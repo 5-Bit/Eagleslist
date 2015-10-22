@@ -1,17 +1,9 @@
-﻿using System;
+﻿using System.Windows;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Eagleslist
 {
@@ -23,6 +15,23 @@ namespace Eagleslist
         public MainWindow()
         {
             InitializeComponent();
+            Request();
+        }
+
+        private async void Request()
+        {
+            string url = "http://sourcekitserviceterminated.com:8080/api";
+            HttpClient client = new HttpClient();
+
+            string responseString = await client.GetStringAsync(url);
+            //6Dictionary<string, string> htmlAttributes = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            Console.WriteLine(responseString);
+
+            Dictionary<string, User[]> users = JsonConvert.DeserializeObject<Dictionary<string, User[]>>(responseString);
+            foreach (User user in users["users"])
+            {
+                Console.WriteLine(user.ToString());
+            }
         }
     }
 }

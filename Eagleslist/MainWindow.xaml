@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Eagleslist"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Eagleslist" Height="350" Width="525">
     <Grid>
-        
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TabItem Header="Listings">
+                <Grid Background="#FFE5E5E5">
+                    <ListView x:Name="listView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            
+            <TabItem Header="Classes">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+
+            <TabItem Header="Login">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+
+            <TabItem Header="Profile">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+
+            <TabItem Header="Create Listing">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+
+        </TabControl>
+
+
     </Grid>
 </Window>
