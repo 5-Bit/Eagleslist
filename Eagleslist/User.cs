@@ -6,11 +6,16 @@ namespace Eagleslist
     public class User
     {
         public int ID { get; private set; }
+        public string ImageURL { get; set; }
+        public string Handle { get; set; }
+        public string Email { get; set; }
+        public string Bio { get; set; }
+        public bool IsMod { get; set; }
+        public bool IsFaculty { get; set; }
 
-        public string Handle { get; private set; }
-        public string Email { get; private set; }
-        public string Bio { get; private set; }
-        public bool IsMod { get; private set; }
-        public bool IsFaculty { get; private set; }
+        public override string ToString()
+        {
+            return "User: " + Handle;
+        }
     }
 }

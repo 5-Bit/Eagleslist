@@ -1,9 +1,8 @@
 ﻿using System.Windows;
-using Newtonsoft.Json;
-using System.Net.Http;
+using System.Windows.Controls;
 using System;
+using Eagleslist;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Eagleslist
 {
@@ -12,26 +11,33 @@ namespace Eagleslist
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Listing> listings = new List<Listing>();
+
         public MainWindow()
         {
             InitializeComponent();
-            Request();
+
+            listingsView.ItemsSource = listings;
+
+            GetUsers();
         }
 
-        private async void Request()
+        private async void GetUsers()
         {
-            string url = "http://sourcekitserviceterminated.com:8080/api";
-            HttpClient client = new HttpClient();
+            RequestManager manager = new RequestManager();
+            List<Listing> newListings = await manager.GetListings();
 
-            string responseString = await client.GetStringAsync(url);
-            //6Dictionary<string, string> htmlAttributes = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-            Console.WriteLine(responseString);
-
-            Dictionary<string, User[]> users = JsonConvert.DeserializeObject<Dictionary<string, User[]>>(responseString);
-            foreach (User user in users["users"])
+            if (newListings != null)
             {
-                Console.WriteLine(user.ToString());
+                listings.InsertRange(0, newListings);
             }
+        }
+
+        private void tabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabControl control = sender as TabControl;
+
+            Console.WriteLine(control.SelectedIndex);
         }
     }
 }

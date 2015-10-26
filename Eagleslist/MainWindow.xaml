@@ -5,39 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Eagleslist"
         mc:Ignorable="d"
-        Title="Eagleslist" Height="350" Width="525">
+        Title="Eagleslist" Height="523.5" Width="833">
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TabItem Header="Listings">
-                <Grid Background="#FFE5E5E5">
-                    <ListView x:Name="listView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            
-            <TabItem Header="Classes">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
+        <Frame x:Name="topBar" Content="" Height="60" VerticalAlignment="Top" Background="#446CB3"/>
+        <StackPanel HorizontalAlignment="Left" Margin="0,60,0,0" VerticalAlignment="Stretch" Width="30" Background="Red">
+            <Button x:Name="button" Content="Button"/>
+        </StackPanel>
 
-            <TabItem Header="Login">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-
-            <TabItem Header="Profile">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-
-            <TabItem Header="Create Listing">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-
-        </TabControl>
-
+        <ListView x:Name="listingsView" Margin="30,60,0,0" HorizontalAlignment="Left" Width="120" VerticalAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <TextBlock Text="{Binding Title}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Handle}" FontWeight="Normal" />
+                        <TextBlock Text="{Binding Body}" FontWeight="Normal" />
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </Grid>
 </Window>
