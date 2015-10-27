@@ -224,7 +224,7 @@
                         </StackPanel>
 
                         <Border Height="150" Width="150" Background="Gray" HorizontalAlignment="Right">
-                            <Image x:Name="listingImage" Source="images/missing.png" RenderOptions.BitmapScalingMode="HighQuality"
+                            <Image x:Name="listingImageView" Source="images/missing.png" RenderOptions.BitmapScalingMode="HighQuality"
                            Stretch="UniformToFill" HorizontalAlignment="Center"/>
                         </Border>
                     </DockPanel>
