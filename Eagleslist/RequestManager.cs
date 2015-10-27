@@ -19,7 +19,8 @@ namespace Eagleslist
 
         public async Task<List<Listing>> GetListings()
         {
-            string url = "https://sourcekitserviceterminated.com/apidb/listings";
+            //string url = "https://sourcekitserviceterminated.com/apidb/listings";
+            string url = "https://sourcekitserviceterminated.com/static/magic.json";
             string responseString = await Request(url);
             return await ListingsFromJSON(responseString);
         }
