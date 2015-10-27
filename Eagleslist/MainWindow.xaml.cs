@@ -116,7 +116,7 @@ namespace Eagleslist
 
             if (success.HasValue && success.Value)
             {
-                profileLabel.Content = "0x7fffffff";
+                profileLabel.Content = "0x7FFFFFFF";
 
                 var bitmap = new BitmapImage(new Uri("pack://application:,,,/images/mick.png"));
                 profileImage.Source = bitmap;

@@ -64,7 +64,7 @@
             </Button>
         </StackPanel>
 
-        <Canvas x:Name="composeContainer" Margin="44, 60, 0, 0" Visibility="Visible">
+        <Canvas x:Name="composeContainer" Margin="44, 60, 0, 0" Visibility="Collapsed">
             <StackPanel>
                 <Grid Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=composeContainer, Path=ActualHeight}">
@@ -162,7 +162,7 @@
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="listingsContainer" Margin="44, 60, 0, 0" Visibility="Collapsed">
+        <Canvas x:Name="listingsContainer" Margin="44, 60, 0, 0" Visibility="Visible">
             <Grid Width="{Binding ElementName=listingsContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=listingsContainer, Path=ActualHeight}">
 
@@ -187,8 +187,8 @@
                                         <TextBlock Text="{Binding Handle}" Margin="0" HorizontalAlignment="Right" Grid.Column="1" />
 
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
                                     </Grid>
 
