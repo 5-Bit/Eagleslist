@@ -65,18 +65,73 @@
         </StackPanel>
 
         <Canvas x:Name="composeContainer" Margin="44, 60, 0, 0" Visibility="Visible">
-            <Grid Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
+            <StackPanel>
+                <Grid Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=composeContainer, Path=ActualHeight}">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*" />
+                        <RowDefinition Height="50*" />
+                        <RowDefinition Height="50*" />
+                        <RowDefinition Height="200*" />
+                        <RowDefinition Height="50*" />
+                    </Grid.RowDefinitions>
 
-                <!-- Column 1 here -->
-                <!-- Column 2 here -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
 
-            </Grid>
+                    <Label Margin="20, 10, 20, 10" Content="New Listing" FontSize="24"
+                           Grid.ColumnSpan="4" Grid.Row="0" VerticalAlignment="Center"/>
+                    
+                    <StackPanel Margin="20, 0, 10, 0" HorizontalAlignment="Stretch" 
+                                Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+                        <Label Content="Post Title"/>
+                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" FontSize="13.333"/>
+                    </StackPanel>
+
+                    <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
+                                Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+                        <Label Content="Price ($)"/>
+                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" FontSize="13.333"/>
+                    </StackPanel>
+
+                    <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
+                                Grid.Column="2" Grid.Row="1" VerticalAlignment="Center">
+                        <Label Content="Condition"/>
+                        <ComboBox x:Name="conditionComboBox">
+                            <ComboBoxItem IsSelected="True">(select)</ComboBoxItem>
+                            <ComboBoxItem>New</ComboBoxItem>
+                            <ComboBoxItem>Great</ComboBoxItem>
+                            <ComboBoxItem>Good</ComboBoxItem>
+                            <ComboBoxItem>Okay</ComboBoxItem>
+                            <ComboBoxItem>Poor</ComboBoxItem>
+                            <ComboBoxItem>Mixed</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Margin="10, 0, 20, 0" HorizontalAlignment="Stretch" 
+                                Grid.Column="3" Grid.Row="1" VerticalAlignment="Center">
+                        <Label Content="ISBN (optional)"/>
+                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" FontSize="13.333"/>
+                    </StackPanel>
+
+                    <DockPanel Margin="20, 20, 20, 0" Grid.ColumnSpan="4" Grid.Row="2" VerticalAlignment="Stretch">
+                        <Label Content="Body" HorizontalAlignment="Left"/>
+                        <Label Content="Please do not post personal contact information" HorizontalAlignment="Right"/>
+                    </DockPanel>
+
+                    <TextBox Background="#ECECEC" Grid.ColumnSpan="4" Grid.Row="3" 
+                                 VerticalAlignment="Stretch" Margin="20, -10, 20, 20"/>
+
+                    <DockPanel Grid.ColumnSpan="4" Grid.Row="4" VerticalAlignment="Center" Margin="20, -20, 20, 0">
+                        <Button Content="Post Listing" HorizontalAlignment="Right" Width="100"/>
+                    </DockPanel>
+                </Grid>
+            </StackPanel>
         </Canvas>
 
         <Canvas x:Name="searchContainer" Margin="44, 60, 0, 0" Visibility="Collapsed">

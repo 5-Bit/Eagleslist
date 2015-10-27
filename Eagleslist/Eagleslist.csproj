@@ -73,18 +73,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Listing.cs" />
-    <Compile Include="ListingPage.xaml.cs">
-      <DependentUpon>ListingPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LoginPrompt.xaml.cs">
       <DependentUpon>LoginPrompt.xaml</DependentUpon>
     </Compile>
     <Compile Include="RequestManager.cs" />
     <Compile Include="User.cs" />
-    <Page Include="ListingPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="LoginPrompt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -101,10 +94,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Resources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
