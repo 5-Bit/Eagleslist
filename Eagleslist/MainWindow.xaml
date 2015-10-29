@@ -70,18 +70,18 @@
                   Height="{Binding ElementName=composeContainer, Path=ActualHeight}">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50*" />
-                        <RowDefinition Height="50*" />
-                        <RowDefinition Height="50*" />
-                        <RowDefinition Height="200*" />
-                        <RowDefinition Height="50*" />
+                        <RowDefinition Height="62" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="0.5*" />
-                        <ColumnDefinition Width="0.5*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="170" />
                     </Grid.ColumnDefinitions>
 
                     <Label Margin="20, 10, 20, 10" Content="New Listing" FontSize="24"
@@ -125,7 +125,7 @@
                     </DockPanel>
 
                     <TextBox Background="#ECECEC" Grid.ColumnSpan="4" Grid.Row="3" 
-                                 VerticalAlignment="Stretch" Margin="20, -10, 20, 20"/>
+                                 VerticalAlignment="Stretch" Margin="20, 0, 20, 20"/>
 
                     <DockPanel Grid.ColumnSpan="4" Grid.Row="4" VerticalAlignment="Center" Margin="20, -20, 20, 0">
                         <Button Content="Post Listing" HorizontalAlignment="Right" Width="100"/>
@@ -152,9 +152,11 @@
 
                     <DockPanel Width="200" Margin="0, 10, 0, 0">
                         <Border BorderThickness="2" CornerRadius="10">
-                            <TextBox x:Name="searchTextBox" Width="150" Height="{Binding ElementName=searchSubmitButton, Path=ActualHeight}"></TextBox>
+                            <TextBox x:Name="searchTextBox" Width="150"
+                                     Height="{Binding ElementName=searchSubmitButton, Path=ActualHeight}"/>
                         </Border>
-                        <Button x:Name="searchSubmitButton" Content="Search" Height="22" Click="SearchSubmitButtonClicked"/>
+                        <Button x:Name="searchSubmitButton" Content="Search" Height="22"
+                                Click="SearchSubmitButtonClicked"/>
                     </DockPanel>
                 </StackPanel>
                 <!-- Column 1 here -->
@@ -181,21 +183,27 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <WrapPanel>
-                                <StackPanel Orientation="Vertical">
-                                    <Grid HorizontalAlignment="Stretch" Width="285">
-                                        <TextBlock Text="{Binding Title}" Margin="0" HorizontalAlignment="Left" Grid.Column="0" />
-                                        <TextBlock Text="{Binding Handle}" Margin="0" HorizontalAlignment="Right" Grid.Column="1" />
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="24" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="3*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
-                                    </Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Title}" Margin="0, 5, 0, 0" HorizontalAlignment="Left" 
+                                               Grid.Column="0" Grid.Row="0"/>
+                                    <TextBlock Text="{Binding Handle}" Margin="0, 5, 0, 0" HorizontalAlignment="Right"
+                                               Grid.Column="1" Grid.Row="0"/>
 
                                     <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
                                                MaxWidth="285" TextWrapping="WrapWithOverflow" TextTrimming="WordEllipsis"
-                                               FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"/>
-                                </StackPanel>
+                                               FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"
+                                               Grid.ColumnSpan="2" Grid.Row="1" Margin="0, 0, 0, 5"/>
+                                </Grid>
                             </WrapPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
