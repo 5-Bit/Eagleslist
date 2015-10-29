@@ -90,11 +90,34 @@ namespace Eagleslist
             if (selectedList.SelectedIndex < listings.Count && selectedList.SelectedIndex >= 0)
             {
                 Listing selectedListing = listings[selectedList.SelectedIndex];
+
                 listingTitleLabel.Content = selectedListing.Title;
                 listingContentTextBlock.Text = selectedListing.Content;
                 listingAskingPrice.Content = selectedListing.Price;
                 listingConditionLabel.Content = selectedListing.Condition;
+
+                SetCurrentListingImage(selectedListing);
             }
+        }
+
+        private async void SetCurrentListingImage(Listing listing)
+        {
+            BitmapImage image = null;
+
+            Uri result = null;
+            bool success = Uri.TryCreate(listing.ImageURL, UriKind.Absolute, out result) 
+                && (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps);
+
+            if (success)
+            {
+                image = await RequestManager.GetBitmapFromURI(result);
+            }
+            else
+            {
+                image = new BitmapImage(new Uri("pack://application:,,,/images/missing.png"));
+            }
+
+            listingImageView.Source = image;
         }
 
         private void CoursesButtonClicked(object sender, RoutedEventArgs e)

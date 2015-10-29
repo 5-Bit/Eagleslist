@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Windows.Media.Imaging;
+using System.Net;
+using System.IO;
 
 namespace Eagleslist
 {
@@ -23,6 +26,19 @@ namespace Eagleslist
             string url = "https://sourcekitserviceterminated.com/static/magic.json";
             string responseString = await Request(url);
             return await ListingsFromJSON(responseString);
+        }
+
+        public static async Task<BitmapImage> GetBitmapFromURI(Uri uri)
+        {
+            byte[] bytes = await new WebClient().DownloadDataTaskAsync(uri);
+
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnDemand;
+            image.StreamSource = new MemoryStream(bytes);
+            image.EndInit();
+
+            return image;
         }
 
         private async Task<string> Request(string url)
