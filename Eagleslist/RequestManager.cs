@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Windows.Media.Imaging;
 using System.Net;
 using System.IO;
+using System.Text;
 
 namespace Eagleslist
 {
@@ -67,7 +68,7 @@ namespace Eagleslist
             }
         }
 
-        private async Task<HttpResponseMessage> AttemptRegistration(string userName, string password)
+        public async Task<HttpResponseMessage> AttemptRegistration(RegistrationSubmission registration)
         {
             using (WebRequestHandler handler = new WebRequestHandler())
             {
@@ -77,9 +78,9 @@ namespace Eagleslist
                 {
                     try
                     {
-                        MultipartContent content = new MultipartContent();
-
-                        return await client.PostAsync("", content);
+                        string json = JsonConvert.SerializeObject(registration);
+                        StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                        return await client.PostAsync("https://sourcekitserviceterminated.com/apidb/users/new", content);
                     }
                     catch (HttpRequestException exception)
                     {
