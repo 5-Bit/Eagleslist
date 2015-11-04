@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using System;
+using Humanizer;
+using System.Windows.Media;
 
 namespace Eagleslist
 {
@@ -21,35 +23,45 @@ namespace Eagleslist
             primaryPanels.Add(listingsContainer);
             primaryPanels.Add(coursesContainer);
 
-            hideAllContainersExcept(null);
+            HideAllContainersExcept(composeContainer);
         }
 
-        private void hideAllContainersExcept(Canvas container)
+        private void HideAllContainersExcept(Canvas container)
         {
             foreach (Canvas canvas in primaryPanels)
             {
-                canvas.Visibility = Visibility.Collapsed;
-            }
+                // 218
+                var index = primaryPanels.IndexOf(canvas);
+                var button = sideBarButtonContainer.Children[index] as Button;
 
-            if (container != null)
-            {
-                container.Visibility = Visibility.Visible;
+                if (canvas == container)
+                {
+                    (button.Content as DockPanel).Children[0].Visibility = Visibility.Visible;
+                    //button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DADADA"));
+                    container.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    (button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
+                    //button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ECECEC"));
+                    canvas.Visibility = Visibility.Collapsed;
+                }
             }
         }
 
         private void ComposeButtonClicked(object sender, RoutedEventArgs e)
         {
-            hideAllContainersExcept(composeContainer);
+            HideAllContainersExcept(composeContainer);
         }
 
         private void SearchButtonClicked(object sender, RoutedEventArgs e)
         {
-            hideAllContainersExcept(searchContainer);
+            HideAllContainersExcept(searchContainer);
         }
 
         private void ListingsButtonClicked(object sender, RoutedEventArgs e)
         {
-            hideAllContainersExcept(listingsContainer);
+            HideAllContainersExcept(listingsContainer);
             GetNewListings();
         }
 
@@ -95,9 +107,22 @@ namespace Eagleslist
                 listingContentTextBlock.Text = selectedListing.Content;
                 listingAskingPrice.Content = selectedListing.Price;
                 listingConditionLabel.Content = selectedListing.Condition;
+                listingTimePostedLabel.Content = HumanizeDateString(selectedListing.CreateDate);
 
                 SetCurrentListingImage(selectedListing);
             }
+        }
+
+        private string HumanizeDateString(string input)
+        {
+            DateTime date = DateTime.Parse(input, null, System.Globalization.DateTimeStyles.RoundtripKind);
+
+            if (date == null)
+            {
+                return null;
+            }
+
+            return date.Humanize();
         }
 
         private async void SetCurrentListingImage(Listing listing)
@@ -122,7 +147,7 @@ namespace Eagleslist
 
         private void CoursesButtonClicked(object sender, RoutedEventArgs e)
         {
-            hideAllContainersExcept(coursesContainer);
+            HideAllContainersExcept(coursesContainer);
         }
 
         private void MessagesButtonClicked(object sender, RoutedEventArgs e)
@@ -137,19 +162,22 @@ namespace Eagleslist
 
             bool? success = prompt.ShowDialog();
 
+            Console.WriteLine(success.HasValue);
+            Console.WriteLine(success.Value);
+
             if (success.HasValue && success.Value)
             {
-                profileLabel.Content = "0x7FFFFFFF";
+                //profileLabel.Content = "0x7FFFFFFF";
 
-                var bitmap = new BitmapImage(new Uri("pack://application:,,,/images/mick.png"));
-                profileImage.Source = bitmap;
+                //var bitmap = new BitmapImage(new Uri("pack://application:,,,/images/mick.png"));
+                //profileImage.Source = bitmap;
             }
         }
 
         private void SearchSubmitButtonClicked(object sender, RoutedEventArgs e)
         {
             GetFakeSearchListings();
-            hideAllContainersExcept(listingsContainer);
+            HideAllContainersExcept(listingsContainer);
         }
     }
 }

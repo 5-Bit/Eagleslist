@@ -67,6 +67,34 @@ namespace Eagleslist
             }
         }
 
+        private async Task<HttpResponseMessage> AttemptRegistration(string userName, string password)
+        {
+            using (WebRequestHandler handler = new WebRequestHandler())
+            {
+                handler.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
+
+                using (HttpClient client = new HttpClient(handler))
+                {
+                    try
+                    {
+                        MultipartContent content = new MultipartContent();
+
+                        return await client.PostAsync("", content);
+                    }
+                    catch (HttpRequestException exception)
+                    {
+                        Console.WriteLine(exception.Message);
+                        return null;
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception.Message);
+                        return null;
+                    }
+                }
+            }
+        }
+
         private Task<List<User>> UsersFromJSON(String JSON)
         {
             return Task.Run(() =>

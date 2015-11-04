@@ -7,12 +7,54 @@
         xmlns:local="clr-namespace:Eagleslist"
         mc:Ignorable="d"
         Title="Eagleslist" MinWidth="800" MinHeight="480">
+    
+    <Window.Resources>
+        <SolidColorBrush x:Key="primaryColor" Color="#446CB3" />
+        <SolidColorBrush x:Key="secondaryColor" Color="#ECECEC" />
+        <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA" />
+
+        <Style TargetType="{x:Type Button}">
+            <!--<Setter Property="Background" Value="Green"/>-->
+            <!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <theme Name="Chrome"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            RenderDefaulted="{TemplateBinding Button.IsDefaulted}"
+            RenderMouseOver="{TemplateBinding IsMouseOver}"
+            RenderPressed="{TemplateBinding IsPressed}"
+            SnapsToDevicePixels="True">
+                            <ContentPresenter
+                Margin="{TemplateBinding Padding}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                RecognizesAccessKey="True"/>
+                        </theme>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>-->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource secondaryColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    
     <Grid>
-        <Canvas x:Name="topBar" Height="60" VerticalAlignment="Top" Background="#446CB3">
+        <Grid x:Name="topBar" Height="60" VerticalAlignment="Top" Panel.ZIndex="1000" Background="{StaticResource primaryColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
             <Button x:Name="profileButton" Click="ProfileButtonClicked" Height="40"
-                    Canvas.Left="10" Canvas.Top="10" Canvas.Bottom="10"
+                    Grid.Column="0" HorizontalAlignment="Left" Margin="20, 0, 0, 0"
                     Background="#446CB3" BorderThickness="0">
-                
+
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                     <Image Source="images/profile_white.png" RenderOptions.BitmapScalingMode="HighQuality"
                            Stretch="UniformToFill" Height="25" VerticalAlignment="Top"
@@ -24,49 +66,88 @@
             </Button>
 
             <Button x:Name="messagesButton" Click="MessagesButtonClicked" 
-                    Height="40" Canvas.Right="10" Canvas.Top="10" Canvas.Bottom="10" 
-                    Background="#446CB3" BorderThickness="0">
-                
+                    Height="40" Grid.Column="1" HorizontalAlignment="Right" 
+                    Background="#446CB3" BorderThickness="0" Margin="0, 0, 20, 0">
+
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Label VerticalAlignment="Center" Foreground="White" Content="Messages"/>
-                    
+
                     <Image Source="images/messages.png" RenderOptions.BitmapScalingMode="HighQuality" 
                            Stretch="Fill" Height="20" VerticalAlignment="Center"
                            HorizontalAlignment="Center" />
                 </StackPanel>
             </Button>
-        </Canvas>
-        <StackPanel HorizontalAlignment="Left" Margin="0,60,0,0" VerticalAlignment="Stretch"
-                    Width="44" Background="#ECECEC">
+        </Grid>
 
-            <Button x:Name="composeButton" Height="25" Margin="0, 8, 0, 8" Background="#ECECEC" 
-                    BorderThickness="0" Click="ComposeButtonClicked">
+        <Grid Margin="0,60,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Left"
+                    Width="54" Background="{StaticResource secondaryColor}" x:Name="sideBarButtonContainer">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
 
-                <Image Source="images/create.png" />
+            <Button x:Name="composeButton" Background="{StaticResource secondaryColor}" HorizontalContentAlignment="Stretch"
+                    BorderThickness="0" Click="ComposeButtonClicked" Grid.Row="0" Padding="0">
+
+                <DockPanel Margin="0">
+                    <Frame Background="{StaticResource primaryColor}" Padding="0" Margin="0" 
+                           HorizontalAlignment="Left" Width="2"/>
+
+                    <StackPanel>
+                        <Image Source="images/create.png" Height="25" Width="25"/>
+                        <Label HorizontalAlignment="Center" Padding="0" Content="Create"/>
+                    </StackPanel>
+                </DockPanel>
             </Button>
-            
-            <Button x:Name="searchButton" Height="25" Margin="0, 8, 0, 8" Background="#ECECEC" 
-                    BorderThickness="0" Click="SearchButtonClicked">
 
-                <Image Source="images/search.png" />
+            <Button x:Name="searchButton" Background="{StaticResource secondaryColor}" HorizontalContentAlignment="Stretch"
+                    BorderThickness="0" Click="SearchButtonClicked"  Grid.Row="1" Padding="0">
+
+                <DockPanel Margin="0">
+                    <Frame Background="{StaticResource primaryColor}" Padding="0" Margin="0" 
+                           HorizontalAlignment="Left" Width="2"/>
+
+                    <StackPanel>
+                        <Image Source="images/search.png" Height="25" Width="25"/>
+                        <Label HorizontalAlignment="Center" Padding="0" Content="Search"/>
+                    </StackPanel>
+                </DockPanel>
             </Button>
 
-            <Button x:Name="listingsButton" Height="25" Margin="0, 8, 0, 8" Background="#ECECEC" 
-                    BorderThickness="0" Click="ListingsButtonClicked">
-                
-                <Image Source="images/listings.png" />
-            </Button>
-            
-            <Button x:Name="coursesButton" Height="25" Margin="0, 8, 0, 8" Background="#ECECEC"
-                    BorderThickness="0" Click="CoursesButtonClicked">
-                
-                <Image Source="images/courses.png" />
-            </Button>
-        </StackPanel>
+            <Button x:Name="listingsButton" Background="{StaticResource secondaryColor}" HorizontalContentAlignment="Stretch"
+                    BorderThickness="0" Click="ListingsButtonClicked"  Grid.Row="2" Padding="0">
 
-        <Canvas x:Name="composeContainer" Margin="44, 60, 0, 0" Visibility="Collapsed">
+                <DockPanel Margin="0">
+                    <Frame Background="{StaticResource primaryColor}" Padding="0" Margin="0" 
+                           HorizontalAlignment="Left" Width="2"/>
+
+                    <StackPanel>
+                        <Image Source="images/listings.png" Height="25" Width="25"/>
+                        <Label HorizontalAlignment="Center" Padding="0" Content="Browse"/>
+                    </StackPanel>
+                </DockPanel>
+            </Button>
+
+            <Button x:Name="coursesButton" Background="{StaticResource secondaryColor}" HorizontalContentAlignment="Stretch"
+                    BorderThickness="0" Click="CoursesButtonClicked" Grid.Row="3" Padding="0">
+
+                <DockPanel Margin="0">
+                    <Frame Background="{StaticResource primaryColor}" Padding="0" Margin="0" 
+                           HorizontalAlignment="Left" Width="2"/>
+
+                    <StackPanel>
+                        <Image Source="images/courses.png" Height="25" Width="25"/>
+                        <Label HorizontalAlignment="Center" Padding="0" Content="Courses"/>
+                    </StackPanel>
+                </DockPanel>
+            </Button>
+        </Grid>
+
+        <Canvas x:Name="composeContainer" Margin="54, 60, 0, 0" Visibility="Collapsed">
             <StackPanel>
-                <Grid Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
+                <Grid x:Name="composeGrid" Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=composeContainer, Path=ActualHeight}">
 
                     <Grid.RowDefinitions>
@@ -127,14 +208,35 @@
                     <TextBox Background="#ECECEC" Grid.ColumnSpan="4" Grid.Row="3" 
                                  VerticalAlignment="Stretch" Margin="20, 0, 20, 20"/>
 
-                    <DockPanel Grid.ColumnSpan="4" Grid.Row="4" VerticalAlignment="Center" Margin="20, -20, 20, 0">
-                        <Button Content="Post Listing" HorizontalAlignment="Right" Width="100"/>
+                    <DockPanel Grid.ColumnSpan="4" Grid.Row="4" VerticalAlignment="Center" Margin="20, 0, 20, 20">
+                        <Button Content="Preview" HorizontalAlignment="Right" Width="100">
+                            <Button.Triggers>
+                                <EventTrigger RoutedEvent="Button.Click">
+                                    <BeginStoryboard>
+                                        <!--<Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="composeGrid"
+                                                             Storyboard.TargetProperty="(Grid.Height)" 
+                                                             From="{Binding ElementName=composeGrid, Path=ActualHeight}"
+                                                             To="0" Duration="0:0:0.35" AutoReverse="False"/>
+                                        </Storyboard>-->
+                                        <Storyboard >
+                                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="composeGrid"
+                                                                              Storyboard.TargetProperty="Margin"
+                                                                              BeginTime="00:00:00">
+                                                <SplineThicknessKeyFrame KeyTime="00:00:00" Value="0, 0, 0, 0" />
+                                                <SplineThicknessKeyFrame KeyTime="00:00:0.25" Value="0, -500, 0, 0" />
+                                            </ThicknessAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Button.Triggers>
+                        </Button>
                     </DockPanel>
                 </Grid>
             </StackPanel>
         </Canvas>
 
-        <Canvas x:Name="searchContainer" Margin="44, 60, 0, 0" Visibility="Collapsed">
+        <Canvas x:Name="searchContainer" Margin="54, 60, 0, 0" Visibility="Collapsed">
             <Grid Width="{Binding ElementName=searchContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=searchContainer, Path=ActualHeight}">
 
@@ -164,7 +266,7 @@
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="listingsContainer" Margin="44, 60, 0, 0" Visibility="Visible">
+        <Canvas x:Name="listingsContainer" Margin="54, 60, 0, 0" Visibility="Visible">
             <Grid Width="{Binding ElementName=listingsContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=listingsContainer, Path=ActualHeight}">
 
@@ -209,55 +311,55 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <StackPanel x:Name="contentStack" Margin="20, 20, 20, 20" Grid.Column="1"
-                            MaxHeight="{Binding ElementName=listingsView, Path=ActualHeight}">
-                    <DockPanel>
+                <Grid Grid.Column="1" Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                        <StackPanel>
-                            <Label x:Name="listingTitleLabel" FontSize="21.333">fsdfdsf</Label>
-                            <!--<DockPanel>
-                                <Label Content=""
-                                <Label x:Name="listingCRNLabel" Content="Woooo"/>
-                            </DockPanel>-->
-                            
-                            <DockPanel>
-                                <Label Content="Condition: "/>
-                                <Label x:Name="listingConditionLabel" Content="Woooo"/>
-                            </DockPanel>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
 
-                            <DockPanel>
-                                <Label Content="Price: "/>
-                                <Label x:Name="listingAskingPrice" Content="Woooo"/>
-                            </DockPanel>
-                        </StackPanel>
+                    <StackPanel Grid.Column="0" Grid.Row="0">
+                        <Label x:Name="listingTitleLabel" FontSize="21.333">fsdfdsf</Label>
+                        <DockPanel>
+                            <Label Content="Condition: "/>
+                            <Label x:Name="listingConditionLabel" Content="Woooo"/>
+                        </DockPanel>
 
-                        <Border Height="150" Width="150" Background="Gray" HorizontalAlignment="Right">
-                            <Image x:Name="listingImageView" Source="images/missing.png" RenderOptions.BitmapScalingMode="HighQuality"
-                           Stretch="UniformToFill" HorizontalAlignment="Center"/>
-                        </Border>
-                    </DockPanel>
+                        <DockPanel>
+                            <Label Content="Price: "/>
+                            <Label x:Name="listingAskingPrice" Content="Woooo"/>
+                        </DockPanel>
+
+                        <Label x:Name="listingTimePostedLabel" Content="Woooo"/>
+                    </StackPanel>
+
+                    <Border Height="150" Width="150" Background="Gray" 
+                            HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0">
+                        <Image x:Name="listingImageView" Source="images/missing.png" 
+                               RenderOptions.BitmapScalingMode="HighQuality"
+                               Stretch="UniformToFill" HorizontalAlignment="Center"/>
+                    </Border>
 
                     <TextBlock x:Name="listingContentTextBlock" Text="hello, world" Margin="10" 
                                IsEnabled="False" TextWrapping="WrapWithOverflow"
                                TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
+                               Grid.Row="1" Grid.ColumnSpan="2"/>
+                </Grid>
+                <!--<StackPanel x:Name="contentStack" Margin="20, 20, 20, 20" Grid.Column="1"
+                            MaxHeight="{Binding ElementName=listingsView, Path=ActualHeight}">
+                    <TextBlock x:Name="listingContentTextBlock" Text="hello, world" Margin="10" 
+                               IsEnabled="False" TextWrapping="WrapWithOverflow"
+                               TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
                                MaxWidth="{Binding ElementName=contentStack, Path=ActualWidth}"/>
-
-                    <!--<DockPanel VerticalAlignment="Bottom">
-                        <StackPanel>
-                            <Label>Woo</Label>
-                            <Label>Hoo</Label>
-                        </StackPanel>
-
-                        <StackPanel HorizontalAlignment="Right">
-                            <Label>Woo</Label>
-                            <Label>Hoo</Label>
-                        </StackPanel>
-                    </DockPanel>-->
-                </StackPanel>
+                </StackPanel>-->
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="coursesContainer" Margin="44, 60, 0, 0" Visibility="Collapsed">
+        <Canvas x:Name="coursesContainer" Margin="54, 60, 0, 0" Visibility="Collapsed">
             <Grid Width="{Binding ElementName=coursesContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=coursesContainer, Path=ActualHeight}">
 
