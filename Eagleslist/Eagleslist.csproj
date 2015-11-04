@@ -81,6 +81,7 @@
     <Compile Include="LoginPrompt.xaml.cs">
       <DependentUpon>LoginPrompt.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RegistrationSubmission.cs" />
     <Compile Include="RequestManager.cs" />
     <Compile Include="User.cs" />
     <Page Include="LoginPrompt.xaml">
