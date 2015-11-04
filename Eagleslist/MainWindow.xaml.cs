@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using System;
 using Humanizer;
-using System.Windows.Media;
+using System.Net.Http;
 
 namespace Eagleslist
 {
@@ -24,6 +24,22 @@ namespace Eagleslist
             primaryPanels.Add(coursesContainer);
 
             HideAllContainersExcept(composeContainer);
+
+            TestRegistration();
+        }
+
+        private async void TestRegistration()
+        {
+            RequestManager manager = new RequestManager();
+            HttpResponseMessage response = await manager.AttemptRegistration(new RegistrationSubmission("Mick10", "abc123", "mick10@eagle.fgcu.edu"));
+            var x = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine(x);
+            Console.WriteLine(response.ReasonPhrase);
+            Console.WriteLine(response.Headers);
+            Console.WriteLine(response.IsSuccessStatusCode);
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.RequestMessage);
         }
 
         private void HideAllContainersExcept(Canvas container)
@@ -37,13 +53,11 @@ namespace Eagleslist
                 if (canvas == container)
                 {
                     (button.Content as DockPanel).Children[0].Visibility = Visibility.Visible;
-                    //button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DADADA"));
                     container.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     (button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
-                    //button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ECECEC"));
                     canvas.Visibility = Visibility.Collapsed;
                 }
             }
