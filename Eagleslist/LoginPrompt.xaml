@@ -5,22 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Eagleslist"
         mc:Ignorable="d"
-        Title="Login" Height="180" Width="350" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
-    <StackPanel VerticalAlignment="Center" Margin="20, 20, 20, 20">
-        <DockPanel>
-            <Label Content="Username: "/>
-            <TextBox Width="200" HorizontalAlignment="Right"/>
-        </DockPanel>
+        Title="Login" Height="200" Width="350" ResizeMode="NoResize" 
+        WindowStartupLocation="CenterOwner" Background="#ECECEC">
+    
+    <Window.Resources>
+        <SolidColorBrush x:Key="primaryColor" Color="#446CB3"/>
+        <SolidColorBrush x:Key="secondaryColor" Color="#ECECEC"/>
+        <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA"/>
+        <SolidColorBrush x:Key="primaryDarkColor" Color="#1D1D1D"/>
 
-        <DockPanel Margin="0, 10, 0, 0">
-            <Label Content="Password: "/>
-            <PasswordBox Width="200" HorizontalAlignment="Right"/>
-        </DockPanel>
+        <Style x:Key="MyButtonStyle" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{StaticResource primaryDarkColor}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="0" Padding="0" 
+                            BorderBrush="DarkGray" CornerRadius="0" Background="{StaticResource secondaryColor}">
+                            
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" 
+                                        Value="{StaticResource primaryColor}"/>
+                                
+                                <Setter Property="Foreground" 
+                                        Value="{StaticResource secondaryColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <DockPanel HorizontalAlignment="Center" Margin="0, 20, 0, 0">
-            <Button Content="Register" Margin="10, 0, 10, 0" Padding="10, 0, 10, 0"/>
-            <Button Content="Forgot Password" Margin="10, 0, 10, 0" Padding="10, 0, 10, 0"/>
-            <Button Content="Login" Margin="10, 0, 10, 0" Padding="10, 0, 10, 0" Click="Button_Click"/>
-        </DockPanel>
-    </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="signInButton"
+                Content="Sign In" Grid.Column="0" Grid.Row="0"/>
+        
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="signUpButton"
+                Content="Sign Up" Grid.Column="1" Grid.Row="0"/>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Row="0"/>
+            <PasswordBox Grid.Row="1"/>
+        </Grid>
+    </Grid>
 </Window>
