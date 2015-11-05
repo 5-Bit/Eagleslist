@@ -45,6 +45,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Humanizer, Version=1.37.7.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Humanizer.1.37.7\lib\portable-win+net40+sl50+wp8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Humanizer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -72,11 +76,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AuthResponse.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="Listing.cs" />
     <Compile Include="LoginPrompt.xaml.cs">
       <DependentUpon>LoginPrompt.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RegistrationSubmission.cs" />
     <Compile Include="RequestManager.cs" />
     <Compile Include="User.cs" />
     <Page Include="LoginPrompt.xaml">

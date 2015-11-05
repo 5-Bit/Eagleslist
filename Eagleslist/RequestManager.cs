@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Windows.Media.Imaging;
 using System.Net;
 using System.IO;
+using System.Text;
 
 namespace Eagleslist
 {
@@ -52,6 +53,34 @@ namespace Eagleslist
                     try
                     {
                         return await client.GetStringAsync(url);
+                    }
+                    catch (HttpRequestException exception)
+                    {
+                        Console.WriteLine(exception.Message);
+                        return null;
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception.Message);
+                        return null;
+                    }
+                }
+            }
+        }
+
+        public async Task<HttpResponseMessage> AttemptRegistration(RegistrationSubmission registration)
+        {
+            using (WebRequestHandler handler = new WebRequestHandler())
+            {
+                handler.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
+
+                using (HttpClient client = new HttpClient(handler))
+                {
+                    try
+                    {
+                        string json = JsonConvert.SerializeObject(registration);
+                        StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                        return await client.PostAsync("https://sourcekitserviceterminated.com/apidb/users/new", content);
                     }
                     catch (HttpRequestException exception)
                     {
