@@ -59,62 +59,63 @@
                            Foreground="White" Content="Log In"/>
                 </StackPanel>
             </Button>-->
+                <Canvas Grid.Column="1" HorizontalAlignment="Right">
+                    <Button Background="{StaticResource FGCUGreen}" Click="Button_Click" Width="100" 
+                            HorizontalAlignment="Center" Canvas.ZIndex="2" Foreground="White" Canvas.Right="0" 
+                            Canvas.Top="0" Canvas.Bottom="0" Height="{Binding ElementName=topBar, Path=ActualHeight}">
 
-                <Button Background="{StaticResource FGCUGreen}" Click="Button_Click" Width="100" 
-                    HorizontalAlignment="Right" Grid.Column="1" Panel.ZIndex="10" Foreground="White">
-                    Account
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" >
-                            <Setter Property="Background" Value="#373737" />
-                            <Setter Property="Foreground" Value="White" />
-                            <Setter Property="FontSize" Value="15" />
-                            <Setter Property="SnapsToDevicePixels" Value="True" />
+                        Account
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" >
+                                <Setter Property="Background" Value="#373737" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="SnapsToDevicePixels" Value="True" />
 
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Name="border" BorderThickness="0" Padding="0" Margin="0"
-                            Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Name="border" BorderThickness="0" Padding="0" Margin="0"
+                                                    Background="{TemplateBinding Background}">
+                                                
+                                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                               VerticalAlignment="Center" />
-                                        </Border>
+                                            </Border>
 
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#E59400" />
-                                                <Setter Property="Foreground" Value="White" />
-                                            </Trigger>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#E59400" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                </Trigger>
 
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter Property="Background" Value="OrangeRed" />
-                                                <Setter Property="Foreground" Value="White" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="OrangeRed" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
 
-                <ComboBox x:Name="accountComboBox" Text="Is not open" Width="100" Grid.Column="1" 
-                      HorizontalAlignment="Right" 
-                      Background="{StaticResource FGCUGreen}" Foreground="{StaticResource FGCUGreen}" 
-                      BorderThickness="0" Margin="0, 0, 0, 0" IsEnabled="False">
+                    <ComboBox x:Name="accountComboBox" Text="Is not open" Width="100"
+                              HorizontalAlignment="Right" Canvas.ZIndex="1" Canvas.Right="0" 
+                              Canvas.Top="0" Canvas.Bottom="0" Height="{Binding ElementName=topBar, Path=ActualHeight}"
+                              Background="{StaticResource FGCUGreen}" Foreground="{StaticResource FGCUGreen}" 
+                              BorderThickness="0" Margin="0, 0, 0, 0" IsEnabled="False" ItemsSource="{Binding Path=accountComboBoxItems}">
 
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem">
-                            <Setter Property="Background" Value="{StaticResource FGCUGreen}"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource FGCUGreen}"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-
-                    <ComboBoxItem Name="cbi1">Item1</ComboBoxItem>
-                    <ComboBoxItem Name="cbi2">Item2</ComboBoxItem>
-                    <ComboBoxItem Name="cbi3">Item3</ComboBoxItem>
-                </ComboBox>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem">
+                                <Setter Property="Background" Value="{StaticResource FGCUGreen}"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource FGCUGreen}"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                </Canvas>
 
                 <!--<Button x:Name="messagesButton" Click="MessagesButtonClicked" 
                     Height="40" Grid.Column="1" HorizontalAlignment="Right" 
@@ -375,18 +376,18 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" Grid.Row="0">
-                        <Label x:Name="listingTitleLabel" FontSize="21.333">fsdfdsf</Label>
+                        <Label x:Name="listingTitleLabel" FontSize="21.333" Content="Post Title"/>
                         <DockPanel>
                             <Label Content="Condition: "/>
-                            <Label x:Name="listingConditionLabel" Content="Woooo"/>
+                            <Label x:Name="listingConditionLabel" Content="condition text"/>
                         </DockPanel>
 
                         <DockPanel>
                             <Label Content="Price: "/>
-                            <Label x:Name="listingAskingPrice" Content="Woooo"/>
+                            <Label x:Name="listingAskingPrice" Content="some dollar amount"/>
                         </DockPanel>
 
-                        <Label x:Name="listingTimePostedLabel" Content="Woooo"/>
+                        <Label x:Name="listingTimePostedLabel" Content="undetermined"/>
                     </StackPanel>
 
                     <Border Height="150" Width="150" Background="Gray" 
@@ -396,7 +397,7 @@
                                Stretch="UniformToFill" HorizontalAlignment="Center"/>
                     </Border>
 
-                    <TextBlock x:Name="listingContentTextBlock" Text="hello, world" Margin="10" 
+                    <TextBlock x:Name="listingContentTextBlock" Text="Body text for post." Margin="10" 
                                IsEnabled="False" TextWrapping="WrapWithOverflow"
                                TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
                                Grid.Row="1" Grid.ColumnSpan="2"/>
