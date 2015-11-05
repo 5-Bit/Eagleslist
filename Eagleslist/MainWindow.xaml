@@ -9,7 +9,6 @@
         Title="" MinWidth="800" MinHeight="480" SnapsToDevicePixels="True">
 
     <Window.Resources>
-        
         <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>
         <SolidColorBrush x:Key="FGCUGreen" Color="#00885A"/>
         
@@ -19,43 +18,10 @@
 
         <SolidColorBrush x:Key="primaryColor" Color="#446CB3"/>
         <SolidColorBrush x:Key="secondaryColor" Color="#ECECEC"/>
-
         <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA"/>
 
-        <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
-            <Setter Property="Background" Value="{StaticResource FGCUGreen}"/>
-            <!--<Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBoxItem">
-                        <Grid>
-                            <Border x:Name="Border" Background="Transparent">
-                                <TextBlock FontSize="12" FontFamily="Segoe UI Light">
-                        <ContentPresenter></ContentPresenter>
-                                </TextBlock>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="ComboBoxItem.IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="Red"></Setter>
-                            </Trigger>
-                            <Trigger Property="ComboBoxItem.IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="LightGray"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>-->
-        </Style>
-
-        <Style TargetType="{x:Type Button}">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource secondaryColor}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
     </Window.Resources>
-
+    
     <Grid Background="{StaticResource lightBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -66,18 +32,21 @@
             <ColumnDefinition Width="60"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
+        <Border BorderBrush="{StaticResource FGCUGreen}" BorderThickness="0 1 0 0"
+                 Grid.Row="0" Grid.Column="1" Height="60" VerticalAlignment="Top">
 
-        <Grid x:Name="topBar" Grid.Row="0" Grid.Column="1" Height="60" VerticalAlignment="Top" 
+            <Grid x:Name="topBar"  
               Panel.ZIndex="1000" Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Content="Eagleslist" VerticalAlignment="Center" HorizontalAlignment="Left"
+                <Label Grid.Column="0" Content="Eagleslist" VerticalAlignment="Center" HorizontalAlignment="Left"
                    FontSize="25" FontFamily="Segoe UI Semilight" Padding="0" Margin="20 0"/>
 
-            <!--<Button x:Name="profileButton" Click="ProfileButtonClicked" Height="40"
+                <!--<Button x:Name="profileButton" Click="ProfileButtonClicked" Height="40"
                     Grid.Column="0" HorizontalAlignment="Left" Margin="20, 0, 0, 0"
                     Background="{StaticResource FGCUGreen}" BorderThickness="0">
 
@@ -91,48 +60,79 @@
                 </StackPanel>
             </Button>-->
 
-            <ComboBox Text="Is not open" Width="100" Grid.Column="1" HorizontalAlignment="Right" 
-                    Background="{StaticResource FGCUGreen}" Foreground="{StaticResource FGCUGreen}" 
-                    BorderThickness="0" Margin="0, 0, 0, 0" ItemContainerStyle="{StaticResource ComboBoxStyle}">
-                
-                <ComboBox.Template>
-                    <ControlTemplate TargetType="{x:Type ComboBox}">
-                        <Border x:Name="templateRoot" BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            
-                            <Border x:Name="splitBorder" BorderBrush="Transparent" BorderThickness="1" 
-                                    HorizontalAlignment="Right" Margin="0" SnapsToDevicePixels="true"
-                                    Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
-                                
-                                <Path x:Name="arrow"
-                                      Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z"
-                                      HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
-                            </Border>
-                        </Border>
-                    </ControlTemplate>
+                <Button Background="{StaticResource FGCUGreen}" Click="Button_Click" Width="100" 
+                    HorizontalAlignment="Right" Grid.Column="1" Panel.ZIndex="10" Foreground="White">
+                    Account
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" >
+                            <Setter Property="Background" Value="#373737" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="SnapsToDevicePixels" Value="True" />
 
-                </ComboBox.Template>
-                <ComboBoxItem Name="cbi1">Item1</ComboBoxItem>
-                <ComboBoxItem Name="cbi2">Item2</ComboBoxItem>
-                <ComboBoxItem Name="cbi3">Item3</ComboBoxItem>
-            </ComboBox>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Name="border" BorderThickness="0" Padding="0" Margin="0"
+                            Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                              VerticalAlignment="Center" />
+                                        </Border>
 
-            <!--<Button x:Name="messagesButton" Click="MessagesButtonClicked" 
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#E59400" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="Background" Value="OrangeRed" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <ComboBox x:Name="accountComboBox" Text="Is not open" Width="100" Grid.Column="1" 
+                      HorizontalAlignment="Right" 
+                      Background="{StaticResource FGCUGreen}" Foreground="{StaticResource FGCUGreen}" 
+                      BorderThickness="0" Margin="0, 0, 0, 0" IsEnabled="False">
+
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="Background" Value="{StaticResource FGCUGreen}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource FGCUGreen}"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+
+                    <ComboBoxItem Name="cbi1">Item1</ComboBoxItem>
+                    <ComboBoxItem Name="cbi2">Item2</ComboBoxItem>
+                    <ComboBoxItem Name="cbi3">Item3</ComboBoxItem>
+                </ComboBox>
+
+                <!--<Button x:Name="messagesButton" Click="MessagesButtonClicked" 
                     Height="40" Grid.Column="1" HorizontalAlignment="Right" 
                     Background="{StaticResource FGCUGreen}" BorderThickness="0" Margin="0, 0, 20, 0">
 
 
                 -->
-            <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Label VerticalAlignment="Center" Foreground="White" Content="Messages"/>
 
                     <Image Source="images/messages.png" RenderOptions.BitmapScalingMode="HighQuality" 
                            Stretch="Fill" Height="20" VerticalAlignment="Center"
                            HorizontalAlignment="Center" />
                 </StackPanel>-->
-            <!--
+                <!--
             </Button>-->
-        </Grid>
+            </Grid>
+        </Border>
 
         <Grid Margin="0, 0, 0, 0" VerticalAlignment="Stretch" HorizontalAlignment="Left" Grid.RowSpan="2" Grid.Column="0"
                     Width="60" Background="{StaticResource darkBackground}" x:Name="sideBarButtonContainer">
