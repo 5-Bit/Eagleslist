@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using System;
 using Humanizer;
-using System.Net.Http;
 
 namespace Eagleslist
 {
@@ -18,35 +17,18 @@ namespace Eagleslist
         {
             InitializeComponent();
 
-            primaryPanels.Add(composeContainer);
             primaryPanels.Add(searchContainer);
+            primaryPanels.Add(composeContainer);
             primaryPanels.Add(listingsContainer);
             primaryPanels.Add(coursesContainer);
 
-            HideAllContainersExcept(composeContainer);
-
-            TestRegistration();
-        }
-
-        private async void TestRegistration()
-        {
-            RequestManager manager = new RequestManager();
-            HttpResponseMessage response = await manager.AttemptRegistration(new RegistrationSubmission("Mick10", "abc123", "mick10@eagle.fgcu.edu"));
-            var x = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine(x);
-            Console.WriteLine(response.ReasonPhrase);
-            Console.WriteLine(response.Headers);
-            Console.WriteLine(response.IsSuccessStatusCode);
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.RequestMessage);
+            HideAllContainersExcept(searchContainer);
         }
 
         private void HideAllContainersExcept(Canvas container)
         {
             foreach (Canvas canvas in primaryPanels)
             {
-                // 218
                 var index = primaryPanels.IndexOf(canvas);
                 var button = sideBarButtonContainer.Children[index] as Button;
 
@@ -57,7 +39,11 @@ namespace Eagleslist
                 }
                 else
                 {
-                    (button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
+                    if (button != searchButton)
+                    {
+                        (button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
+                    }
+
                     canvas.Visibility = Visibility.Collapsed;
                 }
             }

@@ -8,15 +8,13 @@ namespace Eagleslist
 {
     public class RegistrationSubmission
     {
-        public string Username { get; private set; }
-        public string Password { get; private set; }
-        public string Email { get; private set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
 
-        public RegistrationSubmission(string username, string password, string email)
+        public RegistrationSubmission()
         {
-            this.Username = username;
-            this.Password = password;
-            this.Email = email;
+
         }
     }
 }
