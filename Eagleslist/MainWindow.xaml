@@ -114,6 +114,12 @@
                                 <Setter Property="BorderThickness" Value="0"/>
                             </Style>
                         </ComboBox.ItemContainerStyle>
+
+                        <ComboBoxItem Content="Sign In" Visibility="Visible"/>
+                        <ComboBoxItem Content="Sign Up" Visibility="Visible"/>
+                        <ComboBoxItem Content="Profile" Visibility="Collapsed"/>
+                        <ComboBoxItem Content="Messages" Visibility="Collapsed"/>
+                        <ComboBoxItem Content="Sign Out" Visibility="Collapsed"/>
                     </ComboBox>
                 </Canvas>
 
