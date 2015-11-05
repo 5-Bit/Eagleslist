@@ -5,17 +5,25 @@ namespace Eagleslist
 {
     public class User
     {
-        public int ID { get; private set; }
-        public string ImageURL { get; set; }
-        public string Handle { get; set; }
-        public string Email { get; set; }
-        public string Bio { get; set; }
-        public bool IsMod { get; set; }
-        public bool IsFaculty { get; set; }
+        public int ID { get; set; }
+        public string SessionID { get; private set; }
+        public string ImageURL { get; private set; }
+        public string Handle { get; private set; }
+        public string Email { get; private set; }
+        public string Bio { get; private set; }
+        public bool IsMod { get; private set; }
+        public bool IsFaculty { get; private set; }
 
-        public override string ToString()
+        public User(int id, string sessionID, string imageURL, string handle, string email, string bio, bool isMod, bool isFaculty)
         {
-            return "User: " + Handle;
+            this.ID = id;
+            this.SessionID = sessionID;
+            this.ImageURL = imageURL;
+            this.Handle = handle;
+            this.Email = email;
+            this.Bio = bio;
+            this.IsMod = isMod;
+            this.IsFaculty = isFaculty;
         }
     }
 }

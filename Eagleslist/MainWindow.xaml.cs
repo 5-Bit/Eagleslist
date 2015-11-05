@@ -179,5 +179,10 @@ namespace Eagleslist
             GetFakeSearchListings();
             HideAllContainersExcept(listingsContainer);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            accountComboBox.IsDropDownOpen = !accountComboBox.IsDropDownOpen;
+        }
     }
 }
