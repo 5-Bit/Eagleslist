@@ -10,12 +10,46 @@ namespace Eagleslist
 {
     public partial class MainWindow : Window
     {
-        ObservableCollection<Listing> listings = new ObservableCollection<Listing>();
-        List<Canvas> primaryPanels = new List<Canvas>();
+        private ObservableCollection<Listing> listings 
+            = new ObservableCollection<Listing>();
+
+        private List<Canvas> primaryPanels = new List<Canvas>();
+
+        private User currentUser
+        {
+            get
+            {
+                return CredentialManager.getCurrentUser();
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    SetLoggedInUI();
+                }
+                else
+                {
+                    SetLoggedOutUI();
+                }
+
+                CredentialManager.setCurrentUser(value);
+            }
+        }
+
+        private bool isUserLoggedIn
+        {
+            get
+            {
+                return currentUser != null;
+            }
+        }
 
         public MainWindow()
         {
+            Console.WriteLine("GetFolderPath: {0}", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
             InitializeComponent();
+            currentUser = CredentialManager.getCurrentUser(); // Needs to stay after component init. Triggers UI changes.
 
             primaryPanels.Add(searchContainer);
             primaryPanels.Add(composeContainer);
@@ -23,6 +57,36 @@ namespace Eagleslist
             primaryPanels.Add(coursesContainer);
 
             HideAllContainersExcept(searchContainer);
+        }
+
+        private void SetLoggedInUI()
+        {
+            accountOverlayButton.Content = currentUser.Handle;
+            ToggleVisibleAccountComboBoxItems(true);
+        }
+
+        private void SetLoggedOutUI()
+        {
+            accountOverlayButton.Content = "Account";
+            ToggleVisibleAccountComboBoxItems(false);
+        }
+
+        private void ToggleVisibleAccountComboBoxItems(bool isLoggedIn)
+        {
+            Visibility visibility = isLoggedIn ? Visibility.Visible : Visibility.Collapsed;
+            Console.WriteLine(visibility);
+
+            foreach (ComboBoxItem item in accountComboBox.Items)
+            {
+                if (item.Visibility.Equals(Visibility.Collapsed))
+                {
+                    item.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    item.Visibility = Visibility.Collapsed;
+                }
+            }
         }
 
         private void HideAllContainersExcept(Canvas container)
@@ -155,7 +219,42 @@ namespace Eagleslist
 
         }
 
-        private void ProfileButtonClicked(object sender, RoutedEventArgs e)
+        private void SearchSubmitButtonClicked(object sender, RoutedEventArgs e)
+        {
+            GetFakeSearchListings();
+            HideAllContainersExcept(listingsContainer);
+        }
+
+        private void accountDropDownClicked(object sender, RoutedEventArgs e)
+        {
+            accountComboBox.IsDropDownOpen = !accountComboBox.IsDropDownOpen;
+        }
+
+        private void accountComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (accountComboBox.SelectedIndex)
+            {
+                case 0:
+                    ShowLoginDialog();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    currentUser = null;
+                    break;
+                default:
+                    break;
+            }
+
+            accountComboBox.IsDropDownOpen = false;
+            accountComboBox.SelectedIndex = -1;
+        }
+
+        private void ShowLoginDialog()
         {
             LoginPrompt prompt = new LoginPrompt();
             prompt.Owner = this;
@@ -172,17 +271,6 @@ namespace Eagleslist
                 //var bitmap = new BitmapImage(new Uri("pack://application:,,,/images/mick.png"));
                 //profileImage.Source = bitmap;
             }
-        }
-
-        private void SearchSubmitButtonClicked(object sender, RoutedEventArgs e)
-        {
-            GetFakeSearchListings();
-            HideAllContainersExcept(listingsContainer);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            accountComboBox.IsDropDownOpen = !accountComboBox.IsDropDownOpen;
         }
     }
 }
