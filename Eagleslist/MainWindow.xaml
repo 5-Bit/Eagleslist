@@ -37,14 +37,14 @@
                  Grid.Row="0" Grid.Column="1" Height="60" VerticalAlignment="Top">
 
             <Grid x:Name="topBar"  
-              Panel.ZIndex="1000" Background="White">
+              Panel.ZIndex="1000" Background="{StaticResource darkBackground}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Content="Eagleslist" VerticalAlignment="Center" HorizontalAlignment="Left"
-                   FontSize="25" FontFamily="Segoe UI Semilight" Padding="0" Margin="20 0"/>
+                   FontSize="25" FontFamily="Segoe UI Semilight" Padding="0" Margin="20 0" Foreground="White"/>
 
                 <!--<Button x:Name="profileButton" Click="ProfileButtonClicked" Height="40"
                     Grid.Column="0" HorizontalAlignment="Left" Margin="20, 0, 0, 0"
@@ -60,26 +60,27 @@
                 </StackPanel>
             </Button>-->
                 <Canvas Grid.Column="1" HorizontalAlignment="Right">
-                    <Button Background="{StaticResource FGCUGreen}" Click="Button_Click" Width="100" 
+                    <Button Background="{StaticResource FGCUGreen}" Click="accountDropDownClicked" MinWidth="60" Padding="20 0" 
                             HorizontalAlignment="Center" Canvas.ZIndex="2" Foreground="White" Canvas.Right="0" 
-                            Canvas.Top="0" Canvas.Bottom="0" Height="{Binding ElementName=topBar, Path=ActualHeight}">
+                            Canvas.Top="0" Canvas.Bottom="0" x:Name="accountOverlayButton" VerticalAlignment="Center"
+                            Height="{Binding ElementName=topBar, Path=ActualHeight}">
 
                         Account
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" >
                                 <Setter Property="Background" Value="#373737" />
                                 <Setter Property="Foreground" Value="White" />
-                                <Setter Property="FontSize" Value="15" />
+                                <!--<Setter Property="FontSize" Value="15" />-->
                                 <Setter Property="SnapsToDevicePixels" Value="True" />
-
+                                <!--<Setter Property="Padding" Value="20 0"/>-->
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Name="border" BorderThickness="0" Padding="0" Margin="0"
+                                            <Border Name="border" BorderThickness="0" Padding="10 0" Margin="0"
                                                     Background="{TemplateBinding Background}">
                                                 
                                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                              VerticalAlignment="Center" />
+                                              VerticalAlignment="{TemplateBinding VerticalAlignment}" Width="{TemplateBinding Width}"/>
                                             </Border>
 
                                             <ControlTemplate.Triggers>
@@ -100,11 +101,14 @@
                         </Button.Style>
                     </Button>
 
-                    <ComboBox x:Name="accountComboBox" Text="Is not open" Width="100"
-                              HorizontalAlignment="Right" Canvas.ZIndex="1" Canvas.Right="0" 
+                    <ComboBox x:Name="accountComboBox"
+                              HorizontalAlignment="Right" Canvas.ZIndex="1" Canvas.Right="0"
+                              Width="{Binding ElementName=accountOverlayButton, Path=ActualWidth}"
                               Canvas.Top="0" Canvas.Bottom="0" Height="{Binding ElementName=topBar, Path=ActualHeight}"
                               Background="{StaticResource FGCUGreen}" Foreground="{StaticResource FGCUGreen}" 
-                              BorderThickness="0" Margin="0, 0, 0, 0" IsEnabled="False" ItemsSource="{Binding Path=accountComboBoxItems}">
+                              BorderThickness="0" Margin="0, 0, 0, 0" IsEnabled="False" 
+                              ItemsSource="{Binding Path=accountComboBoxItems}"
+                              SelectionChanged="accountComboBoxSelectionChanged">
 
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem">
