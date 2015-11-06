@@ -46,19 +46,6 @@
                 <Label Grid.Column="0" Content="Eagleslist" VerticalAlignment="Center" HorizontalAlignment="Left"
                    FontSize="25" FontFamily="Segoe UI Semilight" Padding="0" Margin="20 0" Foreground="White"/>
 
-                <!--<Button x:Name="profileButton" Click="ProfileButtonClicked" Height="40"
-                    Grid.Column="0" HorizontalAlignment="Left" Margin="20, 0, 0, 0"
-                    Background="{StaticResource FGCUGreen}" BorderThickness="0">
-
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                    <Image Source="images/profile_white.png" RenderOptions.BitmapScalingMode="HighQuality"
-                           Stretch="UniformToFill" Height="25" VerticalAlignment="Top"
-                           HorizontalAlignment="Left" x:Name="profileImage" />
-
-                    <Label x:Name="profileLabel" VerticalAlignment="Center"
-                           Foreground="White" Content="Log In"/>
-                </StackPanel>
-            </Button>-->
                 <Canvas Grid.Column="1" HorizontalAlignment="Right">
                     <Button Background="{StaticResource FGCUGreen}" Click="accountDropDownClicked" MinWidth="60" Padding="20 0" 
                             HorizontalAlignment="Center" Canvas.ZIndex="2" Foreground="White" Canvas.Right="0" 
