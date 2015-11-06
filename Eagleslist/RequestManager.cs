@@ -42,6 +42,64 @@ namespace Eagleslist
             return image;
         }
 
+        private static async Task<User> FetchUserByID(AuthResponse auth, HttpClient client)
+        {
+            string url = string.Format("https://sourcekitserviceterminated.com/apidb/users/id/{0}", auth.UserID);
+            return await SendObjectAsJSON<User>(auth, url, client, client.PutAsync);
+        }
+
+        public static async Task<User> AttemptLogin(LoginRequest request)
+        {
+            using (HttpClient client = new HttpClient(DefaultRequestHandler()))
+            {
+                string url = "https://sourcekitserviceterminated.com/apidb/users/auth";
+                AuthResponse response = await SendObjectAsJSON<AuthResponse>(request, url, client, client.PutAsync);
+                Console.WriteLine(response.SessionID);
+                if (response.UserID <= 0)
+                {
+                    return null;
+                }
+
+                return await FetchUserByID(response);
+            }
+        }
+
+        public async Task<AuthResponse> AttemptRegistration(RegistrationSubmission registration)
+        {
+            using (HttpClient client = new HttpClient(DefaultRequestHandler()))
+            {
+                string url = "https://sourcekitserviceterminated.com/apidb/users/new";
+                return await SendObjectAsJSON<AuthResponse>(registration, url, client, client.PostAsync);
+            }
+        }
+
+        private Task<List<User>> UsersFromJSON(String JSON)
+        {
+            return Task.Run(() =>
+            {
+                return JsonConvert.DeserializeObject<Dictionary<string, List<User>>>(JSON)["Users"];
+            });
+        }
+
+        private Task<List<Listing>> ListingsFromJSON(String JSON)
+        {
+            return Task.Run(() =>
+            {
+                return JsonConvert.DeserializeObject<Dictionary<string, List<Listing>>>(JSON)["Listings"];
+            });
+        }
+
+        private static WebRequestHandler DefaultRequestHandler()
+        {
+            WebRequestHandler handler = new WebRequestHandler();
+            handler.ServerCertificateValidationCallback = (sender, certificate, chain, errors) =>
+            {
+                return true;
+            };
+
+            return handler;
+        }
+
         private async Task<string> Request(string url)
         {
             using (WebRequestHandler handler = new WebRequestHandler())
@@ -68,48 +126,48 @@ namespace Eagleslist
             }
         }
 
-        public async Task<HttpResponseMessage> AttemptRegistration(RegistrationSubmission registration)
+        private static async Task<T> GetJSON<T>(string url)
         {
             using (WebRequestHandler handler = new WebRequestHandler())
             {
-                handler.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
+                handler.ServerCertificateValidationCallback = (sender, certificate, chain, errors) =>
+                {
+                    return true;
+                };
 
                 using (HttpClient client = new HttpClient(handler))
                 {
                     try
                     {
-                        string json = JsonConvert.SerializeObject(registration);
-                        StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                        return await client.PostAsync("https://sourcekitserviceterminated.com/apidb/users/new", content);
+                        string responseString = await client.GetStringAsync(url);
+                        return JsonConvert.DeserializeObject<T>(responseString);
                     }
-                    catch (HttpRequestException exception)
+                    catch (Exception e)
                     {
-                        Console.WriteLine(exception.Message);
-                        return null;
-                    }
-                    catch (Exception exception)
-                    {
-                        Console.WriteLine(exception.Message);
-                        return null;
+                        Console.WriteLine(e);
+                        return default(T);
                     }
                 }
             }
         }
 
-        private Task<List<User>> UsersFromJSON(String JSON)
+        private static async Task<T> SendObjectAsJSON<T>(object obj, string url, HttpClient client, Func<string, HttpContent, Task<HttpResponseMessage>> action)
         {
-            return Task.Run(() =>
+            try
             {
-                return JsonConvert.DeserializeObject<Dictionary<string, List<User>>>(JSON)["Users"];
-            });
-        }
+                string json = JsonConvert.SerializeObject(obj);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        private Task<List<Listing>> ListingsFromJSON(String JSON)
-        {
-            return Task.Run(() =>
+                HttpResponseMessage response = await action(url, content);
+                string responseString = await response.Content.ReadAsStringAsync();
+
+                return JsonConvert.DeserializeObject<T>(responseString);
+            }
+            catch (Exception e)
             {
-                return JsonConvert.DeserializeObject<Dictionary<string, List<Listing>>>(JSON)["Listings"];
-            });
+                Console.WriteLine(e);
+                return default(T);
+            }
         }
     }
 }
