@@ -45,7 +45,12 @@ namespace Eagleslist
         private static async Task<User> FetchUserByID(AuthResponse auth, HttpClient client)
         {
             string url = string.Format("https://sourcekitserviceterminated.com/apidb/users/id/{0}", auth.UserID);
-            return await SendObjectAsJSON<User>(auth, url, client, client.PutAsync);
+            Dictionary<string, List<User>> root = await SendObjectAsJSON<Dictionary<string, List<User>>>(auth, url, client, client.PutAsync);
+
+            User user = root["Users"][0];
+            user.AddAuth(auth);
+                
+            return user;
         }
 
         public static async Task<User> AttemptLogin(LoginRequest request)
@@ -54,13 +59,13 @@ namespace Eagleslist
             {
                 string url = "https://sourcekitserviceterminated.com/apidb/users/auth";
                 AuthResponse response = await SendObjectAsJSON<AuthResponse>(request, url, client, client.PutAsync);
-                Console.WriteLine(response.SessionID);
+
                 if (response.UserID <= 0)
                 {
                     return null;
                 }
 
-                return await FetchUserByID(response);
+                return await FetchUserByID(response, client);
             }
         }
 
@@ -160,7 +165,7 @@ namespace Eagleslist
 
                 HttpResponseMessage response = await action(url, content);
                 string responseString = await response.Content.ReadAsStringAsync();
-
+                Console.WriteLine(responseString);
                 return JsonConvert.DeserializeObject<T>(responseString);
             }
             catch (Exception e)
