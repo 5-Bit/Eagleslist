@@ -49,7 +49,7 @@ namespace Eagleslist
 
             User user = root["Users"][0];
             user.AddAuth(auth);
-                
+
             return user;
         }
 
