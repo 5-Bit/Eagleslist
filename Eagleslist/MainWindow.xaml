@@ -106,11 +106,11 @@
                             </Style>
                         </ComboBox.ItemContainerStyle>
 
-                        <ComboBoxItem Content="Sign In" Visibility="Visible"/>
-                        <ComboBoxItem Content="Sign Up" Visibility="Visible"/>
-                        <ComboBoxItem Content="Profile" Visibility="Collapsed"/>
-                        <ComboBoxItem Content="Messages" Visibility="Collapsed"/>
-                        <ComboBoxItem Content="Sign Out" Visibility="Collapsed"/>
+                        <ComboBoxItem Content="Sign In" Visibility="Collapsed" Tag="LoggedOut"/>
+                        <ComboBoxItem Content="Sign Up" Visibility="Collapsed" Tag="LoggedOut"/>
+                        <ComboBoxItem Content="Profile" Visibility="Visible" Tag="LoggedIn"/>
+                        <ComboBoxItem Content="Messages" Visibility="Visible" Tag="LoggedIn"/>
+                        <ComboBoxItem Content="Sign Out" Visibility="Visible" Tag="LoggedIn"/>
                     </ComboBox>
                 </Canvas>
 
