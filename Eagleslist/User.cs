@@ -1,6 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
-using System.Reflection;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
