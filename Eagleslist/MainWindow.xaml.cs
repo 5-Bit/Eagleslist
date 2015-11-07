@@ -15,7 +15,7 @@ namespace Eagleslist
 
         private List<Canvas> primaryPanels = new List<Canvas>();
 
-        private User currentUser
+        internal User currentUser
         {
             get
             {
@@ -24,6 +24,8 @@ namespace Eagleslist
 
             set
             {
+                CredentialManager.setCurrentUser(value); // UI changes below dependent on this.
+
                 if (value != null)
                 {
                     SetLoggedInUI();
@@ -32,12 +34,10 @@ namespace Eagleslist
                 {
                     SetLoggedOutUI();
                 }
-
-                CredentialManager.setCurrentUser(value);
             }
         }
 
-        private bool isUserLoggedIn
+        private bool userIsLoggedIn
         {
             get
             {
@@ -47,9 +47,16 @@ namespace Eagleslist
 
         public MainWindow()
         {
-            Console.WriteLine("GetFolderPath: {0}", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
             InitializeComponent();
-            currentUser = CredentialManager.getCurrentUser(); // Needs to stay after component init. Triggers UI changes.
+
+            if (userIsLoggedIn)
+            {
+                SetLoggedInUI();
+            }
+            else
+            {
+                SetLoggedOutUI();
+            }
 
             primaryPanels.Add(searchContainer);
             primaryPanels.Add(composeContainer);
@@ -61,24 +68,25 @@ namespace Eagleslist
 
         private void SetLoggedInUI()
         {
+            Console.WriteLine("SetLoggedInUI");
             accountOverlayButton.Content = currentUser.Handle;
-            ToggleVisibleAccountComboBoxItems(true);
+            ToggleVisibleAccountComboBoxItems();
         }
 
         private void SetLoggedOutUI()
         {
+            Console.WriteLine("SetLoggedOutUI");
             accountOverlayButton.Content = "Account";
-            ToggleVisibleAccountComboBoxItems(false);
+            ToggleVisibleAccountComboBoxItems();
         }
 
-        private void ToggleVisibleAccountComboBoxItems(bool isLoggedIn)
+        private void ToggleVisibleAccountComboBoxItems()
         {
-            Visibility visibility = isLoggedIn ? Visibility.Visible : Visibility.Collapsed;
-            Console.WriteLine(visibility);
+            string tag = userIsLoggedIn ? "LoggedIn" : "LoggedOut";
 
             foreach (ComboBoxItem item in accountComboBox.Items)
             {
-                if (item.Visibility.Equals(Visibility.Collapsed))
+                if (item.Tag.Equals(tag))
                 {
                     item.Visibility = Visibility.Visible;
                 }
