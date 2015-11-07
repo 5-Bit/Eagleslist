@@ -28,21 +28,22 @@ namespace Eagleslist
         private async void AttemptLogin(string handle, string password)
         {
             LoginRequest request = new LoginRequest(handle, password);
-
-
             User user = await RequestManager.AttemptLogin(request);
+            Console.WriteLine("New user: " + user);
 
-            if (user != null)
+            if (user.AuthError == null || user.AuthError.Length == 0)
             {
-                Console.WriteLine(user.Handle);
-                Console.WriteLine(user.ID);
-                Console.WriteLine(user.SessionID);
-                Console.WriteLine(user.Email);
+                this.DialogResult = true;
+                Close();
+
+                MainWindow mainWindow = (MainWindow)Owner;
+                mainWindow.currentUser = user;
             }
-            else
-            {
-                Console.WriteLine("User loggin response was null");
-            }
+
+            Console.WriteLine(user.Handle);
+            Console.WriteLine(user.ID);
+            Console.WriteLine(user.SessionID);
+            Console.WriteLine(user.Email);
         }
 
         private async void AttemptRegistration()
