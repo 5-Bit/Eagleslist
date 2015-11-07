@@ -9,14 +9,14 @@ namespace Eagleslist
 {
     public class User: IXmlSerializable
     {
-        public int ID { get; private set; }
+        public int ID { get; set; }
         public string SessionID { get; private set; }
-        public string ImageURL { get; private set; }
-        public string Handle { get; private set; }
-        public string Email { get; private set; }
-        public string Bio { get; private set; }
-        public bool IsMod { get; private set; }
-        public bool IsFaculty { get; private set; }
+        public string ImageURL { get; set; }
+        public string Handle { get; set; }
+        public string Email { get; set; }
+        public string Bio { get; set; }
+        public bool IsMod { get; set; }
+        public bool IsFaculty { get; set; }
 
         public string AuthError { get; private set; }
 
@@ -75,6 +75,12 @@ namespace Eagleslist
             writer.WriteAttributeString("IsMod", Convert.ToString(IsMod));
             writer.WriteAttributeString("IsFaculty", Convert.ToString(IsFaculty));
             writer.WriteAttributeString("AuthError", AuthError);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("User: handle={0}, session={1}, imageURL={2}, email={3}, bio={4}, authError={5}",
+                Handle, SessionID, ImageURL, Email, Bio, AuthError);
         }
     }
 }
