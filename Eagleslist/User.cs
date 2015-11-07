@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Eagleslist
 {
@@ -24,6 +25,20 @@ namespace Eagleslist
             this.Bio = bio;
             this.IsMod = isMod;
             this.IsFaculty = isFaculty;
+        }
+
+        public void AddAuth(AuthResponse auth)
+        {
+            this.SessionID = auth.SessionID;
+            this.ID = auth.UserID;
+        }
+
+        public void MergeUser(User otherUser)
+        {
+            foreach(PropertyInfo property in typeof(User).GetProperties())
+            {
+                property.SetValue(this, property.GetValue(otherUser, null));
+            }
         }
     }
 }
