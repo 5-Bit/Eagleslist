@@ -84,12 +84,14 @@
       <DependentUpon>LoginPrompt.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginRequest.cs" />
+    <Compile Include="NewListingResponse.cs" />
     <Compile Include="RegistrationSubmission.cs" />
     <Compile Include="RequestManager.cs" />
     <Compile Include="SignUpPrompt.xaml.cs">
       <DependentUpon>SignUpPrompt.xaml</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
+    <Compile Include="ValidatedListing.cs" />
     <Page Include="LoginPrompt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
