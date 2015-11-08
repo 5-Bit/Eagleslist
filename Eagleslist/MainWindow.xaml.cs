@@ -51,7 +51,11 @@ namespace Eagleslist
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        private void WindowLoaded(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             if (userIsLoggedIn)
             {
                 SetLoggedInUI();
@@ -109,7 +113,7 @@ namespace Eagleslist
             {
                 primaryPanels.ForEach(delegate (Canvas canvas)
                 {
-                    var index = primaryPanels.IndexOf(canvas);
+                    int index = primaryPanels.IndexOf(canvas);
                     var button = sideBarButtonContainer.Children[index] as Button;
 
                     if (canvas == container)
@@ -132,6 +136,13 @@ namespace Eagleslist
             {
                 primaryPanels.ForEach(delegate (Canvas canvas)
                 {
+                    int index = primaryPanels.IndexOf(canvas);
+                    var button = sideBarButtonContainer.Children[index] as Button;
+                    if (button != searchButton)
+                    {
+                        (button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
+                    }
+
                     canvas.Visibility = Visibility.Collapsed;
                 });
             }

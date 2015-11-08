@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Eagleslist"
         mc:Ignorable="d"
+        Loaded="WindowLoaded"
         Title="" MinWidth="800" MinHeight="480" SnapsToDevicePixels="True">
 
     <Window.Resources>
