@@ -11,6 +11,7 @@ namespace Eagleslist
 
         private void SignInClicked(object sender, RoutedEventArgs e)
         {
+            ProgressBar.Visibility = Visibility.Visible;
             AttemptLogin(handleField.Text, passwordField.Password);
         }
 
@@ -18,14 +19,15 @@ namespace Eagleslist
         {
             LoginRequest request = new LoginRequest(handle, password);
             User user = await RequestManager.AttemptLogin(request);
+            ProgressBar.Visibility = Visibility.Collapsed;
 
             if (user.AuthError == null || user.AuthError.Length == 0)
             {
-                this.DialogResult = true;
-                Close();
-
                 MainWindow mainWindow = (MainWindow)Owner;
                 mainWindow.currentUser = user;
+
+                this.DialogResult = true;
+                Close();
             }
         }
     }

@@ -45,10 +45,12 @@ namespace Eagleslist
         private static async Task<User> FetchUserByID(AuthResponse auth, HttpClient client)
         {
             string url = string.Format("https://sourcekitserviceterminated.com/apidb/users/id/{0}", auth.UserID);
-            Dictionary<string, List<User>> root = await SendObjectAsJSON<Dictionary<string, List<User>>>(auth, url, client, client.PutAsync);
+            User user = await SendObjectAsJSON<User>(auth, url, client, client.PutAsync);
 
-            User user = root["Users"][0];
-            user.AddAuth(auth);
+            if (user != null)
+            {
+                user.AddAuth(auth);
+            }
 
             return user;
         }
@@ -76,12 +78,20 @@ namespace Eagleslist
                 string url = "https://sourcekitserviceterminated.com/apidb/users/new";
                 AuthResponse response = await SendObjectAsJSON<AuthResponse>(registration, url, client, client.PostAsync);
 
-                if (response.UserID <= 0)
+                if (response.Error != null && response.Error.Length > 0)
                 {
-                    return null;
+                    return new User(
+                        0, null, null, 
+                        registration.Username, registration.Email, null,
+                        false, false, response.Error
+                    );
                 }
+                else
+                {
+                    LoginRequest request = new LoginRequest(registration.Email, registration.Password);
 
-                return await FetchUserByID(response, client);
+                    return await AttemptLogin(request);
+                }
             }
         }
 

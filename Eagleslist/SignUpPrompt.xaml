@@ -9,6 +9,9 @@
         Title="Eagleslist Sign Up" ResizeMode="NoResize" SizeToContent="Height" Width="350">
 
     <Window.Resources>
+        <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>
+        <SolidColorBrush x:Key="FGCUGreen" Color="#00885A"/>
+
         <SolidColorBrush x:Key="primaryColor" Color="#446CB3"/>
         <SolidColorBrush x:Key="secondaryColor" Color="#ECECEC"/>
         <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA"/>
@@ -42,51 +45,58 @@
         </Style>
     </Window.Resources>
 
-    <Grid Margin="20 20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <ProgressBar x:Name="ProgressBar" Grid.Row="0" Height="2" Visibility="Collapsed"
+                     IsIndeterminate="True" Foreground="{StaticResource FGCUBlue}"/>
 
-        <Grid Visibility="Visible" x:Name="TopGrid">
+        <Grid Margin="20 20" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
-                <RowDefinition Height="16"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="16"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="16"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Content="Username" Padding="0" HorizontalAlignment="Left"
+            <Grid Visibility="Visible" x:Name="TopGrid" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Content="Username" Padding="0" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-            <TextBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="handleField"/>
+                <TextBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="handleField"/>
 
-            <Label Grid.Row="2" Content="FGCU Email Address" Padding="0" HorizontalAlignment="Left"
+                <Label Grid.Row="2" Content="FGCU Email Address" Padding="0" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-            <TextBox Grid.Row="3" VerticalAlignment="Center" 
+                <TextBox Grid.Row="3" VerticalAlignment="Center" 
                      HorizontalAlignment="Stretch" x:Name="emailField"/>
 
-            <Label Grid.Row="4" Content="Password" Padding="0" HorizontalAlignment="Left"
+                <Label Grid.Row="4" Content="Password" Padding="0" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-            <PasswordBox Grid.Row="5" VerticalAlignment="Center"
+                <PasswordBox Grid.Row="5" VerticalAlignment="Center"
                          HorizontalAlignment="Stretch" x:Name="passwordField"/>
 
-            <Button Grid.Row="6" Content="Sign Up" Height="22" Margin="5 0 0 0"
+                <Button Grid.Row="6" Content="Sign Up" Height="22" Margin="5 0 0 0"
                     Padding="5 0" HorizontalAlignment="Right" Click="SignUpButtonClicked"/>
-        </Grid>
+            </Grid>
 
-        <Grid Visibility="Collapsed" x:Name="BottomGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Grid Visibility="Collapsed" x:Name="BottomGrid" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock TextWrapping="Wrap" Grid.Row="0" Padding="0 0 0 0" HorizontalAlignment="Stretch"
+                <TextBlock TextWrapping="Wrap" Grid.Row="0" Padding="0 0 0 0" HorizontalAlignment="Stretch"
                        Foreground="{StaticResource primaryDarkColor}">
                 
                 <Span FontSize="15">Thank you for signing up for Eagleslist!</Span>
@@ -109,19 +119,20 @@
                     email us
                 </Hyperlink>
                 to let us know.
-            </TextBlock>
+                </TextBlock>
 
-            <Grid Grid.Row="1" Margin="0 25 0 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="1" Margin="0 25 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Content="Resend Email" Height="22" 
+                    <Button Grid.Column="0" Content="Resend Email" Height="22" 
                     Margin="5 0 0 0" Padding="5 0" HorizontalAlignment="Left" Click="ResendVerificationEmailClicked"/>
-                
-                <Button Grid.Column="1" Content="Start Using Eagleslist" Height="22" 
+
+                    <Button Grid.Column="1" Content="Start Using Eagleslist" Height="22" 
                     Margin="5 0 0 0" Padding="5 0" HorizontalAlignment="Right" Click="StartUsingEagleslistClicked"/>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

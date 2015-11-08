@@ -26,6 +26,7 @@ namespace Eagleslist
             set
             {
                 CredentialManager.setCurrentUser(value); // UI changes below dependent on this.
+                accountComboBox.IsDropDownOpen = false;
 
                 if (value != null)
                 {
