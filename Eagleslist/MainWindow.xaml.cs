@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using System;
 using Humanizer;
+using Microsoft.Win32;
 
 namespace Eagleslist
 {
@@ -285,7 +286,7 @@ namespace Eagleslist
             LoginPrompt prompt = new LoginPrompt();
             prompt.Owner = this;
 
-            bool? x = prompt.ShowDialog();
+            bool? _ = prompt.ShowDialog();
         }
 
         private void ShowSignUpDialog()
@@ -293,7 +294,26 @@ namespace Eagleslist
             SignUpPrompt prompt = new SignUpPrompt();
             prompt.Owner = this;
 
-            bool? x = prompt.ShowDialog();
+            bool? _ = prompt.ShowDialog();
+        }
+
+        private static void ChooseImages()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            dialog.Title = "Eagleslist - Select Images";
+            dialog.Multiselect = true;
+            dialog.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg";
+
+            bool? x = dialog.ShowDialog();
+
+            if (x.HasValue && x.Value)
+            {
+                foreach (String file in dialog.FileNames)
+                {
+
+                }
+            }
         }
     }
 }

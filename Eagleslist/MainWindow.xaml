@@ -225,24 +225,25 @@
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="composeContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
-            <StackPanel>
-                <Grid x:Name="composeGrid" Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
-                  Height="{Binding ElementName=composeContainer, Path=ActualHeight}">
+        <Canvas x:Name="composeContainer" Margin="0, 0, 0, 0" Visibility="Visible" Grid.Row="1" Grid.Column="1">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
+                          Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
+                          Height="{Binding ElementName=composeContainer, Path=ActualHeight}">
+                <Grid x:Name="composeGrid" HorizontalAlignment="Stretch" Width="Auto">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="62" />
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="250" />
                         <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="170" />
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="15*" />
+                        <ColumnDefinition Width="15*" />
+                        <ColumnDefinition Width="24*" />
                     </Grid.ColumnDefinitions>
 
                     <Label Margin="20, 10, 20, 10" Content="New Listing" FontSize="18"
@@ -289,16 +290,17 @@
                                  VerticalAlignment="Stretch" Margin="20, 0, 20, 20"/>
 
                     <DockPanel Grid.ColumnSpan="4" Grid.Row="4" VerticalAlignment="Center" Margin="20, 0, 20, 20">
-                        <Button Content="Preview" HorizontalAlignment="Right" Width="100">
+                        <Button Content="Post Listing" HorizontalAlignment="Right" Width="100"/>
+                        <!--<Button Content="Preview" HorizontalAlignment="Right" Width="100">
                             <Button.Triggers>
                                 <EventTrigger RoutedEvent="Button.Click">
                                     <BeginStoryboard>
-                                        <!--<Storyboard>
+                                        --><!--<Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="composeGrid"
                                                              Storyboard.TargetProperty="(Grid.Height)" 
                                                              From="{Binding ElementName=composeGrid, Path=ActualHeight}"
                                                              To="0" Duration="0:0:0.35" AutoReverse="False"/>
-                                        </Storyboard>-->
+                                        </Storyboard>--><!--
                                         <Storyboard >
                                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="composeGrid"
                                                                               Storyboard.TargetProperty="Margin"
@@ -310,10 +312,10 @@
                                     </BeginStoryboard>
                                 </EventTrigger>
                             </Button.Triggers>
-                        </Button>
+                        </Button>-->
                     </DockPanel>
                 </Grid>
-            </StackPanel>
+            </ScrollViewer>
         </Canvas>
 
         <Canvas x:Name="listingsContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
@@ -436,7 +438,7 @@
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="profileContainer" Margin="0, 0, 0, 0" Visibility="Visible" Grid.Row="1" Grid.Column="1">
+        <Canvas x:Name="profileContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
             <Grid Width="{Binding ElementName=profileContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=profileContainer, Path=ActualHeight}">
 
