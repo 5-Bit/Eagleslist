@@ -12,7 +12,7 @@ namespace Eagleslist
 {
     public class RequestManager
     {
-        private const string RootURL = "https://sourcekitserviceterminated.com/";
+        private const string RootURL = "https://5bitstudios.com/";
 
         public async Task<List<User>> GetUsers()
         {
