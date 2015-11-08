@@ -14,6 +14,7 @@ namespace Eagleslist
             = new ObservableCollection<Listing>();
 
         private List<Canvas> primaryPanels = new List<Canvas>();
+        private List<Canvas> secondaryPanels = new List<Canvas>();
 
         internal User currentUser
         {
@@ -99,26 +100,41 @@ namespace Eagleslist
 
         private void HideAllContainersExcept(Canvas container)
         {
-            foreach (Canvas canvas in primaryPanels)
+            if (primaryPanels.Contains(container))
             {
-                var index = primaryPanels.IndexOf(canvas);
-                var button = sideBarButtonContainer.Children[index] as Button;
+                primaryPanels.ForEach(delegate (Canvas canvas)
+                {
+                    var index = primaryPanels.IndexOf(canvas);
+                    var button = sideBarButtonContainer.Children[index] as Button;
 
-                if (canvas == container)
-                {
-                    (button.Content as DockPanel).Children[0].Visibility = Visibility.Visible;
-                    container.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    if (button != searchButton)
+                    if (canvas == container)
                     {
-                        (button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
+                        (button.Content as DockPanel).Children[0].Visibility = Visibility.Visible;
+                        container.Visibility = Visibility.Visible;
                     }
+                    else
+                    {
+                        if (button != searchButton)
+                        {
+                            (button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
+                        }
 
-                    canvas.Visibility = Visibility.Collapsed;
-                }
+                        canvas.Visibility = Visibility.Collapsed;
+                    }
+                });
             }
+            else
+            {
+                primaryPanels.ForEach(delegate (Canvas canvas)
+                {
+                    canvas.Visibility = Visibility.Collapsed;
+                });
+            }
+
+            secondaryPanels.ForEach(delegate (Canvas canvas)
+            {
+                canvas.Visibility = Visibility.Collapsed;
+            });
         }
 
         private void ComposeButtonClicked(object sender, RoutedEventArgs e)
@@ -246,6 +262,7 @@ namespace Eagleslist
                     ShowLoginDialog();
                     break;
                 case 1:
+                    ShowSignUpDialog();
                     break;
                 case 2:
                     break;
@@ -267,18 +284,15 @@ namespace Eagleslist
             LoginPrompt prompt = new LoginPrompt();
             prompt.Owner = this;
 
-            bool? success = prompt.ShowDialog();
+            bool? x = prompt.ShowDialog();
+        }
 
-            Console.WriteLine(success.HasValue);
-            Console.WriteLine(success.Value);
+        private void ShowSignUpDialog()
+        {
+            SignUpPrompt prompt = new SignUpPrompt();
+            prompt.Owner = this;
 
-            if (success.HasValue && success.Value)
-            {
-                //profileLabel.Content = "0x7FFFFFFF";
-
-                //var bitmap = new BitmapImage(new Uri("pack://application:,,,/images/mick.png"));
-                //profileImage.Source = bitmap;
-            }
+            bool? x = prompt.ShowDialog();
         }
     }
 }

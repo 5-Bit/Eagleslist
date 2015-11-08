@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace Eagleslist
 {
@@ -22,6 +13,39 @@ namespace Eagleslist
         public SignUpPrompt()
         {
             InitializeComponent();
+        }
+
+        private void ResendVerificationEmailClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StartUsingEagleslistClicked(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+            Close();
+        }
+
+        private void SignUpButtonClicked(object sender, RoutedEventArgs e)
+        {
+            AttemptRegistration();
+        }
+
+        private async void AttemptRegistration()
+        {
+            RegistrationSubmission submission = new RegistrationSubmission(
+                handleField.Text, passwordField.Password, emailField.Text
+            );
+
+            User createdUser = await RequestManager.AttemptRegistration(submission);
+
+            Console.WriteLine(createdUser);
+        }
+
+        private void CollapseSignInFields()
+        {
+            TopGrid.Visibility = Visibility.Collapsed;
+            BottomGrid.Visibility = Visibility.Visible;
         }
     }
 }

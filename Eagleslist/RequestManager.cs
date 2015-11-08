@@ -69,16 +69,23 @@ namespace Eagleslist
             }
         }
 
-        public async Task<AuthResponse> AttemptRegistration(RegistrationSubmission registration)
+        public static async Task<User> AttemptRegistration(RegistrationSubmission registration)
         {
             using (HttpClient client = new HttpClient(DefaultRequestHandler()))
             {
                 string url = "https://sourcekitserviceterminated.com/apidb/users/new";
-                return await SendObjectAsJSON<AuthResponse>(registration, url, client, client.PostAsync);
+                AuthResponse response = await SendObjectAsJSON<AuthResponse>(registration, url, client, client.PostAsync);
+
+                if (response.UserID <= 0)
+                {
+                    return null;
+                }
+
+                return await FetchUserByID(response, client);
             }
         }
 
-        private Task<List<User>> UsersFromJSON(String JSON)
+        private static Task<List<User>> UsersFromJSON(String JSON)
         {
             return Task.Run(() =>
             {
@@ -86,7 +93,7 @@ namespace Eagleslist
             });
         }
 
-        private Task<List<Listing>> ListingsFromJSON(String JSON)
+        private static Task<List<Listing>> ListingsFromJSON(String JSON)
         {
             return Task.Run(() =>
             {
