@@ -23,7 +23,7 @@ namespace Eagleslist
 
         }
 
-        public User(int id, string sessionID, string imageURL, string handle, string email, string bio, bool isMod, bool isFaculty)
+        public User(int id, string sessionID, string imageURL, string handle, string email, string bio, bool isMod, bool isFaculty, string AuthError)
         {
             this.ID = id;
             this.SessionID = sessionID;
