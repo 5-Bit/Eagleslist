@@ -316,7 +316,7 @@
             </StackPanel>
         </Canvas>
 
-        <Canvas x:Name="listingsContainer" Margin="0, 0, 0, 0" Visibility="Visible" Grid.Row="1" Grid.Column="1">
+        <Canvas x:Name="listingsContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
             <Grid Width="{Binding ElementName=listingsContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=listingsContainer, Path=ActualHeight}">
 
@@ -409,7 +409,7 @@
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="coursesContainer" Margin="54, 60, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
+        <Canvas x:Name="coursesContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
             <Grid Width="{Binding ElementName=coursesContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=coursesContainer, Path=ActualHeight}">
 
@@ -420,6 +420,30 @@
 
                 <!-- Column 1 here -->
                 <!-- Column 2 here -->
+
+            </Grid>
+        </Canvas>
+
+        <Canvas x:Name="messagesContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
+            <Grid Width="{Binding ElementName=messagesContainer, Path=ActualWidth}"
+                  Height="{Binding ElementName=messagesContainer, Path=ActualHeight}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+        </Canvas>
+
+        <Canvas x:Name="profileContainer" Margin="0, 0, 0, 0" Visibility="Visible" Grid.Row="1" Grid.Column="1">
+            <Grid Width="{Binding ElementName=profileContainer, Path=ActualWidth}"
+                  Height="{Binding ElementName=profileContainer, Path=ActualHeight}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
             </Grid>
         </Canvas>
