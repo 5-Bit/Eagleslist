@@ -66,6 +66,9 @@ namespace Eagleslist
             primaryPanels.Add(listingsContainer);
             primaryPanels.Add(coursesContainer);
 
+            secondaryPanels.Add(profileContainer);
+            secondaryPanels.Add(messagesContainer);
+
             HideAllContainersExcept(searchContainer);
         }
 
@@ -154,6 +157,17 @@ namespace Eagleslist
             HideAllContainersExcept(listingsContainer);
             GetNewListings();
         }
+
+        private void ProfileButtonClicked()
+        {
+            HideAllContainersExcept(profileContainer);
+        }
+
+        private void MessagesButtonClicked()
+        {
+            HideAllContainersExcept(messagesContainer);
+        }
+
 
         private async void GetFakeSearchListings()
         {
@@ -267,11 +281,13 @@ namespace Eagleslist
                     ShowSignUpDialog();
                     break;
                 case 2:
+                    ProfileButtonClicked();
                     break;
                 case 3:
+                    MessagesButtonClicked();
                     break;
                 case 4:
-                    currentUser = null;
+                    ShowSignOutDialog();
                     break;
                 default:
                     break;
@@ -279,6 +295,22 @@ namespace Eagleslist
 
             accountComboBox.IsDropDownOpen = false;
             accountComboBox.SelectedIndex = -1;
+        }
+
+        private void ShowSignOutDialog()
+        {
+            string text = "Are you sure you want to sign out?";
+            string caption = "Eagleslist - Sign Out";
+
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+
+            MessageBoxResult result = MessageBox.Show(text, caption, buttons, icon);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                currentUser = null;
+            }
         }
 
         private void ShowLoginDialog()
