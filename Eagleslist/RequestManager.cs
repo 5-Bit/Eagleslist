@@ -12,11 +12,11 @@ namespace Eagleslist
 {
     public class RequestManager
     {
-        public bool RequestIsActive { get; private set; }
+        private const string RootURL = "https://sourcekitserviceterminated.com/";
 
         public async Task<List<User>> GetUsers()
         {
-            string url = "https://sourcekitserviceterminated.com/apidb/users";
+            string url = RootURL + "apidb/users";
             string responseString = await Request(url);
             return await UsersFromJSON(responseString);
         }
@@ -24,7 +24,7 @@ namespace Eagleslist
         public async Task<List<Listing>> GetListings()
         {
             //string url = "https://sourcekitserviceterminated.com/apidb/listings";
-            string url = "https://sourcekitserviceterminated.com/static/magic.json";
+            string url = RootURL + "static/magic.json";
             string responseString = await Request(url);
             return await ListingsFromJSON(responseString);
         }
@@ -44,7 +44,7 @@ namespace Eagleslist
 
         private static async Task<User> FetchUserByID(AuthResponse auth, HttpClient client)
         {
-            string url = string.Format("https://sourcekitserviceterminated.com/apidb/users/id/{0}", auth.UserID);
+            string url = string.Format("{0}apidb/users/id/{1}", RootURL, auth.UserID);
             User user = await SendObjectAsJSON<User>(auth, url, client, client.PutAsync);
 
             if (user != null)
@@ -55,11 +55,22 @@ namespace Eagleslist
             return user;
         }
 
+        public static async Task<NewListingResponse> PostNewListing(Listing listing, string sessionID)
+        {
+            using (HttpClient client = new HttpClient(DefaultRequestHandler()))
+            {
+                string url = RootURL + "apidb/listings/new";
+                ValidatedListing validated = new ValidatedListing(sessionID, listing);
+
+                return await SendObjectAsJSON<NewListingResponse>(validated, url, client, client.PostAsync);
+            }
+        }
+
         public static async Task<User> AttemptLogin(LoginRequest request)
         {
             using (HttpClient client = new HttpClient(DefaultRequestHandler()))
             {
-                string url = "https://sourcekitserviceterminated.com/apidb/users/auth";
+                string url = RootURL + "apidb/users/auth";
                 AuthResponse response = await SendObjectAsJSON<AuthResponse>(request, url, client, client.PutAsync);
 
                 if (response.UserID <= 0)
@@ -75,7 +86,7 @@ namespace Eagleslist
         {
             using (HttpClient client = new HttpClient(DefaultRequestHandler()))
             {
-                string url = "https://sourcekitserviceterminated.com/apidb/users/new";
+                string url = RootURL + "apidb/users/new";
                 AuthResponse response = await SendObjectAsJSON<AuthResponse>(registration, url, client, client.PostAsync);
 
                 if (response.Error != null && response.Error.Length > 0)
@@ -182,7 +193,7 @@ namespace Eagleslist
 
                 HttpResponseMessage response = await action(url, content);
                 string responseString = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(responseString);
+
                 return JsonConvert.DeserializeObject<T>(responseString);
             }
             catch (Exception e)
