@@ -28,6 +28,7 @@ namespace Eagleslist
 
         private void SignUpButtonClicked(object sender, RoutedEventArgs e)
         {
+            ProgressBar.Visibility = Visibility.Visible;
             AttemptRegistration();
         }
 
@@ -37,9 +38,16 @@ namespace Eagleslist
                 handleField.Text, passwordField.Password, emailField.Text
             );
 
-            User createdUser = await RequestManager.AttemptRegistration(submission);
+            User user = await RequestManager.AttemptRegistration(submission);
+            ProgressBar.Visibility = Visibility.Collapsed;
 
-            Console.WriteLine(createdUser);
+            if (user.AuthError == null || user.AuthError.Length == 0)
+            {
+                MainWindow mainWindow = (MainWindow)Owner;
+                mainWindow.currentUser = user;
+
+                CollapseSignInFields();
+            }
         }
 
         private void CollapseSignInFields()
