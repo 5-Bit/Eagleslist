@@ -76,12 +76,20 @@ namespace Eagleslist
                 string url = "https://sourcekitserviceterminated.com/apidb/users/new";
                 AuthResponse response = await SendObjectAsJSON<AuthResponse>(registration, url, client, client.PostAsync);
 
-                if (response.UserID <= 0)
+                if (response.Error != null && response.Error.Length > 0)
                 {
-                    return null;
+                    return new User(
+                        0, null, null, 
+                        registration.Username, registration.Email, null,
+                        false, false, response.Error
+                    );
                 }
+                else
+                {
+                    LoginRequest request = new LoginRequest(registration.Email, registration.Password);
 
-                return await FetchUserByID(response, client);
+                    return await AttemptLogin(request);
+                }
             }
         }
 
