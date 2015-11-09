@@ -6,6 +6,8 @@ using System.Windows.Media.Imaging;
 using System;
 using Humanizer;
 using Microsoft.Win32;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Eagleslist
 {
@@ -16,6 +18,7 @@ namespace Eagleslist
 
         private List<Canvas> primaryPanels = new List<Canvas>();
         private List<Canvas> secondaryPanels = new List<Canvas>();
+        private LinkedList<object> navigationStack = new LinkedList<object>();
 
         internal User currentUser
         {
@@ -48,6 +51,16 @@ namespace Eagleslist
             }
         }
 
+        private User currentProfileUser
+        {
+            set
+            {
+                ProfileUsername.Text = value.Handle;
+                ProfileEmail.Text = value.Email;
+                ProfileBio.Text = value.Bio;
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -55,7 +68,6 @@ namespace Eagleslist
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             if (userIsLoggedIn)
             {
                 SetLoggedInUI();
@@ -78,14 +90,12 @@ namespace Eagleslist
 
         private void SetLoggedInUI()
         {
-            Console.WriteLine("SetLoggedInUI");
             accountOverlayButton.Content = currentUser.Handle;
             ToggleVisibleAccountComboBoxItems();
         }
 
         private void SetLoggedOutUI()
         {
-            Console.WriteLine("SetLoggedOutUI");
             accountOverlayButton.Content = "Account";
             ToggleVisibleAccountComboBoxItems();
         }
@@ -149,7 +159,14 @@ namespace Eagleslist
 
             secondaryPanels.ForEach(delegate (Canvas canvas)
             {
-                canvas.Visibility = Visibility.Collapsed;
+                if (canvas == container)
+                {
+                    canvas.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    canvas.Visibility = Visibility.Collapsed;
+                }
             });
         }
 
@@ -171,6 +188,7 @@ namespace Eagleslist
 
         private void ProfileButtonClicked()
         {
+            currentProfileUser = currentUser;
             HideAllContainersExcept(profileContainer);
         }
 
@@ -357,6 +375,54 @@ namespace Eagleslist
 
                 }
             }
+        }
+
+        private static string GravatarURLFromUser(User user, int size)
+        {
+            string root = "http://www.gravatar.com/avatar";
+            string hash = GravatarMD5StringFromString(user.Email);
+
+            return string.Format("{0}/{1}?s={2}", root, hash, size);
+        }
+
+        private static string GravatarMD5StringFromString(string input)
+        {
+            using (MD5 md5Hash = MD5.Create())
+            {
+                string hash = GetMd5Hash(md5Hash, input.Trim().ToLower());
+                return VerifyMd5Hash(md5Hash, input, hash) ? hash : null;
+            }
+        }
+
+        private static string GetMd5Hash(MD5 md5Hash, string input)
+        {
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            return sBuilder.ToString();
+        }
+
+        private static bool VerifyMd5Hash(MD5 md5Hash, string input, string hash)
+        {
+            string hashOfInput = GetMd5Hash(md5Hash, input);
+            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+
+            return comparer.Compare(hashOfInput, hash) == 0;
+        }
+
+        private void NavigationBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NavigationForwardButtonClicked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
