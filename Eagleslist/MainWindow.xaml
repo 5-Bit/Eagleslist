@@ -14,18 +14,18 @@
         
         <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>
         <SolidColorBrush x:Key="FGCUGreen" Color="#00885A"/>
-        <SolidColorBrush x:Key="FGCUGreenDark" Color="#006644"/>
+        <SolidColorBrush x:Key="FGCUGreenDark" Color="#006F41"/>
         
         <SolidColorBrush x:Key="darkBackground" Color="#2F323A"/>
         <SolidColorBrush x:Key="darkerBackground" Color="#27292F"/>
         <SolidColorBrush x:Key="lightBackground" Color="#ECEEF3"/>
+        <SolidColorBrush x:Key="lightBackground2" Color="#ECECEC"/>
 
         <SolidColorBrush x:Key="primaryColor" Color="#446CB3"/>
-        <SolidColorBrush x:Key="secondaryColor" Color="#ECECEC"/>
         <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA"/>
 
         <Style TargetType="{x:Type Button}" x:Key="SidePanelButtonStyle">
-            <Setter Property="Background" Value="{StaticResource darkBackground}"/>
+            <Setter Property="Background" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -37,7 +37,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource darkerBackground}"/>
+                    <Setter Property="Background" Value="{StaticResource lightBackground}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -60,43 +60,67 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <!--<Style TargetType="{x:Type Button}" BasedOn="{StaticResource TopPanelButtonStyle}" x:Key="TopPanelDropDownButton">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="{DynamicResource ResourceKey=accountOverlayButton}" Property="Background" Value="Blue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
     </Window.Resources>
     
     <Grid Background="{StaticResource lightBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <Border BorderBrush="{StaticResource FGCUGreen}" BorderThickness="0 1 0 0"
-                 Grid.Row="0" Grid.Column="1" Height="60" VerticalAlignment="Top">
 
-            <Grid x:Name="topBar"  
+        <Grid x:Name="topBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
               Panel.ZIndex="1000" Background="{StaticResource darkBackground}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="Eagleslist" VerticalAlignment="Center" HorizontalAlignment="Left"
-                   FontSize="25" FontFamily="Segoe UI Semilight" Padding="0" Margin="20 0" Foreground="White"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="72 0">
+                <Button Background="{StaticResource darkBackground}" BorderThickness="0"
+                        Width="60" Height="60" Click="NavigationBackButtonClicked">
 
-                <Canvas Grid.Column="1" HorizontalAlignment="Right">
-                    <Button Click="accountDropDownClicked" MinWidth="60" Padding="20 0" 
+                    <Image Source="images/navLeft.png" RenderOptions.BitmapScalingMode="HighQuality" 
+                           Stretch="Fill" Margin="12"/>
+                </Button>
+
+                <Button Background="{StaticResource darkBackground}" BorderThickness="0"
+                            Width="60" Height="60" Click="NavigationForwardButtonClicked">
+
+                    <Image Source="images/navRight.png" RenderOptions.BitmapScalingMode="HighQuality" 
+                           Stretch="Fill" Margin="12"/>
+                </Button>
+            </StackPanel>
+
+            <Label  Content="Eagleslist" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        FontSize="25" FontFamily="Segoe UI Semilight" Padding="0" 
+                        Foreground="White" Grid.Column="1" Margin="20 0"/>
+
+            <Canvas Grid.Column="2" HorizontalAlignment="Right">
+                <Button Click="accountDropDownClicked" MinWidth="60" Padding="20 0"
                             HorizontalAlignment="Center" Canvas.ZIndex="2" Foreground="White"
                             Canvas.Right="0" Canvas.Top="0" Canvas.Bottom="0" 
                             x:Name="accountOverlayButton" VerticalAlignment="Center"
                             Style="{StaticResource TopPanelButtonStyle}"
                             Height="{Binding ElementName=topBar, Path=ActualHeight}">
-                        Account                  
-                    </Button>
+                    Account
+                </Button>
 
-                    <ComboBox x:Name="accountComboBox"
+                <ComboBox x:Name="accountComboBox"
                               HorizontalAlignment="Right" Canvas.ZIndex="1" Canvas.Right="0"
                               Width="{Binding ElementName=accountOverlayButton, Path=ActualWidth}"
                               Canvas.Top="0" Canvas.Bottom="0" Height="{Binding ElementName=topBar, Path=ActualHeight}"
@@ -105,58 +129,57 @@
                               ItemsSource="{Binding Path=accountComboBoxItems}"
                               SelectionChanged="accountComboBoxSelectionChanged">
 
-                        <ComboBox.ItemContainerStyle>
-                            <Style TargetType="ComboBoxItem">
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="BorderThickness" Value="0"/>
-                                <Setter Property="Background" Value="{StaticResource FGCUGreen}"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Background" Value="{StaticResource FGCUGreen}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                                                   VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource FGCUGreenDark}"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ComboBox.ItemContainerStyle>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource FGCUGreenDark}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
 
-                        <ComboBoxItem Content="Sign In" Visibility="Collapsed" Tag="LoggedOut"/>
-                        <ComboBoxItem Content="Sign Up" Visibility="Collapsed" Tag="LoggedOut"/>
-                        <ComboBoxItem Content="Profile" Visibility="Visible" Tag="LoggedIn"/>
-                        <ComboBoxItem Content="Messages" Visibility="Visible" Tag="LoggedIn"/>
-                        <ComboBoxItem Content="Sign Out" Visibility="Visible" Tag="LoggedIn"/>
-                    </ComboBox>
-                </Canvas>
+                    <ComboBoxItem Content="Sign In" Visibility="Collapsed" Tag="LoggedOut"/>
+                    <ComboBoxItem Content="Sign Up" Visibility="Collapsed" Tag="LoggedOut"/>
+                    <ComboBoxItem Content="Profile" Visibility="Visible" Tag="LoggedIn"/>
+                    <ComboBoxItem Content="Messages" Visibility="Visible" Tag="LoggedIn"/>
+                    <ComboBoxItem Content="Sign Out" Visibility="Visible" Tag="LoggedIn"/>
+                </ComboBox>
+            </Canvas>
 
-                <!--<Button x:Name="messagesButton" Click="MessagesButtonClicked" 
+            <!--<Button x:Name="messagesButton" Click="MessagesButtonClicked" 
                     Height="40" Grid.Column="1" HorizontalAlignment="Right" 
                     Background="{StaticResource FGCUGreen}" BorderThickness="0" Margin="0, 0, 20, 0">
 
 
                 -->
-                <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Label VerticalAlignment="Center" Foreground="White" Content="Messages"/>
 
                     <Image Source="images/messages.png" RenderOptions.BitmapScalingMode="HighQuality" 
                            Stretch="Fill" Height="20" VerticalAlignment="Center"
                            HorizontalAlignment="Center" />
                 </StackPanel>-->
-                <!--
+            <!--
             </Button>-->
-            </Grid>
-        </Border>
-
+        </Grid>
+        
         <Grid Margin="0, 0, 0, 0" VerticalAlignment="Stretch" HorizontalAlignment="Left" 
-              Grid.RowSpan="2" Grid.Column="0" Width="60" 
-              Background="{StaticResource darkBackground}" x:Name="sideBarButtonContainer">
+              Grid.RowSpan="3" Grid.Column="0" Width="60" Panel.ZIndex="1500"
+              Background="White" x:Name="sideBarButtonContainer">
             
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
@@ -190,7 +213,7 @@
                     <StackPanel>
                         <Image Source="images/create.png" Height="25" Width="25"/>
                         <Label HorizontalAlignment="Center" Padding="0"
-                               Content="Create" Foreground="White"/>
+                               Content="Create" Foreground="Black"/>
                     </StackPanel>
                 </DockPanel>
             </Button>
@@ -206,7 +229,7 @@
                     <StackPanel>
                         <Image Source="images/listings.png" Height="25" Width="25"/>
                         <Label HorizontalAlignment="Center" Padding="0"
-                               Content="Browse" Foreground="White"/>
+                               Content="Browse" Foreground="Black"/>
                     </StackPanel>
                 </DockPanel>
             </Button>
@@ -221,7 +244,8 @@
 
                     <StackPanel>
                         <Image Source="images/courses.png" Height="25" Width="25"/>
-                        <Label HorizontalAlignment="Center" Padding="0" Content="Courses" Foreground="White"/>
+                        <Label HorizontalAlignment="Center" Padding="0" 
+                               Content="Courses" Foreground="Black"/>
                     </StackPanel>
                 </DockPanel>
             </Button>
@@ -257,7 +281,7 @@
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="composeContainer" Margin="0, 0, 0, 0" Visibility="Visible" Grid.Row="1" Grid.Column="1">
+        <Canvas x:Name="composeContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                           Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
                           Height="{Binding ElementName=composeContainer, Path=ActualHeight}">
@@ -267,7 +291,8 @@
                         <RowDefinition Height="62" />
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
-                        <RowDefinition Height="250" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
 
@@ -319,9 +344,12 @@
                     </DockPanel>
 
                     <TextBox Background="White" Grid.ColumnSpan="4" Grid.Row="3" 
-                                 VerticalAlignment="Stretch" Margin="20, 0, 20, 20"/>
+                             VerticalAlignment="Stretch" Margin="20, 0, 20, 20"
+                             MinHeight="150" TextWrapping="Wrap"/>
+                    
+                    <TextBlock Text="wooo" Grid.Row="4"/>
 
-                    <DockPanel Grid.ColumnSpan="4" Grid.Row="4" VerticalAlignment="Center" Margin="20, 0, 20, 20">
+                    <DockPanel Grid.ColumnSpan="4" Grid.Row="5" VerticalAlignment="Center" Margin="20, 0, 20, 20">
                         <Button Content="Post Listing" HorizontalAlignment="Right" Width="100">
                             <Button.Triggers>
                                 <EventTrigger RoutedEvent="Button.Click">
@@ -494,19 +522,66 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                
+                <Label Content="Hello?"/>
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="profileContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
+        <Canvas x:Name="profileContainer" Margin="20" Visibility="Visible" Grid.Row="1" Grid.Column="1">
             <Grid Width="{Binding ElementName=profileContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=profileContainer, Path=ActualHeight}">
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                <Border Width="100" Height="100" Background="Red" ClipToBounds="True"
+                        Grid.Row="0" Grid.Column="0">
+                    <Image x:Name="ProfileImage"/>
+                </Border>
+
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                        <TextBlock Text="Username" VerticalAlignment="Center" x:Name="ProfileUsername"/>
+                        <TextBlock Text="Email" VerticalAlignment="Center" x:Name="ProfileEmail"/>
+
+                   </StackPanel>
+                    <TextBlock Text="Bio" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0"
+                               TextWrapping="Wrap" x:Name="ProfileBio"/>
+                </Grid>
             </Grid>
         </Canvas>
+
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="&lt; /&gt; with &#10084; by 5Bit Studios" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" Margin="0" Padding="0"
+                   Foreground="DarkGray" FontSize="9.333" Grid.Row="0" Grid.Column="0"/>
+
+        </Grid>
     </Grid>
 </Window>
