@@ -144,9 +144,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\courses.png" />
-    <Resource Include="images\create.png" />
-    <Resource Include="images\listings.png" />
     <Resource Include="images\profile.png" />
     <Resource Include="images\search.png" />
   </ItemGroup>
@@ -161,6 +158,19 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\messages.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\navLeft.png" />
+    <Resource Include="images\navRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\courses.png" />
+    <Resource Include="images\create.png" />
+    <Resource Include="images\listings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\navLeftHover.png" />
+    <Resource Include="images\navRightHover.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

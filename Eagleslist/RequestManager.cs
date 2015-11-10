@@ -12,7 +12,7 @@ namespace Eagleslist
 {
     public class RequestManager
     {
-        private const string RootURL = "https://sourcekitserviceterminated.com/";
+        private const string RootURL = "https://5bitstudios.com/";
 
         public async Task<List<User>> GetUsers()
         {
@@ -23,8 +23,7 @@ namespace Eagleslist
 
         public async Task<List<Listing>> GetListings()
         {
-            //string url = "https://sourcekitserviceterminated.com/apidb/listings";
-            string url = RootURL + "static/magic.json";
+            string url = RootURL + "apidb/listings";
             string responseString = await Request(url);
             return await ListingsFromJSON(responseString);
         }
