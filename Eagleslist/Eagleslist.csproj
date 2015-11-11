@@ -79,6 +79,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AuthResponse.cs" />
+    <Compile Include="Book.cs" />
     <Compile Include="CredentialManager.cs" />
     <Compile Include="Listing.cs" />
     <Compile Include="LoginPrompt.xaml.cs">
