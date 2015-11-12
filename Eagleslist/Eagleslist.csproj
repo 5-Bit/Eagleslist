@@ -85,7 +85,9 @@
     <Compile Include="CredentialManager.cs" />
     <Compile Include="FlagHandlerRequest.cs" />
     <Compile Include="FlagRaisedResponse.cs" />
+    <Compile Include="Flag.cs" />
     <Compile Include="FlagResolution.cs" />
+    <Compile Include="FlagType.cs" />
     <Compile Include="Listing.cs" />
     <Compile Include="LoginPrompt.xaml.cs">
       <DependentUpon>LoginPrompt.xaml</DependentUpon>
