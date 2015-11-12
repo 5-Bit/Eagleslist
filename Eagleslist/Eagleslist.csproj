@@ -82,6 +82,7 @@
     <Compile Include="Book.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="BookCreationResponse.cs" />
+    <Compile Include="CourseCreationResponse.cs" />
     <Compile Include="CredentialManager.cs" />
     <Compile Include="FlagHandlerRequest.cs" />
     <Compile Include="FlagRaisedResponse.cs" />
