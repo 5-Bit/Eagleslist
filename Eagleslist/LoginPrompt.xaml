@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Eagleslist"
         mc:Ignorable="d"
-        Title="Login" Height="200" Width="350" ResizeMode="NoResize" 
-        WindowStartupLocation="CenterOwner" Background="#ECECEC">
+        Title="Sign in to Eagleslist" SizeToContent="WidthAndHeight" ResizeMode="NoResize" 
+        WindowStartupLocation="CenterOwner" Background="White">
     
     <Window.Resources>
+        <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>
+        <SolidColorBrush x:Key="FGCUGreen" Color="#00885A"/>
+
         <SolidColorBrush x:Key="primaryColor" Color="#446CB3"/>
         <SolidColorBrush x:Key="secondaryColor" Color="#ECECEC"/>
         <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA"/>
@@ -41,32 +44,51 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <ProgressBar x:Name="ProgressBar" Grid.Row="0" Height="2" Visibility="Collapsed"
+                     IsIndeterminate="True" Foreground="{StaticResource FGCUBlue}"/>
 
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="signInButton"
-                Content="Sign In" Grid.Column="0" Grid.Row="0"/>
-        
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="signUpButton"
-                Content="Sign Up" Grid.Column="1" Grid.Row="0"/>
-
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20 20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="24"/>
-                <RowDefinition Height="24"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
 
-            <TextBox Grid.Row="0"/>
-            <PasswordBox Grid.Row="1"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Content="Username or Email" Padding="0" HorizontalAlignment="Left"
+                   VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
+
+            <TextBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="handleField"/>
+
+            <Label Grid.Row="2" Content="Password" Padding="0" HorizontalAlignment="Left"
+                   VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
+
+            <PasswordBox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="passwordField"/>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Content="Stay signed in" Margin="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1" Margin="20 0 0 0">
+                    <Button Content="Forgot Password" Height="22" Margin="5 0" Padding="5 0"/>
+                    <Button Content="Sign In" Height="22" Margin="5 0 0 0" Padding="5 0" Click="SignInClicked"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

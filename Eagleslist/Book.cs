@@ -1,17 +1,19 @@
-﻿using System;
-
+﻿
 namespace Eagleslist
 {
-    public class Book
+    public class Book 
     {
-        public string ISBN10 { get; set; }
-        public string ISBN13 { get; set; }
-        public string Title { get; set; }
-        public string ImageURL { get; set; }
+        public int BookID { get; private set; }
 
-        public Book()
-        {
+        public string ISBN10 { get; private set; }
 
-        }
+        public string ISBN13 { get; private set; }
+
+        public string Title { get; private set; }
+
+        public string ImageURL { get; private set; }
+
+        public string Description { get; private set; }
+       
     }
 }

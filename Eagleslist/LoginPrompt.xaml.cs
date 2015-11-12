@@ -9,10 +9,26 @@ namespace Eagleslist
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SignInClicked(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
-            Close();
+            ProgressBar.Visibility = Visibility.Visible;
+            AttemptLogin(handleField.Text, passwordField.Password);
+        }
+
+        private async void AttemptLogin(string handle, string password)
+        {
+            LoginRequest request = new LoginRequest(handle, password);
+            User user = await RequestManager.AttemptLogin(request);
+            ProgressBar.Visibility = Visibility.Collapsed;
+
+            if (user.AuthError == null || user.AuthError.Length == 0)
+            {
+                MainWindow mainWindow = (MainWindow)Owner;
+                mainWindow.currentUser = user;
+
+                this.DialogResult = true;
+                Close();
+            }
         }
     }
 }
