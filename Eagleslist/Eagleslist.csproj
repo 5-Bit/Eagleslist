@@ -83,7 +83,9 @@
     <Compile Include="Course.cs" />
     <Compile Include="BookCreationResponse.cs" />
     <Compile Include="CredentialManager.cs" />
+    <Compile Include="Flag.cs" />
     <Compile Include="FlagResolution.cs" />
+    <Compile Include="FlagType.cs" />
     <Compile Include="Listing.cs" />
     <Compile Include="LoginPrompt.xaml.cs">
       <DependentUpon>LoginPrompt.xaml</DependentUpon>
