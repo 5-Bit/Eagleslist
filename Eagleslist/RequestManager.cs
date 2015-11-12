@@ -81,6 +81,24 @@ namespace Eagleslist
             }
         }
 
+        public static async Task<bool> AttemptLogout(string sessionID)
+        {
+            using (HttpClient client = new HttpClient(DefaultRequestHandler()))
+            {
+                Dictionary<string, string> payload = new Dictionary<string, string> {
+                    { "SessionID", sessionID }
+                };
+
+                string url = RootURL + "apidb/users/logout";
+                string json = JsonConvert.SerializeObject(payload);
+
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PutAsync(url, content);
+                return response.StatusCode == HttpStatusCode.NoContent;
+            }
+        }
+
         public static async Task<User> AttemptRegistration(RegistrationSubmission registration)
         {
             using (HttpClient client = new HttpClient(DefaultRequestHandler()))
