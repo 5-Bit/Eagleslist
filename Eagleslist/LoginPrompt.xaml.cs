@@ -24,7 +24,7 @@ namespace Eagleslist
             if (user.AuthError == null || user.AuthError.Length == 0)
             {
                 MainWindow mainWindow = (MainWindow)Owner;
-                mainWindow.currentUser = user;
+                mainWindow.CurrentUser = user;
 
                 this.DialogResult = true;
                 Close();
