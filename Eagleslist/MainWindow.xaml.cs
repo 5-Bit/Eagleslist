@@ -20,7 +20,7 @@ namespace Eagleslist
         private List<Canvas> secondaryPanels = new List<Canvas>();
         private LinkedList<object> navigationStack = new LinkedList<object>();
 
-        internal User currentUser
+        internal User CurrentUser
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Eagleslist
         {
             get
             {
-                return currentUser != null;
+                return CurrentUser != null;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Eagleslist
 
         private void SetLoggedInUI()
         {
-            accountOverlayButton.Content = currentUser.Handle;
+            accountOverlayButton.Content = CurrentUser.Handle;
             ToggleVisibleAccountComboBoxItems();
         }
 
@@ -188,7 +188,7 @@ namespace Eagleslist
 
         private void ProfileButtonClicked()
         {
-            currentProfileUser = currentUser;
+            currentProfileUser = CurrentUser;
             HideAllContainersExcept(profileContainer);
         }
 
@@ -338,7 +338,13 @@ namespace Eagleslist
 
             if (result == MessageBoxResult.Yes)
             {
-                currentUser = null;
+                if (CurrentUser.SessionID != null)
+                {
+                    string sessionID = String.Copy(CurrentUser.SessionID);
+                    RequestManager.AttemptLogout(sessionID);
+                }
+
+                CurrentUser = null;
             }
         }
 

@@ -81,7 +81,7 @@ namespace Eagleslist
             }
         }
 
-        public static async Task<bool> AttemptLogout(string sessionID)
+        public static async void AttemptLogout(string sessionID)
         {
             using (HttpClient client = new HttpClient(DefaultRequestHandler()))
             {
@@ -94,8 +94,7 @@ namespace Eagleslist
 
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PutAsync(url, content);
-                return response.StatusCode == HttpStatusCode.NoContent;
+                HttpResponseMessage _ = await client.PutAsync(url, content);
             }
         }
 
