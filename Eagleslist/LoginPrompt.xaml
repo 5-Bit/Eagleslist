@@ -45,7 +45,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=handleField}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -70,12 +70,14 @@
             <Label Grid.Row="0" Content="Username or Email" Padding="0" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-            <TextBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="handleField"/>
+            <TextBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                     x:Name="handleField" TextChanged="InputFieldChanged"/>
 
             <Label Grid.Row="2" Content="Password" Padding="0" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-            <PasswordBox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="passwordField"/>
+            <PasswordBox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                         x:Name="passwordField" PasswordChanged="InputFieldChanged"/>
 
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
@@ -86,7 +88,8 @@
                 <CheckBox Content="Stay signed in" Margin="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1" Margin="20 0 0 0">
                     <Button Content="Forgot Password" Height="22" Margin="5 0" Padding="5 0"/>
-                    <Button Content="Sign In" Height="22" Margin="5 0 0 0" Padding="5 0" Click="SignInClicked"/>
+                    <Button Content="Sign In" Height="22" Margin="5 0 0 0" Padding="5 0" 
+                            Click="SignInClicked" x:Name="SignInButton" IsEnabled="False"/>
                 </StackPanel>
             </Grid>
         </Grid>

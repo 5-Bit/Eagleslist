@@ -58,7 +58,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Visibility="Visible" x:Name="TopGrid" Grid.Row="0">
+            <Grid Visibility="Visible" x:Name="TopGrid" Grid.Row="0" FocusManager.FocusedElement="{Binding ElementName=handleField}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="16"/>
                     <RowDefinition Height="25"/>
@@ -66,28 +66,40 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="16"/>
                     <RowDefinition Height="25"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Content="Username" Padding="0" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-                <TextBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="handleField"/>
+                <TextBox Grid.Row="1" VerticalAlignment="Center" TextChanged="UserInputChanged"
+                         HorizontalAlignment="Stretch" x:Name="handleField"/>
 
                 <Label Grid.Row="2" Content="FGCU Email Address" Padding="0" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-                <TextBox Grid.Row="3" VerticalAlignment="Center" 
+                <TextBox Grid.Row="3" VerticalAlignment="Center" TextChanged="UserInputChanged"
                      HorizontalAlignment="Stretch" x:Name="emailField"/>
 
                 <Label Grid.Row="4" Content="Password" Padding="0" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-                <PasswordBox Grid.Row="5" VerticalAlignment="Center"
+                <PasswordBox Grid.Row="5" VerticalAlignment="Center" PasswordChanged="UserInputChanged"
                          HorizontalAlignment="Stretch" x:Name="passwordField"/>
 
-                <Button Grid.Row="6" Content="Sign Up" Height="22" Margin="5 0 0 0"
-                    Padding="5 0" HorizontalAlignment="Right" Click="SignUpButtonClicked"/>
+                <Label Grid.Row="6" Content="Password" Padding="0" HorizontalAlignment="Left"
+                   VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
+
+                <PasswordBox Grid.Row="7" VerticalAlignment="Center" PasswordChanged="UserInputChanged"
+                         HorizontalAlignment="Stretch" x:Name="confirmPasswordField"/>
+
+                <Button Grid.Row="8" Content="Sign Up" Height="22" Margin="5 0 0 0" IsEnabled="False"
+                    Padding="5 0" HorizontalAlignment="Right" Click="SignUpButtonClicked" x:Name="SignUpButton"/>
+                
+                <TextBlock Grid.Row="9" x:Name="InputErrorTextBox" MinHeight="0" HorizontalAlignment="Stretch" Height="0"/>
             </Grid>
 
             <Grid Visibility="Collapsed" x:Name="BottomGrid" Grid.Row="0">

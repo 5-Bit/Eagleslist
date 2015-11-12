@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Eagleslist
 {
@@ -21,14 +22,29 @@ namespace Eagleslist
             User user = await RequestManager.AttemptLogin(request);
             ProgressBar.Visibility = Visibility.Collapsed;
 
-            if (user.AuthError == null || user.AuthError.Length == 0)
+            if (user != null)
             {
-                MainWindow mainWindow = (MainWindow)Owner;
-                mainWindow.CurrentUser = user;
+                if (user.AuthError == null || user.AuthError.Length == 0)
+                {
+                    MainWindow mainWindow = (MainWindow)Owner;
+                    mainWindow.CurrentUser = user;
 
-                this.DialogResult = true;
-                Close();
+                    this.DialogResult = true;
+                    Close();
+                } else
+                {
+                    Console.WriteLine("Login failed");
+                }
             }
+            else
+            {
+                Console.WriteLine("Login failed");
+            }
+        }
+
+        private void InputFieldChanged(object sender, RoutedEventArgs e)
+        {
+            SignInButton.IsEnabled = handleField.Text.Length > 0 && passwordField.Password.Length > 0;
         }
     }
 }
