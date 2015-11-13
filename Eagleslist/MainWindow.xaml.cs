@@ -8,6 +8,7 @@ using Humanizer;
 using Microsoft.Win32;
 using System.Security.Cryptography;
 using System.Text;
+using System.Windows.Media;
 
 namespace Eagleslist
 {
@@ -128,14 +129,20 @@ namespace Eagleslist
 
                     if (canvas == container)
                     {
-                        (button.Content as DockPanel).Children[0].Visibility = Visibility.Visible;
+                        if (button != searchButton)
+                        {
+                            button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ECEEF3"));
+                        }
+
+                        //(button.Content as DockPanel).Children[0].Visibility = Visibility.Visible;
                         container.Visibility = Visibility.Visible;
                     }
                     else
                     {
                         if (button != searchButton)
                         {
-                            (button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
+                            //(button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
+                            button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                         }
 
                         canvas.Visibility = Visibility.Collapsed;
@@ -150,9 +157,10 @@ namespace Eagleslist
                     var button = sideBarButtonContainer.Children[index] as Button;
                     if (button != searchButton)
                     {
-                        (button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
+                        //(button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
                     }
 
+                    button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                     canvas.Visibility = Visibility.Collapsed;
                 });
             }

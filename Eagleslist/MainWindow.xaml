@@ -11,7 +11,9 @@
 
     
     <Window.Resources>
-        
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <!--<local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" TrueValue="Visible" FalseValue="Hidden"/>-->
+
         <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>
         <SolidColorBrush x:Key="FGCUGreen" Color="#00885A"/>
         <SolidColorBrush x:Key="FGCUGreenDark" Color="#006F41"/>
@@ -54,11 +56,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
+            <!--<Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="{StaticResource lightBackground}"/>
                 </Trigger>
-            </Style.Triggers>
+            </Style.Triggers>-->
         </Style>
 
         <Style TargetType="{x:Type Button}" x:Key="TopPanelButtonStyle">
@@ -109,13 +111,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="72 0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="60 0">
                 <Button BorderThickness="0" Width="60" Height="60"
                         Click="NavigationBackButtonClicked"
                         Style="{StaticResource NavigationButtonStyle}">
 
                     <Image Source="images/navLeft.png" RenderOptions.BitmapScalingMode="HighQuality" 
-                           Stretch="Fill" Margin="12"/>
+                           Stretch="Fill" Margin="14"/>
                 </Button>
 
                 <Button BorderThickness="0" Width="60" Height="60" 
@@ -123,7 +125,7 @@
                         Style="{StaticResource NavigationButtonStyle}">
 
                     <Image Source="images/navRight.png" RenderOptions.BitmapScalingMode="HighQuality" 
-                           Stretch="Fill" Margin="12"/>
+                           Stretch="Fill" Margin="14"/>
                 </Button>
             </StackPanel>
 
@@ -226,49 +228,58 @@
             <Button x:Name="composeButton" HorizontalContentAlignment="Stretch" 
                     BorderThickness="0" Click="ComposeButtonClicked" Grid.Row="1"
                     Padding="0" Style="{StaticResource SidePanelButtonStyle}">
-                
-                <DockPanel Margin="0">
-                    <Frame Background="{StaticResource FGCUGreen}" Padding="0" Margin="0" 
-                           HorizontalAlignment="Left" Width="2"/>
 
-                    <StackPanel>
+                <Grid VerticalAlignment="Stretch">
+                    <Canvas VerticalAlignment="Stretch">
+                        <Frame Background="{StaticResource FGCUGreen}" Padding="0" Margin="0" 
+                           HorizontalAlignment="Left" Width="2" Height="41" Canvas.Left="0"
+                           Visibility="{Binding ElementName=composeButton, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"/>
+                    </Canvas>
+
+
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Image Source="images/create.png" Height="25" Width="25"/>
                         <Label HorizontalAlignment="Center" Padding="0"
                                Content="Create" Foreground="Black"/>
                     </StackPanel>
-                </DockPanel>
+                </Grid>
             </Button>
 
             <Button x:Name="listingsButton" HorizontalContentAlignment="Stretch"
                     BorderThickness="0" Click="ListingsButtonClicked"  Grid.Row="2"
                     Padding="0" Style="{StaticResource SidePanelButtonStyle}">
+                <Grid VerticalAlignment="Stretch">
+                    <Canvas VerticalAlignment="Stretch">
+                        <Frame Background="{StaticResource FGCUGreen}" Padding="0" Margin="0" 
+                           HorizontalAlignment="Left" Width="2" Height="41"
+                           Visibility="{Binding ElementName=listingsButton, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"/>
+                    </Canvas>
 
-                <DockPanel Margin="0">
-                    <Frame Background="{StaticResource FGCUGreen}" Padding="0" Margin="0" 
-                           HorizontalAlignment="Left" Width="2"/>
-
-                    <StackPanel>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Image Source="images/listings.png" Height="25" Width="25"/>
                         <Label HorizontalAlignment="Center" Padding="0"
                                Content="Browse" Foreground="Black"/>
                     </StackPanel>
-                </DockPanel>
+                </Grid>
             </Button>
 
             <Button x:Name="coursesButton" HorizontalContentAlignment="Stretch"
                     BorderThickness="0" Click="CoursesButtonClicked" Grid.Row="3"
                     Padding="0" Style="{StaticResource SidePanelButtonStyle}">
-                
-                <DockPanel Margin="0">
-                    <Frame Background="{StaticResource FGCUGreen}" Padding="0" Margin="0" 
-                           HorizontalAlignment="Left" Width="2"/>
 
-                    <StackPanel>
+                <Grid VerticalAlignment="Stretch">
+                    <Canvas VerticalAlignment="Stretch">
+                        <Frame Background="{StaticResource FGCUGreen}" Padding="0" Margin="0" 
+                           HorizontalAlignment="Left" Width="2" Height="41"
+                           Visibility="{Binding ElementName=coursesButton, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"/>
+                    </Canvas>
+
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Image Source="images/courses.png" Height="25" Width="25"/>
                         <Label HorizontalAlignment="Center" Padding="0" 
                                Content="Courses" Foreground="Black"/>
                     </StackPanel>
-                </DockPanel>
+                </Grid>
             </Button>
         </Grid>
 
