@@ -21,6 +21,8 @@ namespace Eagleslist
         private List<Canvas> secondaryPanels = new List<Canvas>();
         private LinkedList<object> navigationStack = new LinkedList<object>();
 
+        private ListingCreation Draft = new ListingCreation();
+
         internal User CurrentUser
         {
             get
@@ -87,6 +89,8 @@ namespace Eagleslist
             secondaryPanels.Add(messagesContainer);
 
             HideAllContainersExcept(searchContainer);
+
+            ConditionComboBox.ItemsSource = Enum.GetValues(typeof(BookCondition));
         }
 
         private void SetLoggedInUI()
@@ -370,6 +374,36 @@ namespace Eagleslist
             prompt.Owner = this;
 
             bool? _ = prompt.ShowDialog();
+        }
+
+        private void NewListingTitleChanged(object sender, RoutedEventArgs e)
+        {
+            Draft.Title = NewListingTitleBox.Text;
+        }
+
+        private void NewListingPriceChanged(object sender, RoutedEventArgs e)
+        {
+            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
+        }
+
+        private void NewListingContentChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewListingConditionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewListingISBNChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewListingImagesChanged(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private static void ChooseImages()
