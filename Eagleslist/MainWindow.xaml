@@ -131,7 +131,7 @@
 
             <Label  Content="Eagleslist" VerticalAlignment="Center" HorizontalAlignment="Center"
                         FontSize="25" FontFamily="Segoe UI Semilight" Padding="0" 
-                        Foreground="White" Grid.Column="1" Margin="20 0"/>
+                        Foreground="White" Grid.Column="1" Margin="0"/>
 
             <Canvas Grid.Column="2" HorizontalAlignment="Right">
                 <Button Click="accountDropDownClicked" MinWidth="60" Padding="10 0"
@@ -313,7 +313,7 @@
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="composeContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
+        <Canvas x:Name="composeContainer" Margin="0, 0, 0, 0" Visibility="Visible" Grid.Row="1" Grid.Column="1">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                           Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
                           Height="{Binding ElementName=composeContainer, Path=ActualHeight}">
@@ -325,7 +325,7 @@
                         <RowDefinition Height="50" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="40" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -341,27 +341,22 @@
                     <StackPanel Margin="20, 0, 10, 0" HorizontalAlignment="Stretch" 
                                 Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
                         <Label Content="Post Title"/>
-                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" FontSize="13.333"/>
+                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" 
+                                 FontSize="13.333" x:Name="NewListingTitleBox" TextChanged="NewListingTitleChanged"/>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
                                 Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
                         <Label Content="Price ($)"/>
-                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" FontSize="13.333"/>
+                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}"
+                                 FontSize="13.333" x:Name="NewListingPriceBox" TextChanged="NewListingPriceChanged"/>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
                                 Grid.Column="2" Grid.Row="1" VerticalAlignment="Center">
                         <Label Content="Condition"/>
-                        <ComboBox x:Name="conditionComboBox">
-                            <ComboBoxItem IsSelected="True">(select)</ComboBoxItem>
-                            <ComboBoxItem>New</ComboBoxItem>
-                            <ComboBoxItem>Great</ComboBoxItem>
-                            <ComboBoxItem>Good</ComboBoxItem>
-                            <ComboBoxItem>Okay</ComboBoxItem>
-                            <ComboBoxItem>Poor</ComboBoxItem>
-                            <ComboBoxItem>Mixed</ComboBoxItem>
-                        </ComboBox>
+                        <ComboBox x:Name="ConditionComboBox"/>
+
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 20, 0" HorizontalAlignment="Stretch" 
@@ -379,10 +374,24 @@
                              VerticalAlignment="Stretch" Margin="20, 0, 20, 20"
                              MinHeight="150" TextWrapping="Wrap"/>
                     
-                    <TextBlock Text="wooo" Grid.Row="4"/>
+                    <ListView x:Name="newPostImagesListView" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
+                              Margin="20 0" Height="80"
+                          SelectionChanged="ListingsViewSelectionChanged" 
+                          SelectedIndex="{Binding Path=SelectedIndexValue}" 
+                          ItemsSource="{Binding Path=Items}">
 
-                    <DockPanel Grid.ColumnSpan="4" Grid.Row="5" VerticalAlignment="Center" Margin="20, 0, 20, 20">
-                        <Button Content="Post Listing" HorizontalAlignment="Right" Width="100">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <DockPanel Grid.ColumnSpan="4" Grid.Row="5" VerticalAlignment="Center" Margin="20, 20, 20, 20">
+                        <Button Content="Post Listing" HorizontalAlignment="Right" Width="100"
+                                x:Name="PostNewListingButton" IsEnabled="False">
                             <Button.Triggers>
                                 <EventTrigger RoutedEvent="Button.Click">
                                     <BeginStoryboard>
@@ -559,7 +568,7 @@
             </Grid>
         </Canvas>
 
-        <Canvas x:Name="profileContainer" Margin="20" Visibility="Visible" Grid.Row="1" Grid.Column="1">
+        <Canvas x:Name="profileContainer" Margin="20" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
             <Grid Width="{Binding ElementName=profileContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=profileContainer, Path=ActualHeight}">
 

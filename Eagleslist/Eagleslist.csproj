@@ -80,6 +80,7 @@
     </ApplicationDefinition>
     <Compile Include="AuthResponse.cs" />
     <Compile Include="Book.cs" />
+    <Compile Include="BookCondition.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="BookCreationResponse.cs" />
     <Compile Include="CourseCreationResponse.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="FlagResolution.cs" />
     <Compile Include="FlagType.cs" />
     <Compile Include="Listing.cs" />
+    <Compile Include="ListingCreation.cs" />
     <Compile Include="LoginPrompt.xaml.cs">
       <DependentUpon>LoginPrompt.xaml</DependentUpon>
     </Compile>
