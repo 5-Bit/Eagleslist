@@ -90,7 +90,7 @@ namespace Eagleslist
 
             HideAllContainersExcept(searchContainer);
 
-            ConditionComboBox.ItemsSource = Enum.GetValues(typeof(BookCondition));
+            NewListingConditionComboBox.ItemsSource = Enum.GetValues(typeof(BookCondition));
         }
 
         private void SetLoggedInUI()
@@ -379,26 +379,31 @@ namespace Eagleslist
         private void NewListingTitleChanged(object sender, RoutedEventArgs e)
         {
             Draft.Title = NewListingTitleBox.Text;
+            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
         }
 
         private void NewListingPriceChanged(object sender, RoutedEventArgs e)
         {
+            Draft.Price = NewListingPriceBox.Text;
             PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
         }
 
         private void NewListingContentChanged(object sender, RoutedEventArgs e)
         {
-
+            Draft.Content = NewListingContentBox.Text;
+            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
         }
 
         private void NewListingConditionChanged(object sender, RoutedEventArgs e)
         {
-
+            Draft.Condition = BookConditionMethods.FromInt(NewListingConditionComboBox.SelectedIndex);
+            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
         }
 
         private void NewListingISBNChanged(object sender, RoutedEventArgs e)
         {
-
+            Draft.ISBN = NewListingISBNBox.Text;
+            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
         }
 
         private void NewListingImagesChanged(object sender, RoutedEventArgs e)

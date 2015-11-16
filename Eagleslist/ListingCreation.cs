@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Eagleslist
 {
@@ -9,9 +10,10 @@ namespace Eagleslist
     {
         public string Title { get; set; }
         public string Content { get; set; }
+        public string ISBN { get; set; }
         public List<Bitmap> images { get; private set; }
         public string Price { get; set; }
-        public string Condition { get; set; }
+        public BookCondition Condition { get; set; }
 
         public void AddImage(Bitmap image)
         {
@@ -40,12 +42,25 @@ namespace Eagleslist
         {
             return !string.IsNullOrWhiteSpace(Title) 
                 && !string.IsNullOrWhiteSpace(Content)
-                && IsPriceValid();
+                && IsPriceValid()
+                && IsConditionValid()
+                && IsISBNValid();
+        }
+
+        public bool IsConditionValid()
+        {
+            return Condition != 0;
         }
 
         public bool IsPriceValid()
         {
             return IsNewPriceValid(Price);
+        }
+
+        public bool IsISBNValid()
+        {
+            Regex pattern = new Regex("(ISBN[-]*(1[03])*[ ]*(: ){0,1})*(([0-9Xx][- ]*){13}|([0-9Xx][- ]*){10})");
+            return string.IsNullOrWhiteSpace(ISBN) || pattern.IsMatch(ISBN);
         }
 
         public static bool IsNewPriceValid(string price)

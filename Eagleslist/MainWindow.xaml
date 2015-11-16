@@ -355,14 +355,15 @@
                     <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
                                 Grid.Column="2" Grid.Row="1" VerticalAlignment="Center">
                         <Label Content="Condition"/>
-                        <ComboBox x:Name="ConditionComboBox"/>
+                        <ComboBox x:Name="NewListingConditionComboBox" SelectionChanged="NewListingConditionChanged"/>
 
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 20, 0" HorizontalAlignment="Stretch" 
                                 Grid.Column="3" Grid.Row="1" VerticalAlignment="Center">
                         <Label Content="ISBN (optional)"/>
-                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" FontSize="13.333"/>
+                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" 
+                                 FontSize="13.333" x:Name="NewListingISBNBox" TextChanged="NewListingISBNChanged"/>
                     </StackPanel>
 
                     <DockPanel Margin="20, 20, 20, 0" Grid.ColumnSpan="4" Grid.Row="2" VerticalAlignment="Stretch">
@@ -372,9 +373,10 @@
 
                     <TextBox Background="White" Grid.ColumnSpan="4" Grid.Row="3" 
                              VerticalAlignment="Stretch" Margin="20, 0, 20, 20"
-                             MinHeight="150" TextWrapping="Wrap"/>
+                             MinHeight="150" TextWrapping="Wrap" x:Name="NewListingContentBox"
+                             TextChanged="NewListingContentChanged"/>
                     
-                    <ListView x:Name="newPostImagesListView" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
+                    <ListView x:Name="NewListingImagesListView" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
                               Margin="20 0" Height="80"
                           SelectionChanged="ListingsViewSelectionChanged" 
                           SelectedIndex="{Binding Path=SelectedIndexValue}" 
