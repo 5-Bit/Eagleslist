@@ -1,11 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Media.Imaging;
 using System;
-using Humanizer;
-using Microsoft.Win32;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Media;
@@ -14,14 +10,9 @@ namespace Eagleslist
 {
     public partial class MainWindow : Window
     {
-        private ObservableCollection<Listing> listings 
-            = new ObservableCollection<Listing>();
-
-        private List<Canvas> primaryPanels = new List<Canvas>();
-        private List<Canvas> secondaryPanels = new List<Canvas>();
+        private List<UserControl> primaryPanels = new List<UserControl>();
+        private List<UserControl> secondaryPanels = new List<UserControl>();
         private LinkedList<object> navigationStack = new LinkedList<object>();
-
-        private ListingCreation Draft = new ListingCreation();
 
         internal User CurrentUser
         {
@@ -54,16 +45,6 @@ namespace Eagleslist
             }
         }
 
-        private User currentProfileUser
-        {
-            set
-            {
-                ProfileUsername.Text = value.Handle;
-                ProfileEmail.Text = value.Email;
-                ProfileBio.Text = value.Bio;
-            }
-        }
-
         public MainWindow()
         {
             InitializeComponent();
@@ -90,7 +71,6 @@ namespace Eagleslist
 
             HideAllContainersExcept(searchContainer);
 
-            NewListingConditionComboBox.ItemsSource = Enum.GetValues(typeof(BookCondition));
         }
 
         private void SetLoggedInUI()
@@ -122,11 +102,11 @@ namespace Eagleslist
             }
         }
 
-        private void HideAllContainersExcept(Canvas container)
+        private void HideAllContainersExcept(UserControl container)
         {
             if (primaryPanels.Contains(container))
             {
-                primaryPanels.ForEach(delegate (Canvas canvas)
+                primaryPanels.ForEach(delegate (UserControl canvas)
                 {
                     int index = primaryPanels.IndexOf(canvas);
                     var button = sideBarButtonContainer.Children[index] as Button;
@@ -155,9 +135,9 @@ namespace Eagleslist
             }
             else
             {
-                primaryPanels.ForEach(delegate (Canvas canvas)
+                primaryPanels.ForEach(delegate (UserControl control)
                 {
-                    int index = primaryPanels.IndexOf(canvas);
+                    int index = primaryPanels.IndexOf(control);
                     var button = sideBarButtonContainer.Children[index] as Button;
                     if (button != searchButton)
                     {
@@ -165,19 +145,19 @@ namespace Eagleslist
                     }
 
                     button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    canvas.Visibility = Visibility.Collapsed;
+                    control.Visibility = Visibility.Collapsed;
                 });
             }
 
-            secondaryPanels.ForEach(delegate (Canvas canvas)
+            secondaryPanels.ForEach(delegate (UserControl control)
             {
-                if (canvas == container)
+                if (control == container)
                 {
-                    canvas.Visibility = Visibility.Visible;
+                    control.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    canvas.Visibility = Visibility.Collapsed;
+                    control.Visibility = Visibility.Collapsed;
                 }
             });
         }
@@ -194,100 +174,19 @@ namespace Eagleslist
 
         private void ListingsButtonClicked(object sender, RoutedEventArgs e)
         {
+            listingsContainer.GetNewListings();
             HideAllContainersExcept(listingsContainer);
-            GetNewListings();
         }
 
         private void ProfileButtonClicked()
         {
-            currentProfileUser = CurrentUser;
+            profileContainer.currentProfileUser = CurrentUser;
             HideAllContainersExcept(profileContainer);
         }
 
         private void MessagesButtonClicked()
         {
             HideAllContainersExcept(messagesContainer);
-        }
-
-
-        private async void GetFakeSearchListings()
-        {
-            RequestManager manager = new RequestManager();
-            List<Listing> newListings = await manager.GetListings();
-            List<Listing> tmp = new List<Listing>();
-            tmp.Add(newListings[0]);
-
-            listings = new ObservableCollection<Listing>(tmp);
-            listingsView.ItemsSource = listings;
-
-            if (listings.Count > 0)
-            {
-                listingsView.SelectedIndex = 0;
-            }
-        }
-
-        private async void GetNewListings()
-        {
-            RequestManager manager = new RequestManager();
-            List<Listing> newListings = await manager.GetListings();
-
-            listings = new ObservableCollection<Listing>(newListings);
-            listingsView.ItemsSource = listings;
-
-            if (listings.Count > 0)
-            {
-                listingsView.SelectedIndex = 0;
-            }
-        }
-
-        private void ListingsViewSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListView selectedList = sender as ListView;
-
-            if (selectedList.SelectedIndex < listings.Count && selectedList.SelectedIndex >= 0)
-            {
-                Listing selectedListing = listings[selectedList.SelectedIndex];
-
-                listingTitleLabel.Content = selectedListing.Title;
-                listingContentTextBlock.Text = selectedListing.Content;
-                listingAskingPrice.Content = selectedListing.Price;
-                listingConditionLabel.Content = selectedListing.Condition;
-                listingTimePostedLabel.Content = HumanizeDateString(selectedListing.CreateDate);
-
-                SetCurrentListingImage(selectedListing);
-            }
-        }
-
-        private string HumanizeDateString(string input)
-        {
-            DateTime date = DateTime.Parse(input, null, System.Globalization.DateTimeStyles.RoundtripKind);
-
-            if (date == null)
-            {
-                return null;
-            }
-
-            return date.Humanize();
-        }
-
-        private async void SetCurrentListingImage(Listing listing)
-        {
-            BitmapImage image = null;
-
-            Uri result = null;
-            bool success = Uri.TryCreate(listing.ImageURL, UriKind.Absolute, out result) 
-                && (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps);
-
-            if (success)
-            {
-                image = await RequestManager.GetBitmapFromURI(result);
-            }
-            else
-            {
-                image = new BitmapImage(new Uri("pack://application:,,,/images/missing.png"));
-            }
-
-            listingImageView.Source = image;
         }
 
         private void CoursesButtonClicked(object sender, RoutedEventArgs e)
@@ -298,12 +197,6 @@ namespace Eagleslist
         private void MessagesButtonClicked(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void SearchSubmitButtonClicked(object sender, RoutedEventArgs e)
-        {
-            GetFakeSearchListings();
-            HideAllContainersExcept(listingsContainer);
         }
 
         private void accountDropDownClicked(object sender, RoutedEventArgs e)
@@ -374,60 +267,6 @@ namespace Eagleslist
             prompt.Owner = this;
 
             bool? _ = prompt.ShowDialog();
-        }
-
-        private void NewListingTitleChanged(object sender, RoutedEventArgs e)
-        {
-            Draft.Title = NewListingTitleBox.Text;
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
-        }
-
-        private void NewListingPriceChanged(object sender, RoutedEventArgs e)
-        {
-            Draft.Price = NewListingPriceBox.Text;
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
-        }
-
-        private void NewListingContentChanged(object sender, RoutedEventArgs e)
-        {
-            Draft.Content = NewListingContentBox.Text;
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
-        }
-
-        private void NewListingConditionChanged(object sender, RoutedEventArgs e)
-        {
-            Draft.Condition = BookConditionMethods.FromInt(NewListingConditionComboBox.SelectedIndex);
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
-        }
-
-        private void NewListingISBNChanged(object sender, RoutedEventArgs e)
-        {
-            Draft.ISBN = NewListingISBNBox.Text;
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
-        }
-
-        private void NewListingImagesChanged(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private static void ChooseImages()
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-
-            dialog.Title = "Eagleslist - Select Images";
-            dialog.Multiselect = true;
-            dialog.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg";
-
-            bool? x = dialog.ShowDialog();
-
-            if (x.HasValue && x.Value)
-            {
-                foreach (String file in dialog.FileNames)
-                {
-
-                }
-            }
         }
 
         private static string GravatarURLFromUser(User user, int size)
