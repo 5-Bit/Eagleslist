@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Eagleslist.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="640">
+             d:DesignHeight="400" d:DesignWidth="640" IsVisibleChanged="VisibilityChanged">
 
-    <Grid Background="{StaticResource lightBackground}" x:Name="BrowseListingContainer">
+    <Grid Background="White" x:Name="BrowseListingContainer">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ListView x:Name="listingsView" BorderThickness="0" Background="{StaticResource darkerBackground}"
+        <ListView x:Name="listingsView" BorderThickness="0" Background="{StaticResource lightBackground}"
                           VerticalAlignment="Center" HorizontalAlignment="Stretch"
                           Height="{Binding ElementName=BrowseListingContainer, Path=ActualHeight}" 
                           SelectionChanged="ListingsViewSelectionChanged" 
@@ -50,50 +50,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Grid Grid.Column="1" Margin="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="150"/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Column="0" Grid.Row="0">
-                <Label x:Name="listingTitleLabel" FontSize="21.333" Content="Post Title"/>
-                <DockPanel>
-                    <Label Content="Condition: "/>
-                    <Label x:Name="listingConditionLabel" Content="condition text"/>
-                </DockPanel>
-
-                <DockPanel>
-                    <Label Content="Price: "/>
-                    <Label x:Name="listingAskingPrice" Content="some dollar amount"/>
-                </DockPanel>
-
-                <Label x:Name="listingTimePostedLabel" Content="undetermined"/>
-            </StackPanel>
-
-            <Border Height="150" Width="150" Background="Gray" 
-                            HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0">
-                <Image x:Name="listingImageView" Source="../images/missing.png" 
-                               RenderOptions.BitmapScalingMode="HighQuality"
-                               Stretch="UniformToFill" HorizontalAlignment="Center"/>
-            </Border>
-
-            <TextBlock x:Name="listingContentTextBlock" Text="Body text for post." Margin="10" 
-                               IsEnabled="False" TextWrapping="WrapWithOverflow"
-                               TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
-                               Grid.Row="1" Grid.ColumnSpan="2"/>
-        </Grid>
-        <!--<StackPanel x:Name="contentStack" Margin="20, 20, 20, 20" Grid.Column="1"
-                            MaxHeight="{Binding ElementName=listingsView, Path=ActualHeight}">
-                    <TextBlock x:Name="listingContentTextBlock" Text="hello, world" Margin="10" 
-                               IsEnabled="False" TextWrapping="WrapWithOverflow"
-                               TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
-                               MaxWidth="{Binding ElementName=contentStack, Path=ActualWidth}"/>
-                </StackPanel>-->
+        <local:ListingControl Grid.Column="1" Margin="20" x:Name="CurrentListing"/>
     </Grid>
 </UserControl>
