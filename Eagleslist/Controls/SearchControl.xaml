@@ -6,20 +6,6 @@
              xmlns:local="clr-namespace:Eagleslist.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="640">
-
-    <UserControl.Resources>
-        <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>
-        <SolidColorBrush x:Key="FGCUGreen" Color="#00885A"/>
-        <SolidColorBrush x:Key="FGCUGreenDark" Color="#006F41"/>
-
-        <SolidColorBrush x:Key="darkBackground" Color="#2F323A"/>
-        <SolidColorBrush x:Key="darkerBackground" Color="#27292F"/>
-        <SolidColorBrush x:Key="lightBackground" Color="#ECEEF3"/>
-        <SolidColorBrush x:Key="lightBackground2" Color="#ECECEC"/>
-
-        <SolidColorBrush x:Key="primaryColor" Color="#446CB3"/>
-        <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA"/>
-    </UserControl.Resources>
     
     <Grid Background="{StaticResource lightBackground}">
         <Grid.ColumnDefinitions>

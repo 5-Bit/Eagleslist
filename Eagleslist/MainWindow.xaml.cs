@@ -10,8 +10,10 @@ namespace Eagleslist
 {
     public partial class MainWindow : Window
     {
-        private List<UserControl> primaryPanels = new List<UserControl>();
-        private List<UserControl> secondaryPanels = new List<UserControl>();
+        private List<UserControl> PrimaryPanels = new List<UserControl>();
+        private List<UserControl> SecondaryPanels = new List<UserControl>();
+        internal List<Button> PrimaryNavigationControls = new List<Button>();
+
         private LinkedList<object> navigationStack = new LinkedList<object>();
 
         internal User CurrentUser
@@ -24,20 +26,20 @@ namespace Eagleslist
             set
             {
                 CredentialManager.setCurrentUser(value); // UI changes below dependent on this.
-                accountComboBox.IsDropDownOpen = false;
+                topBar.accountComboBox.IsDropDownOpen = false;
 
                 if (value != null)
                 {
-                    SetLoggedInUI();
+                    topBar.SetLoggedInUI();
                 }
                 else
                 {
-                    SetLoggedOutUI();
+                    topBar.SetLoggedOutUI();
                 }
             }
         }
 
-        private bool userIsLoggedIn
+        internal bool userIsLoggedIn
         {
             get
             {
@@ -52,221 +54,86 @@ namespace Eagleslist
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
+            topBar.ContainingWindow = this;
+            sideBarButtonContainer.ContainingWindow = this;
+
             if (userIsLoggedIn)
             {
-                SetLoggedInUI();
+                topBar.SetLoggedInUI();
             }
             else
             {
-                SetLoggedOutUI();
+                topBar.SetLoggedOutUI();
             }
 
-            primaryPanels.Add(searchContainer);
-            primaryPanels.Add(composeContainer);
-            primaryPanels.Add(listingsContainer);
-            primaryPanels.Add(coursesContainer);
+            PrimaryPanels.Add(searchContainer);
+            PrimaryPanels.Add(composeContainer);
+            PrimaryPanels.Add(listingsContainer);
+            PrimaryPanels.Add(coursesContainer);
 
-            secondaryPanels.Add(profileContainer);
-            secondaryPanels.Add(messagesContainer);
-
-            HideAllContainersExcept(searchContainer);
-
+            SecondaryPanels.Add(profileContainer);
+            SecondaryPanels.Add(messagesContainer);
         }
 
-        private void SetLoggedInUI()
+        internal void ContainerDisplayPanelAtIndex(int index)
         {
-            accountOverlayButton.Content = CurrentUser.Handle;
-            ToggleVisibleAccountComboBoxItems();
-        }
-
-        private void SetLoggedOutUI()
-        {
-            accountOverlayButton.Content = "Account";
-            ToggleVisibleAccountComboBoxItems();
-        }
-
-        private void ToggleVisibleAccountComboBoxItems()
-        {
-            string tag = userIsLoggedIn ? "LoggedIn" : "LoggedOut";
-
-            foreach (ComboBoxItem item in accountComboBox.Items)
+            if (index < PrimaryPanels.Count)
             {
-                if (item.Tag.Equals(tag))
+                for (int iterator = 0; iterator < PrimaryPanels.Count; iterator++)
                 {
-                    item.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    item.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
+                    PrimaryPanels[iterator].Visibility = index == iterator 
+                        ? Visibility.Visible : Visibility.Collapsed;
 
-        private void HideAllContainersExcept(UserControl container)
-        {
-            if (primaryPanels.Contains(container))
-            {
-                primaryPanels.ForEach(delegate (UserControl canvas)
-                {
-                    int index = primaryPanels.IndexOf(canvas);
-                    var button = sideBarButtonContainer.Children[index] as Button;
-
-                    if (canvas == container)
+                    if (iterator != 0)
                     {
-                        if (button != searchButton)
+                        Button button = PrimaryNavigationControls[iterator];
+
+                        if (iterator == index)
                         {
                             button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ECEEF3"));
                         }
-
-                        //(button.Content as DockPanel).Children[0].Visibility = Visibility.Visible;
-                        container.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        if (button != searchButton)
+                        else
                         {
-                            //(button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
                             button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                         }
-
-                        canvas.Visibility = Visibility.Collapsed;
                     }
-                });
+                }
+
+                for (int iterator = 0; iterator < SecondaryPanels.Count; iterator++)
+                {
+                    SecondaryPanels[iterator].Visibility = Visibility.Collapsed;
+                }
             }
             else
             {
-                primaryPanels.ForEach(delegate (UserControl control)
+                for (int iterator = 1; iterator < PrimaryPanels.Count; iterator++)
                 {
-                    int index = primaryPanels.IndexOf(control);
-                    var button = sideBarButtonContainer.Children[index] as Button;
-                    if (button != searchButton)
-                    {
-                        //(button.Content as DockPanel).Children[0].Visibility = Visibility.Hidden;
-                    }
-
+                    Button button = PrimaryNavigationControls[iterator];
                     button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    control.Visibility = Visibility.Collapsed;
-                });
-            }
-
-            secondaryPanels.ForEach(delegate (UserControl control)
-            {
-                if (control == container)
-                {
-                    control.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    control.Visibility = Visibility.Collapsed;
-                }
-            });
-        }
-
-        private void ComposeButtonClicked(object sender, RoutedEventArgs e)
-        {
-            HideAllContainersExcept(composeContainer);
-        }
-
-        private void SearchButtonClicked(object sender, RoutedEventArgs e)
-        {
-            HideAllContainersExcept(searchContainer);
-        }
-
-        private void ListingsButtonClicked(object sender, RoutedEventArgs e)
-        {
-            listingsContainer.GetNewListings();
-            HideAllContainersExcept(listingsContainer);
-        }
-
-        private void ProfileButtonClicked()
-        {
-            profileContainer.currentProfileUser = CurrentUser;
-            HideAllContainersExcept(profileContainer);
-        }
-
-        private void MessagesButtonClicked()
-        {
-            HideAllContainersExcept(messagesContainer);
-        }
-
-        private void CoursesButtonClicked(object sender, RoutedEventArgs e)
-        {
-            HideAllContainersExcept(coursesContainer);
-        }
-
-        private void MessagesButtonClicked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void accountDropDownClicked(object sender, RoutedEventArgs e)
-        {
-            accountComboBox.IsDropDownOpen = !accountComboBox.IsDropDownOpen;
-        }
-
-        private void accountComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            switch (accountComboBox.SelectedIndex)
-            {
-                case 0:
-                    ShowLoginDialog();
-                    break;
-                case 1:
-                    ShowSignUpDialog();
-                    break;
-                case 2:
-                    ProfileButtonClicked();
-                    break;
-                case 3:
-                    MessagesButtonClicked();
-                    break;
-                case 4:
-                    ShowSignOutDialog();
-                    break;
-                default:
-                    break;
-            }
-
-            accountComboBox.IsDropDownOpen = false;
-            accountComboBox.SelectedIndex = -1;
-        }
-
-        private void ShowSignOutDialog()
-        {
-            string text = "Are you sure you want to sign out?";
-            string caption = "Eagleslist - Sign Out";
-
-            MessageBoxButton buttons = MessageBoxButton.YesNo;
-            MessageBoxImage icon = MessageBoxImage.Warning;
-
-            MessageBoxResult result = MessageBox.Show(text, caption, buttons, icon);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                if (CurrentUser.SessionID != null)
-                {
-                    string sessionID = String.Copy(CurrentUser.SessionID);
-                    RequestManager.AttemptLogout(sessionID);
                 }
 
-                CurrentUser = null;
+                for (int iterator = 0; iterator < SecondaryPanels.Count; iterator++)
+                {
+                    if (index - PrimaryPanels.Count == iterator)
+                    {
+                        SecondaryPanels[iterator].Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        SecondaryPanels[iterator].Visibility = Visibility.Collapsed;
+                    }
+                }
             }
         }
 
-        private void ShowLoginDialog()
+        internal void ShowSecondaryPanelAtIndex(int index)
         {
-            LoginPrompt prompt = new LoginPrompt();
-            prompt.Owner = this;
+            if (index == 0)
+            {
+                profileContainer.currentProfileUser = CurrentUser;
+            }
 
-            bool? _ = prompt.ShowDialog();
-        }
-
-        private void ShowSignUpDialog()
-        {
-            SignUpPrompt prompt = new SignUpPrompt();
-            prompt.Owner = this;
-
-            bool? _ = prompt.ShowDialog();
+            ContainerDisplayPanelAtIndex(PrimaryPanels.Count + index);
         }
 
         private static string GravatarURLFromUser(User user, int size)
@@ -305,16 +172,6 @@ namespace Eagleslist
             StringComparer comparer = StringComparer.OrdinalIgnoreCase;
 
             return comparer.Compare(hashOfInput, hash) == 0;
-        }
-
-        private void NavigationBackButtonClicked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void NavigationForwardButtonClicked(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

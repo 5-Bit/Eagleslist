@@ -4,6 +4,74 @@
              xmlns:local="clr-namespace:Eagleslist"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>
+        <SolidColorBrush x:Key="FGCUGreen" Color="#00885A"/>
+        <SolidColorBrush x:Key="FGCUGreenDark" Color="#006F41"/>
+
+        <SolidColorBrush x:Key="darkBackground" Color="#2F323A"/>
+        <SolidColorBrush x:Key="darkerBackground" Color="#27292F"/>
+        <SolidColorBrush x:Key="lightBackground" Color="#ECEEF3"/>
+        <SolidColorBrush x:Key="lightBackground2" Color="#ECECEC"/>
+
+        <SolidColorBrush x:Key="primaryColor" Color="#446CB3"/>
+        <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA"/>
+
+        <Style TargetType="{x:Type Button}" x:Key="NavigationButtonStyle">
+            <Setter Property="Background" Value="{StaticResource darkBackground}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource lightBackground}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="SidePanelButtonStyle">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--<Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource lightBackground}"/>
+                </Trigger>
+            </Style.Triggers>-->
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="TopPanelButtonStyle">
+            <Setter Property="Background" Value="{StaticResource FGCUGreen}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                                              VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource FGCUGreenDark}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Application.Resources>
 </Application>
