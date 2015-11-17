@@ -84,8 +84,14 @@
     <Compile Include="Controls\CoursesBrowserControl.xaml.cs">
       <DependentUpon>CoursesBrowserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CreditBarControl.xaml.cs">
+      <DependentUpon>CreditBarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ListingBrowserControl.xaml.cs">
       <DependentUpon>ListingBrowserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListingControl.xaml.cs">
+      <DependentUpon>ListingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ListingCreationControl.xaml.cs">
       <DependentUpon>ListingCreationControl.xaml</DependentUpon>
@@ -132,7 +138,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\CreditBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ListingBrowserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ListingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

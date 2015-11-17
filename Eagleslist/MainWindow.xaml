@@ -22,11 +22,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <controls:TopBarControl x:Name="topBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-              Panel.ZIndex="1000" Background="{StaticResource darkBackground}"/>
+        <!-- Top navigation bar -->
+        <controls:TopBarControl x:Name="topBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 
+        <!-- Side navigation bar -->
         <controls:SideBarControl Margin="0, 0, 0, 0" VerticalAlignment="Stretch" HorizontalAlignment="Left" 
-              Grid.RowSpan="3" Grid.Column="0" Width="60" Panel.ZIndex="1500"
+              Grid.RowSpan="2" Grid.Column="0" Width="60" Panel.ZIndex="1500"
               Background="White" x:Name="sideBarButtonContainer"/>
 
         <!-- Side navigation bar -->
@@ -53,20 +54,7 @@
         <controls:ProfileViewerControl x:Name="profileContainer" Margin="20" 
                                        Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
 
-        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-              VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="24"/>
-            </Grid.RowDefinitions>
-
-            <Label Content="&lt; /&gt; with &#10084; by 5Bit Studios" HorizontalAlignment="Center"
-                   VerticalAlignment="Center" Margin="0" Padding="0"
-                   Foreground="DarkGray" FontSize="9.333" Grid.Row="0" Grid.Column="0"/>
-
-        </Grid>
+        <!-- Bottom credit bar -->
+        <controls:CreditBarControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource darkBackground}" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>
