@@ -99,6 +99,12 @@
     <Compile Include="Controls\SearchControl.xaml.cs">
       <DependentUpon>SearchControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SideBarControl.xaml.cs">
+      <DependentUpon>SideBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TopBarControl.xaml.cs">
+      <DependentUpon>TopBarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Course.cs" />
     <Compile Include="Books\BookCreationResponse.cs" />
     <Compile Include="CourseCreationResponse.cs" />
@@ -143,6 +149,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SideBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TopBarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
