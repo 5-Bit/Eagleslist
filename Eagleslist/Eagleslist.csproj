@@ -79,19 +79,37 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AuthResponse.cs" />
-    <Compile Include="Book.cs" />
-    <Compile Include="BookCondition.cs" />
+    <Compile Include="Books\Book.cs" />
+    <Compile Include="Books\BookCondition.cs" />
+    <Compile Include="Controls\CoursesBrowserControl.xaml.cs">
+      <DependentUpon>CoursesBrowserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListingBrowserControl.xaml.cs">
+      <DependentUpon>ListingBrowserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListingCreationControl.xaml.cs">
+      <DependentUpon>ListingCreationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MessagesViewerControl.xaml.cs">
+      <DependentUpon>MessagesViewerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProfileViewerControl.xaml.cs">
+      <DependentUpon>ProfileViewerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchControl.xaml.cs">
+      <DependentUpon>SearchControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Course.cs" />
-    <Compile Include="BookCreationResponse.cs" />
+    <Compile Include="Books\BookCreationResponse.cs" />
     <Compile Include="CourseCreationResponse.cs" />
     <Compile Include="CredentialManager.cs" />
-    <Compile Include="FlagHandlerRequest.cs" />
-    <Compile Include="FlagRaisedResponse.cs" />
-    <Compile Include="Flag.cs" />
-    <Compile Include="FlagResolution.cs" />
-    <Compile Include="FlagType.cs" />
+    <Compile Include="Flags\FlagHandlerRequest.cs" />
+    <Compile Include="Flags\FlagRaisedResponse.cs" />
+    <Compile Include="Flags\Flag.cs" />
+    <Compile Include="Flags\FlagResolution.cs" />
+    <Compile Include="Flags\FlagType.cs" />
     <Compile Include="Listing.cs" />
-    <Compile Include="ListingCreation.cs" />
+    <Compile Include="Listing Creation\ListingCreation.cs" />
     <Compile Include="LoginPrompt.xaml.cs">
       <DependentUpon>LoginPrompt.xaml</DependentUpon>
     </Compile>
@@ -104,6 +122,30 @@
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="ValidatedListing.cs" />
+    <Page Include="Controls\CoursesBrowserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ListingBrowserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ListingCreationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MessagesViewerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProfileViewerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginPrompt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -182,6 +224,7 @@
     <Resource Include="images\navLeftHover.png" />
     <Resource Include="images\navRightHover.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

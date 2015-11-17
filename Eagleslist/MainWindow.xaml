@@ -5,14 +5,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Eagleslist"
+        xmlns:controls="clr-namespace:Eagleslist.Controls"
         mc:Ignorable="d"
         Loaded="WindowLoaded"
         Title="" MinWidth="800" MinHeight="480" SnapsToDevicePixels="True">
 
-    
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <!--<local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" TrueValue="Visible" FalseValue="Hidden"/>-->
 
         <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>
         <SolidColorBrush x:Key="FGCUGreen" Color="#00885A"/>
@@ -142,7 +141,7 @@
                             Height="{Binding ElementName=topBar, Path=ActualHeight}">
                     Account
                 </Button>
-
+                
                 <ComboBox x:Name="accountComboBox"
                               HorizontalAlignment="Right" Canvas.ZIndex="1" Canvas.Right="0"
                               Width="{Binding ElementName=accountOverlayButton, Path=ActualWidth}"
@@ -283,333 +282,23 @@
             </Button>
         </Grid>
 
-        <Canvas x:Name="searchContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
-            <Grid Width="{Binding ElementName=searchContainer, Path=ActualWidth}"
-                  Height="{Binding ElementName=searchContainer, Path=ActualHeight}">
+        <controls:SearchControl x:Name="searchContainer" Margin="0, 0, 0, 0"
+                                Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <controls:ListingCreationControl x:Name="composeContainer" Margin="0, 0, 0, 0"
+                                         Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
 
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label HorizontalAlignment="Center" Margin="0, 0, 0, 10" FontSize="24">Search for:</Label>
-                    <DockPanel HorizontalAlignment="Center">
-                        <RadioButton Content="Books" IsChecked="True" Margin="5, 0, 5, 0"/>
-                        <RadioButton Content="Courses" Margin="5, 0, 5, 0"/>
-                        <RadioButton Content="Faculty" Margin="5, 0, 5, 0"/>
-                    </DockPanel>
+        <controls:ListingBrowserControl x:Name="listingsContainer" Margin="0, 0, 0, 0" 
+                                        Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
 
-                    <DockPanel Width="200" Margin="0, 10, 0, 0">
-                        <Border BorderThickness="2" CornerRadius="10">
-                            <TextBox x:Name="searchTextBox" Width="150"
-                                     Height="{Binding ElementName=searchSubmitButton, Path=ActualHeight}"/>
-                        </Border>
-                        <Button x:Name="searchSubmitButton" Content="Search" Height="22"
-                                Click="SearchSubmitButtonClicked"/>
-                    </DockPanel>
-                </StackPanel>
-                <!-- Column 1 here -->
-                <!-- Column 2 here -->
-            </Grid>
-        </Canvas>
+        <controls:CoursesBrowserControl x:Name="coursesContainer" Margin="0, 0, 0, 0"
+                                        Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
 
-        <Canvas x:Name="composeContainer" Margin="0, 0, 0, 0" Visibility="Visible" Grid.Row="1" Grid.Column="1">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
-                          Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
-                          Height="{Binding ElementName=composeContainer, Path=ActualHeight}">
-                <Grid x:Name="composeGrid" HorizontalAlignment="Stretch" Width="Auto">
+        <controls:MessagesViewerControl x:Name="messagesContainer" Margin="0, 0, 0, 0"
+                                        Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="62" />
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*" />
-                        <ColumnDefinition Width="15*" />
-                        <ColumnDefinition Width="15*" />
-                        <ColumnDefinition Width="24*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label Margin="20, 10, 20, 10" Content="New Listing" FontSize="18"
-                           Grid.ColumnSpan="4" Grid.Row="0" VerticalAlignment="Center"/>
-
-                    <StackPanel Margin="20, 0, 10, 0" HorizontalAlignment="Stretch" 
-                                Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
-                        <Label Content="Post Title"/>
-                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" 
-                                 FontSize="13.333" x:Name="NewListingTitleBox" TextChanged="NewListingTitleChanged"/>
-                    </StackPanel>
-
-                    <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
-                                Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
-                        <Label Content="Price ($)"/>
-                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}"
-                                 FontSize="13.333" x:Name="NewListingPriceBox" TextChanged="NewListingPriceChanged"/>
-                    </StackPanel>
-
-                    <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
-                                Grid.Column="2" Grid.Row="1" VerticalAlignment="Center">
-                        <Label Content="Condition"/>
-                        <ComboBox x:Name="NewListingConditionComboBox" SelectionChanged="NewListingConditionChanged"/>
-
-                    </StackPanel>
-
-                    <StackPanel Margin="10, 0, 20, 0" HorizontalAlignment="Stretch" 
-                                Grid.Column="3" Grid.Row="1" VerticalAlignment="Center">
-                        <Label Content="ISBN (optional)"/>
-                        <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" 
-                                 FontSize="13.333" x:Name="NewListingISBNBox" TextChanged="NewListingISBNChanged"/>
-                    </StackPanel>
-
-                    <DockPanel Margin="20, 20, 20, 0" Grid.ColumnSpan="4" Grid.Row="2" VerticalAlignment="Stretch">
-                        <Label Content="Body" HorizontalAlignment="Left"/>
-                        <Label Content="Please do not post personal contact information" HorizontalAlignment="Right"/>
-                    </DockPanel>
-
-                    <TextBox Background="White" Grid.ColumnSpan="4" Grid.Row="3" 
-                             VerticalAlignment="Stretch" Margin="20, 0, 20, 20"
-                             MinHeight="150" TextWrapping="Wrap" x:Name="NewListingContentBox"
-                             TextChanged="NewListingContentChanged"/>
-                    
-                    <ListView x:Name="NewListingImagesListView" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
-                              Margin="20 0" Height="80"
-                          SelectionChanged="ListingsViewSelectionChanged" 
-                          SelectedIndex="{Binding Path=SelectedIndexValue}" 
-                          ItemsSource="{Binding Path=Items}">
-
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-
-                    <DockPanel Grid.ColumnSpan="4" Grid.Row="5" VerticalAlignment="Center" Margin="20, 20, 20, 20">
-                        <Button Content="Post Listing" HorizontalAlignment="Right" Width="100"
-                                x:Name="PostNewListingButton" IsEnabled="False">
-                            <Button.Triggers>
-                                <EventTrigger RoutedEvent="Button.Click">
-                                    <BeginStoryboard>
-                                        <!--<Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="composeGrid"
-                                                             Storyboard.TargetProperty="(Grid.Height)" 
-                                                             From="{Binding ElementName=composeGrid, Path=ActualHeight}"
-                                                             To="0" Duration="0:0:0.35" AutoReverse="False"/>
-                                        </Storyboard>-->
-                                        
-                                        <Storyboard >
-                                            <!-- <DoubleAnimation Storyboard.TargetName="composeGrid"
-                                                             Storyboard.TargetProperty="(Grid.Height)"
-                                                             From="{Binding ElementName=composeGrid, Path=ActualHeight}"
-                                                             To="0" Duration="0:0:0.35"/>-->
-                                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="composeGrid"
-                                                                              Storyboard.TargetProperty="Margin"
-                                                                              BeginTime="00:00:00">
-                                                    
-                                                    <SplineThicknessKeyFrame KeyTime="00:00:00" Value="0, 0, 0, 0" />
-                                                <SplineThicknessKeyFrame KeyTime="00:00:0.25" Value="0, 0, 0, 0" />
-                                                </ThicknessAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Button.Triggers>
-                        </Button>
-                        <!--<Button Content="Preview" HorizontalAlignment="Right" Width="100">
-                            <Button.Triggers>
-                                <EventTrigger RoutedEvent="Button.Click">
-                                    <BeginStoryboard>
-                                        --><!--<Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="composeGrid"
-                                                             Storyboard.TargetProperty="(Grid.Height)" 
-                                                             From="{Binding ElementName=composeGrid, Path=ActualHeight}"
-                                                             To="0" Duration="0:0:0.35" AutoReverse="False"/>
-                                        </Storyboard>--><!--
-                                        <Storyboard >
-                                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="composeGrid"
-                                                                              Storyboard.TargetProperty="Margin"
-                                                                              BeginTime="00:00:00">
-                                                <SplineThicknessKeyFrame KeyTime="00:00:00" Value="0, 0, 0, 0" />
-                                                <SplineThicknessKeyFrame KeyTime="00:00:0.25" Value="0, -500, 0, 0" />
-                                            </ThicknessAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Button.Triggers>
-                        </Button>-->
-                    </DockPanel>
-                </Grid>
-            </ScrollViewer>
-        </Canvas>
-
-        <Canvas x:Name="listingsContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
-            <Grid Width="{Binding ElementName=listingsContainer, Path=ActualWidth}"
-                  Height="{Binding ElementName=listingsContainer, Path=ActualHeight}">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="300" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <ListView x:Name="listingsView" BorderThickness="0" Background="{StaticResource darkerBackground}"
-                          VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                          Height="{Binding ElementName=listingsContainer, Path=ActualHeight}" 
-                          SelectionChanged="ListingsViewSelectionChanged" 
-                          SelectedIndex="{Binding Path=SelectedIndexValue}" 
-                          ItemsSource="{Binding Path=Items}" Grid.Column="0">
-
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <WrapPanel>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="24" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock Text="{Binding Title}" Margin="0, 5, 0, 0" HorizontalAlignment="Left" 
-                                               Grid.Column="0" Grid.Row="0" Foreground="White"/>
-                                    <TextBlock Text="{Binding Handle}" Margin="0, 5, 0, 0" HorizontalAlignment="Right"
-                                               Grid.Column="1" Grid.Row="0" Foreground="{StaticResource lightBackground}"/>
-
-                                    <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
-                                               MaxWidth="285" TextWrapping="WrapWithOverflow" TextTrimming="WordEllipsis"
-                                               FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"
-                                               Grid.ColumnSpan="2" Grid.Row="1" Margin="0, 0, 0, 5"/>
-                                </Grid>
-                            </WrapPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-                <Grid Grid.Column="1" Margin="20">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="150"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="150"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0" Grid.Row="0">
-                        <Label x:Name="listingTitleLabel" FontSize="21.333" Content="Post Title"/>
-                        <DockPanel>
-                            <Label Content="Condition: "/>
-                            <Label x:Name="listingConditionLabel" Content="condition text"/>
-                        </DockPanel>
-
-                        <DockPanel>
-                            <Label Content="Price: "/>
-                            <Label x:Name="listingAskingPrice" Content="some dollar amount"/>
-                        </DockPanel>
-
-                        <Label x:Name="listingTimePostedLabel" Content="undetermined"/>
-                    </StackPanel>
-
-                    <Border Height="150" Width="150" Background="Gray" 
-                            HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0">
-                        <Image x:Name="listingImageView" Source="images/missing.png" 
-                               RenderOptions.BitmapScalingMode="HighQuality"
-                               Stretch="UniformToFill" HorizontalAlignment="Center"/>
-                    </Border>
-
-                    <TextBlock x:Name="listingContentTextBlock" Text="Body text for post." Margin="10" 
-                               IsEnabled="False" TextWrapping="WrapWithOverflow"
-                               TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
-                               Grid.Row="1" Grid.ColumnSpan="2"/>
-                </Grid>
-                <!--<StackPanel x:Name="contentStack" Margin="20, 20, 20, 20" Grid.Column="1"
-                            MaxHeight="{Binding ElementName=listingsView, Path=ActualHeight}">
-                    <TextBlock x:Name="listingContentTextBlock" Text="hello, world" Margin="10" 
-                               IsEnabled="False" TextWrapping="WrapWithOverflow"
-                               TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
-                               MaxWidth="{Binding ElementName=contentStack, Path=ActualWidth}"/>
-                </StackPanel>-->
-            </Grid>
-        </Canvas>
-
-        <Canvas x:Name="coursesContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
-            <Grid Width="{Binding ElementName=coursesContainer, Path=ActualWidth}"
-                  Height="{Binding ElementName=coursesContainer, Path=ActualHeight}">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <!-- Column 1 here -->
-                <!-- Column 2 here -->
-
-            </Grid>
-        </Canvas>
-
-        <Canvas x:Name="messagesContainer" Margin="0, 0, 0, 0" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
-            <Grid Width="{Binding ElementName=messagesContainer, Path=ActualWidth}"
-                  Height="{Binding ElementName=messagesContainer, Path=ActualHeight}">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                
-                <Label Content="Hello?"/>
-            </Grid>
-        </Canvas>
-
-        <Canvas x:Name="profileContainer" Margin="20" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
-            <Grid Width="{Binding ElementName=profileContainer, Path=ActualWidth}"
-                  Height="{Binding ElementName=profileContainer, Path=ActualHeight}">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Border Width="100" Height="100" Background="Red" ClipToBounds="True"
-                        Grid.Row="0" Grid.Column="0">
-                    <Image x:Name="ProfileImage"/>
-                </Border>
-
-                <Grid Grid.Row="0" Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
-                        <TextBlock Text="Username" VerticalAlignment="Center" x:Name="ProfileUsername"/>
-                        <TextBlock Text="Email" VerticalAlignment="Center" x:Name="ProfileEmail"/>
-
-                   </StackPanel>
-                    <TextBlock Text="Bio" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0"
-                               TextWrapping="Wrap" x:Name="ProfileBio"/>
-                </Grid>
-            </Grid>
-        </Canvas>
+        <controls:ProfileViewerControl x:Name="profileContainer" Margin="20" 
+                                       Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
 
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
               VerticalAlignment="Center">
