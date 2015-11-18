@@ -1,18 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace Eagleslist.Controls
 {
@@ -21,12 +11,13 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class ListingCreationControl : UserControl
     {
+        internal MainWindow ContainingWindow;
+        internal Func<bool> LoginTrigger;
         private ListingCreation Draft = new ListingCreation();
 
         public ListingCreationControl()
         {
             InitializeComponent();
-
             NewListingConditionComboBox.ItemsSource = Enum.GetValues(typeof(BookCondition));
         }
 
@@ -63,6 +54,54 @@ namespace Eagleslist.Controls
         private void NewListingImagesChanged(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CreateListingButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (ContainingWindow?.CurrentUser?.SessionID != null)
+            {
+                ShowConfirmPostDialog();
+            } 
+            else
+            {
+                if (LoginTrigger != null && LoginTrigger())
+                {
+                    ShowConfirmPostDialog();
+                }
+            }
+        }
+
+        private async void ShowConfirmPostDialog()
+        {
+            string text = "You are about to post a new listing to Eagleslist. Are you sure that you want to continue?";
+            string caption = "Eagleslist - Post New Listing";
+
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result = MessageBox.Show(text, caption, buttons, icon);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                string sessionID = ContainingWindow.CurrentUser.SessionID;
+                string condition = NewListingConditionComboBox.Items[NewListingConditionComboBox.SelectedIndex].ToString();
+                Listing listing = new Listing(
+                    NewListingTitleBox.Text, NewListingContentBox.Text, null,
+                    null, null, null, NewListingISBNBox.Text, 
+                    NewListingPriceBox.Text, condition, DateTime.Now, -1, -1
+                );
+
+                NewListingResponse response = await RequestManager.PostNewListing(listing, sessionID);
+
+                if (response == null || !string.IsNullOrWhiteSpace(response.Error))
+                {
+                    Console.WriteLine("failed to post");
+                    Console.WriteLine(response.Error);
+                }
+                else
+                {
+                    Console.WriteLine("new listing post succeded");
+                }
+            }
         }
 
         private static void ChooseImages()
