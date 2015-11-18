@@ -85,7 +85,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Content="Stay signed in" Margin="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <CheckBox Content="Stay signed in" Margin="0" Grid.Column="0" x:Name="StaySignedInCheckbox"
+                          HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1" Margin="20 0 0 0">
                     <Button Content="Forgot Password" Height="22" Margin="5 0" Padding="5 0"/>
                     <Button Content="Sign In" Height="22" Margin="5 0 0 0" Padding="5 0" 

@@ -6,28 +6,45 @@ namespace Eagleslist
 {
     public class CredentialManager
     {
-        ~CredentialManager()
-        {
+        private static User NonPersistentUser = null;
 
-        }
-
-        public static User getCurrentUser()
+        public static bool UserIsLoggedIn
         {
-            return ReadUser();
-        }
-
-        public static void setCurrentUser(User user)
-        {
-            if (user == null)
+            get
             {
-                if (File.Exists(GetWriteFilePath()))
+                return GetCurrentUser() != null;
+            }
+        }
+
+        public static User GetCurrentUser()
+        {
+            if (File.Exists(GetWriteFilePath()))
+            {
+                return ReadUser();
+            }
+            else
+            {
+                return NonPersistentUser;
+            }
+        }
+
+        public static void SetCurrentUser(User user, bool persist)
+        {
+            if (persist)
+            {
+                if (user == null)
                 {
-                    File.Delete(GetWriteFilePath());
+                    DeletePersistingUser();
+                }
+                else
+                {
+                    WriteUser(user);
                 }
             }
             else
             {
-                WriteUser(user);
+                DeletePersistingUser();
+                NonPersistentUser = user;
             }
         }
 
@@ -44,6 +61,14 @@ namespace Eagleslist
             }
 
             return null;
+        }
+
+        private static void DeletePersistingUser()
+        {
+            if (File.Exists(GetWriteFilePath()))
+            {
+                File.Delete(GetWriteFilePath());
+            }
         }
 
         private static void WriteUser(User user)

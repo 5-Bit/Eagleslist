@@ -2,7 +2,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
 
 namespace Eagleslist.Controls
 {
@@ -58,7 +57,7 @@ namespace Eagleslist.Controls
 
         private void CreateListingButtonClicked(object sender, RoutedEventArgs e)
         {
-            if (ContainingWindow?.CurrentUser?.SessionID != null)
+            if (CredentialManager.GetCurrentUser().SessionID != null)
             {
                 ShowConfirmPostDialog();
             } 
@@ -68,6 +67,18 @@ namespace Eagleslist.Controls
                 {
                     ShowConfirmPostDialog();
                 }
+            }
+        }
+
+        private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+
+            }
+            else
+            {
+
             }
         }
 
@@ -82,7 +93,7 @@ namespace Eagleslist.Controls
 
             if (result == MessageBoxResult.Yes)
             {
-                string sessionID = ContainingWindow.CurrentUser.SessionID;
+                string sessionID = CredentialManager.GetCurrentUser().SessionID;
                 string condition = NewListingConditionComboBox.Items[NewListingConditionComboBox.SelectedIndex].ToString();
                 Listing listing = new Listing(
                     NewListingTitleBox.Text, NewListingContentBox.Text, null,

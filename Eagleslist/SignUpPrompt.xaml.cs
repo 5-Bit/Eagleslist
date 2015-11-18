@@ -40,8 +40,7 @@ namespace Eagleslist
 
             if (user.AuthError == null || user.AuthError.Length == 0)
             {
-                MainWindow mainWindow = (MainWindow)Owner;
-                mainWindow.CurrentUser = user;
+                CredentialManager.SetCurrentUser(user, false);
 
                 CollapseSignInFields();
             }
