@@ -29,16 +29,17 @@ namespace Eagleslist
                     MainWindow mainWindow = (MainWindow)Owner;
                     mainWindow.CurrentUser = user;
 
-                    this.DialogResult = true;
+                    DialogResult = true;
                     Close();
-                } else
+                }
+                else
                 {
-                    Console.WriteLine("Login failed");
+                    DialogResult = false;
                 }
             }
             else
             {
-                Console.WriteLine("Login failed");
+                DialogResult = false;
             }
         }
 
