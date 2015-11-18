@@ -16,37 +16,6 @@ namespace Eagleslist
 
         private LinkedList<object> navigationStack = new LinkedList<object>();
 
-        internal User CurrentUser
-        {
-            get
-            {
-                return CredentialManager.getCurrentUser();
-            }
-
-            set
-            {
-                CredentialManager.setCurrentUser(value); // UI changes below dependent on this.
-                topBar.accountComboBox.IsDropDownOpen = false;
-
-                if (value != null)
-                {
-                    topBar.SetLoggedInUI();
-                }
-                else
-                {
-                    topBar.SetLoggedOutUI();
-                }
-            }
-        }
-
-        internal bool userIsLoggedIn
-        {
-            get
-            {
-                return CurrentUser != null;
-            }
-        }
-
         public MainWindow()
         {
             InitializeComponent();
@@ -60,7 +29,7 @@ namespace Eagleslist
             composeContainer.ContainingWindow = this;
             composeContainer.LoginTrigger = () => topBar.ShowLoginDialog();
 
-            if (userIsLoggedIn)
+            if (CredentialManager.UserIsLoggedIn)
             {
                 topBar.SetLoggedInUI();
             }
@@ -133,7 +102,7 @@ namespace Eagleslist
         {
             if (index == 0)
             {
-                profileContainer.currentProfileUser = CurrentUser;
+                profileContainer.currentProfileUser = CredentialManager.GetCurrentUser();
             }
 
             ContainerDisplayPanelAtIndex(PrimaryPanels.Count + index);
