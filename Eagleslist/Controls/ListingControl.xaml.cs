@@ -32,7 +32,7 @@ namespace Eagleslist.Controls
             listingAskingPrice.Content = listing?.Price;
             listingConditionLabel.Content = listing?.Condition;
             listingContentTextBlock.Text = listing?.Content;
-            listingTimePostedLabel.Content = HumanizeDateString(listing?.CreateDate);
+            listingTimePostedLabel.Content = HumanizeDateString(listing?.CreateDate.ToString());
         }
 
         private string HumanizeDateString(string input)
