@@ -78,7 +78,7 @@ namespace Eagleslist
                     CultureInfo.CurrentUICulture
                 );
 
-                return converted;
+                return converted >= Decimal.Zero ? converted : -1;
             }
             catch (Exception)
             {
