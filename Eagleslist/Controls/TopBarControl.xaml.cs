@@ -109,12 +109,13 @@ namespace Eagleslist.Controls
             }
         }
 
-        private void ShowLoginDialog()
+        internal bool ShowLoginDialog()
         {
             LoginPrompt prompt = new LoginPrompt();
             prompt.Owner = ContainingWindow;
 
-            bool? _ = prompt.ShowDialog();
+            bool? success = prompt.ShowDialog();
+            return success.HasValue && success.Value;
         }
 
         private void ShowSignUpDialog()
