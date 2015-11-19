@@ -38,17 +38,17 @@ namespace Eagleslist.Controls
             }
         }
 
-        internal async void GetNewListings()
+        private async void GetNewListings()
         {
             var manager = new RequestManager();
             var newListings = await manager.GetListings();
 
             _listings = new ObservableCollection<Listing>(newListings);
-            listingsView.ItemsSource = _listings;
+            ListingsView.ItemsSource = _listings;
 
             if (_listings.Count > 0)
             {
-                listingsView.SelectedIndex = 0;
+                ListingsView.SelectedIndex = 0;
             }
         }
     }

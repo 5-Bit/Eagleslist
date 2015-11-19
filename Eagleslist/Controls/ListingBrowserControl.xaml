@@ -5,7 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Eagleslist.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="640" IsVisibleChanged="VisibilityChanged">
+             d:DesignHeight="400" d:DesignWidth="740" IsVisibleChanged="VisibilityChanged">
+
+    <UserControl.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+    </UserControl.Resources>
 
     <Grid Background="White" x:Name="BrowseListingContainer">
 
@@ -14,38 +20,58 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ListView x:Name="listingsView" BorderThickness="0" Background="{StaticResource lightBackground}"
+        <ListView x:Name="ListingsView" BorderThickness="0" Background="{StaticResource lightBackground}"
                   VerticalAlignment="Center" HorizontalAlignment="Stretch"
                   Height="{Binding ElementName=BrowseListingContainer, Path=ActualHeight}" 
                   SelectionChanged="ListingsViewSelectionChanged" 
                   SelectedIndex="{Binding Path=SelectedIndexValue}" 
-                  ItemsSource="{Binding Path=Items}" Grid.Column="0">
+                  ItemsSource="{Binding Path=Items}" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <WrapPanel>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="24" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
+                    <Grid Margin="0" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="24" />
+                        </Grid.RowDefinitions>
 
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--Title, Content, Price, Condition, CreateDate-->
+                        <Grid Grid.Row="0" Grid.Column="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="{Binding Title}" Margin="0, 5, 0, 0" HorizontalAlignment="Left" 
-                                               Grid.Column="0" Grid.Row="0" Foreground="Black"/>
-                            <TextBlock Text="{Binding Handle}" Margin="0, 5, 0, 0" HorizontalAlignment="Right"
-                                               Grid.Column="1" Grid.Row="0" Foreground="Black"/>
+                            <TextBlock Text="{Binding Title}" Margin="0" HorizontalAlignment="Left" 
+                                   Foreground="Black" Grid.Row="0" Grid.Column="0" TextTrimming="WordEllipsis"/>
 
-                            <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
-                                               MaxWidth="285" TextWrapping="WrapWithOverflow" TextTrimming="WordEllipsis"
-                                               FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"
-                                               Grid.ColumnSpan="2" Grid.Row="1" Margin="0, 0, 0, 5" Foreground="Black"/>
+                            <TextBlock Text="{Binding Price}" Margin="0" HorizontalAlignment="Right" 
+                                   Foreground="Black" Grid.Row="0" Grid.Column="1"/>
                         </Grid>
-                    </WrapPanel>
+                        
+                        <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
+                                               TextWrapping="WrapWithOverflow" TextTrimming="WordEllipsis"
+                                               FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"
+                                               Grid.Row="1" Grid.Column="0" Margin="0" Foreground="Black"/>
+
+                        <Grid Grid.Row="2" Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Condition}" Margin="0" HorizontalAlignment="Left"
+                                   Grid.Row="0" Grid.Column="0" Foreground="Black"/>
+
+                            <TextBlock Text="{Binding CreateDate}" Margin="0" HorizontalAlignment="Right"
+                                   Grid.Row="0" Grid.Column="1" Foreground="Black"/>
+                        </Grid>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
