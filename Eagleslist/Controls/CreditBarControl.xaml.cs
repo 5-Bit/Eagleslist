@@ -7,7 +7,7 @@ namespace Eagleslist.Controls
     /// <summary>
     /// Interaction logic for CreditBarControl.xaml
     /// </summary>
-    public partial class CreditBarControl : UserControl
+    public partial class CreditBarControl
     {
         public CreditBarControl()
         {

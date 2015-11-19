@@ -10,7 +10,6 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class ListingCreationControl : UserControl
     {
-        internal MainWindow ContainingWindow;
         internal Func<bool> LoginTrigger;
         private ListingCreation Draft = new ListingCreation();
 
@@ -84,53 +83,53 @@ namespace Eagleslist.Controls
 
         private async void ShowConfirmPostDialog()
         {
-            string text = "You are about to post a new listing to Eagleslist. Are you sure that you want to continue?";
-            string caption = "Eagleslist - Post New Listing";
+            const string text = "You are about to post a new listing to Eagleslist. Are you sure that you want to continue?";
+            const string caption = "Eagleslist - Post New Listing";
 
-            MessageBoxButton buttons = MessageBoxButton.YesNo;
-            MessageBoxImage icon = MessageBoxImage.Warning;
-            MessageBoxResult result = MessageBox.Show(text, caption, buttons, icon);
+            const MessageBoxButton buttons = MessageBoxButton.YesNo;
+            const MessageBoxImage icon = MessageBoxImage.Warning;
+            var result = MessageBox.Show(text, caption, buttons, icon);
 
-            if (result == MessageBoxResult.Yes)
+            if (result != MessageBoxResult.Yes) return;
+
+            var sessionId = CredentialManager.GetCurrentUser().SessionID;
+            var condition = NewListingConditionComboBox.Items[NewListingConditionComboBox.SelectedIndex].ToString();
+            var listing = new Listing(
+                NewListingTitleBox.Text, NewListingContentBox.Text, null,
+                null, null, null, NewListingISBNBox.Text, 
+                NewListingPriceBox.Text, condition, DateTime.Now, -1, -1
+            );
+
+            var response = await RequestManager.PostNewListing(listing, sessionId);
+
+            if (response == null || !string.IsNullOrWhiteSpace(response.Error))
             {
-                string sessionID = CredentialManager.GetCurrentUser().SessionID;
-                string condition = NewListingConditionComboBox.Items[NewListingConditionComboBox.SelectedIndex].ToString();
-                Listing listing = new Listing(
-                    NewListingTitleBox.Text, NewListingContentBox.Text, null,
-                    null, null, null, NewListingISBNBox.Text, 
-                    NewListingPriceBox.Text, condition, DateTime.Now, -1, -1
-                );
-
-                NewListingResponse response = await RequestManager.PostNewListing(listing, sessionID);
-
-                if (response == null || !string.IsNullOrWhiteSpace(response.Error))
-                {
-                    Console.WriteLine("failed to post");
-                    Console.WriteLine(response.Error);
-                }
-                else
-                {
-                    Console.WriteLine("new listing post succeded");
-                }
+                Console.WriteLine("failed to post");
+                Console.WriteLine(response.Error);
+            }
+            else
+            {
+                Console.WriteLine("new listing post succeded");
             }
         }
 
         private static void ChooseImages()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-
-            dialog.Title = "Eagleslist - Select Images";
-            dialog.Multiselect = true;
-            dialog.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg";
-
-            bool? x = dialog.ShowDialog();
-
-            if (x.HasValue && x.Value)
+            var dialog = new OpenFileDialog
             {
-                foreach (String file in dialog.FileNames)
-                {
+                Title = "Eagleslist - Select Images",
+                Multiselect = true,
+                Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg"
+            };
 
-                }
+
+            var x = dialog.ShowDialog();
+
+            if (!x.HasValue || !x.Value) return;
+
+            foreach (var file in dialog.FileNames)
+            {
+
             }
         }
     }

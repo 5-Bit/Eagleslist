@@ -39,6 +39,9 @@ namespace Eagleslist
             {
                 DialogResult = false;
             }
+
+            MainWindow window = (MainWindow)Owner;
+            window.ReloadLoginStateUi();
         }
 
         private void InputFieldChanged(object sender, RoutedEventArgs e)

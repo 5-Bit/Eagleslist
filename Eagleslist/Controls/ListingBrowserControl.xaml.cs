@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,9 +7,9 @@ namespace Eagleslist.Controls
     /// <summary>
     /// Interaction logic for ListingBrowserControl.xaml
     /// </summary>
-    public partial class ListingBrowserControl : UserControl
+    public partial class ListingBrowserControl
     {
-        private ObservableCollection<Listing> listings = new ObservableCollection<Listing>();
+        private ObservableCollection<Listing> _listings = new ObservableCollection<Listing>();
 
         public ListingBrowserControl()
         {
@@ -28,11 +26,11 @@ namespace Eagleslist.Controls
 
         private void ListingsViewSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListView selectedList = sender as ListView;
+            var selectedList = sender as ListView;
 
-            if (selectedList.SelectedIndex < listings.Count && selectedList.SelectedIndex >= 0)
+            if (selectedList != null && selectedList.SelectedIndex < _listings.Count && selectedList.SelectedIndex >= 0)
             {
-                CurrentListing.SetListing(listings[selectedList.SelectedIndex]);
+                CurrentListing.SetListing(_listings[selectedList.SelectedIndex]);
             }
             else
             {
@@ -42,13 +40,13 @@ namespace Eagleslist.Controls
 
         internal async void GetNewListings()
         {
-            RequestManager manager = new RequestManager();
-            List<Listing> newListings = await manager.GetListings();
+            var manager = new RequestManager();
+            var newListings = await manager.GetListings();
 
-            listings = new ObservableCollection<Listing>(newListings);
-            listingsView.ItemsSource = listings;
+            _listings = new ObservableCollection<Listing>(newListings);
+            listingsView.ItemsSource = _listings;
 
-            if (listings.Count > 0)
+            if (_listings.Count > 0)
             {
                 listingsView.SelectedIndex = 0;
             }

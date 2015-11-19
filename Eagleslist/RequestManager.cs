@@ -12,27 +12,27 @@ namespace Eagleslist
 {
     public class RequestManager
     {
-        private const string RootURL = "https://5bitstudios.com/";
+        private const string RootUrl = "https://5bitstudios.com/";
 
         public async Task<List<User>> GetUsers()
         {
-            string url = RootURL + "apidb/users";
-            string responseString = await Request(url);
-            return await UsersFromJSON(responseString);
+            const string url = RootUrl + "apidb/users";
+            var responseString = await Request(url);
+            return await UsersFromJson(responseString);
         }
 
         public async Task<List<Listing>> GetListings()
         {
-            string url = RootURL + "apidb/listings";
-            string responseString = await Request(url);
-            return await ListingsFromJSON(responseString);
+            const string url = RootUrl + "apidb/listings";
+            var responseString = await Request(url);
+            return await ListingsFromJson(responseString);
         }
 
-        public static async Task<BitmapImage> GetBitmapFromURI(Uri uri)
+        public static async Task<BitmapImage> GetBitmapFromUri(Uri uri)
         {
-            byte[] bytes = await new WebClient().DownloadDataTaskAsync(uri);
+            var bytes = await new WebClient().DownloadDataTaskAsync(uri);
 
-            BitmapImage image = new BitmapImage();
+            var image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnDemand;
             image.StreamSource = new MemoryStream(bytes);
@@ -41,71 +41,68 @@ namespace Eagleslist
             return image;
         }
 
-        private static async Task<User> FetchUserByID(AuthResponse auth, HttpClient client)
+        private static async Task<User> FetchUserById(AuthResponse auth, HttpClient client)
         {
-            string url = string.Format("{0}apidb/users/id/{1}", RootURL, auth.UserID);
-            User user = await SendObjectAsJSON<User>(auth, url, client, client.PutAsync);
+            string url = $"{RootUrl}apidb/users/id/{auth.UserID}";
+            var user = await SendObjectAsJson<User>(auth, url, client.PutAsync);
 
-            if (user != null)
-            {
-                user.AddAuth(auth);
-            }
+            user?.AddAuth(auth);
 
             return user;
         }
 
-        public static async Task<NewListingResponse> PostNewListing(Listing listing, string sessionID)
+        public static async Task<NewListingResponse> PostNewListing(Listing listing, string sessionId)
         {
-            using (HttpClient client = new HttpClient(DefaultRequestHandler()))
+            using (var client = new HttpClient(DefaultRequestHandler()))
             {
-                string url = RootURL + "apidb/listings/new";
-                ValidatedListing validated = new ValidatedListing(sessionID, listing);
+                const string url = RootUrl + "apidb/listings/new";
+                var validated = new ValidatedListing(sessionId, listing);
 
-                return await SendObjectAsJSON<NewListingResponse>(validated, url, client, client.PostAsync);
+                return await SendObjectAsJson<NewListingResponse>(validated, url, client.PostAsync);
             }
         }
 
         public static async Task<User> AttemptLogin(LoginRequest request)
         {
-            using (HttpClient client = new HttpClient(DefaultRequestHandler()))
+            using (var client = new HttpClient(DefaultRequestHandler()))
             {
-                string url = RootURL + "apidb/users/auth";
-                AuthResponse response = await SendObjectAsJSON<AuthResponse>(request, url, client, client.PutAsync);
+                const string url = RootUrl + "apidb/users/auth";
+                var response = await SendObjectAsJson<AuthResponse>(request, url, client.PutAsync);
 
                 if (response.UserID <= 0)
                 {
                     return null;
                 }
 
-                return await FetchUserByID(response, client);
+                return await FetchUserById(response, client);
             }
         }
 
-        public static async void AttemptLogout(string sessionID)
+        public static async void AttemptLogout(string sessionId)
         {
-            using (HttpClient client = new HttpClient(DefaultRequestHandler()))
+            using (var client = new HttpClient(DefaultRequestHandler()))
             {
-                Dictionary<string, string> payload = new Dictionary<string, string> {
-                    { "SessionID", sessionID }
+                var payload = new Dictionary<string, string> {
+                    { "SessionID", sessionId }
                 };
 
-                string url = RootURL + "apidb/users/logout";
-                string json = JsonConvert.SerializeObject(payload);
+                const string url = RootUrl + "apidb/users/logout";
+                var json = JsonConvert.SerializeObject(payload);
 
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage _ = await client.PutAsync(url, content);
+                await client.PutAsync(url, content);
             }
         }
 
         public static async Task<User> AttemptRegistration(RegistrationSubmission registration)
         {
-            using (HttpClient client = new HttpClient(DefaultRequestHandler()))
+            using (var client = new HttpClient(DefaultRequestHandler()))
             {
-                string url = RootURL + "apidb/users/new";
-                AuthResponse response = await SendObjectAsJSON<AuthResponse>(registration, url, client, client.PostAsync);
+                const string url = RootUrl + "apidb/users/new";
+                var response = await SendObjectAsJson<AuthResponse>(registration, url, client.PostAsync);
 
-                if (response.Error != null && response.Error.Length > 0)
+                if (!string.IsNullOrEmpty(response.Error))
                 {
                     return new User(
                         0, null, null, 
@@ -115,47 +112,40 @@ namespace Eagleslist
                 }
                 else
                 {
-                    LoginRequest request = new LoginRequest(registration.Email, registration.Password);
+                    var request = new LoginRequest(registration.Email, registration.Password);
 
                     return await AttemptLogin(request);
                 }
             }
         }
 
-        private static Task<List<User>> UsersFromJSON(String JSON)
+        private static Task<List<User>> UsersFromJson(string json)
         {
-            return Task.Run(() =>
-            {
-                return JsonConvert.DeserializeObject<Dictionary<string, List<User>>>(JSON)["Users"];
-            });
+            return Task.Run(() => JsonConvert.DeserializeObject<Dictionary<string, List<User>>>(json)["Users"]);
         }
 
-        private static Task<List<Listing>> ListingsFromJSON(String JSON)
+        private static Task<List<Listing>> ListingsFromJson(string json)
         {
-            return Task.Run(() =>
-            {
-                return JsonConvert.DeserializeObject<Dictionary<string, List<Listing>>>(JSON)["Listings"];
-            });
+            return Task.Run(() => JsonConvert.DeserializeObject<Dictionary<string, List<Listing>>>(json)["Listings"]);
         }
 
         private static WebRequestHandler DefaultRequestHandler()
         {
-            WebRequestHandler handler = new WebRequestHandler();
-            handler.ServerCertificateValidationCallback = (sender, certificate, chain, errors) =>
+            var handler = new WebRequestHandler
             {
-                return true;
+                ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true
             };
 
             return handler;
         }
 
-        private async Task<string> Request(string url)
+        private static async Task<string> Request(string url)
         {
-            using (WebRequestHandler handler = new WebRequestHandler())
+            using (var handler = new WebRequestHandler())
             {
                 handler.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
 
-                using (HttpClient client = new HttpClient(handler))
+                using (var client = new HttpClient(handler))
                 {
                     try
                     {
@@ -175,20 +165,17 @@ namespace Eagleslist
             }
         }
 
-        private static async Task<T> GetJSON<T>(string url)
+        private static async Task<T> GetJson<T>(string url)
         {
-            using (WebRequestHandler handler = new WebRequestHandler())
+            using (var handler = new WebRequestHandler())
             {
-                handler.ServerCertificateValidationCallback = (sender, certificate, chain, errors) =>
-                {
-                    return true;
-                };
+                handler.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
 
-                using (HttpClient client = new HttpClient(handler))
+                using (var client = new HttpClient(handler))
                 {
                     try
                     {
-                        string responseString = await client.GetStringAsync(url);
+                        var responseString = await client.GetStringAsync(url);
                         return JsonConvert.DeserializeObject<T>(responseString);
                     }
                     catch (Exception e)
@@ -200,15 +187,15 @@ namespace Eagleslist
             }
         }
 
-        private static async Task<T> SendObjectAsJSON<T>(object obj, string url, HttpClient client, Func<string, HttpContent, Task<HttpResponseMessage>> action)
+        private static async Task<T> SendObjectAsJson<T>(object obj, string url, Func<string, HttpContent, Task<HttpResponseMessage>> action)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(obj);
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                var json = JsonConvert.SerializeObject(obj);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await action(url, content);
-                string responseString = await response.Content.ReadAsStringAsync();
+                var response = await action(url, content);
+                var responseString = await response.Content.ReadAsStringAsync();
 
                 return JsonConvert.DeserializeObject<T>(responseString);
             }

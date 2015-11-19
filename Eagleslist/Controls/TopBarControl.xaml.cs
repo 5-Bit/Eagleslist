@@ -107,6 +107,7 @@ namespace Eagleslist.Controls
                 }
 
                 CredentialManager.SetCurrentUser(null, true);
+                ContainingWindow?.ReloadLoginStateUi();
             }
         }
 
