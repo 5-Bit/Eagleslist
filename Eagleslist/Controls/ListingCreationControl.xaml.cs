@@ -87,7 +87,8 @@ namespace Eagleslist.Controls
             const string caption = "Eagleslist - Post New Listing";
 
             const MessageBoxButton buttons = MessageBoxButton.YesNo;
-            const MessageBoxImage icon = MessageBoxImage.Warning;
+            const MessageBoxImage icon = MessageBoxImage.Question;
+
             var result = MessageBox.Show(text, caption, buttons, icon);
 
             if (result != MessageBoxResult.Yes) return;
@@ -104,6 +105,7 @@ namespace Eagleslist.Controls
 
             if (response == null || !string.IsNullOrWhiteSpace(response.Error))
             {
+                ShowListingCreationFailedDialog();
                 Console.WriteLine("failed to post");
                 Console.WriteLine(response.Error);
             }
@@ -111,6 +113,16 @@ namespace Eagleslist.Controls
             {
                 Console.WriteLine("new listing post succeded");
             }
+        }
+
+        private static void ShowListingCreationFailedDialog()
+        {
+            const string text = @"Looks like something went wrong. Please try posting this listing again later.
+                                  If it still doesn't work, please let us know by emailing us at help@5BitStudios.com.
+                                  Please note that a draft of your post has been saved, so you won't have to retype it later.";
+            const string caption = "Eagleslist - Post New Listing Failed";
+
+            MessageBox.Show(text, caption, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private static void ChooseImages()
@@ -121,7 +133,6 @@ namespace Eagleslist.Controls
                 Multiselect = true,
                 Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg"
             };
-
 
             var x = dialog.ShowDialog();
 
