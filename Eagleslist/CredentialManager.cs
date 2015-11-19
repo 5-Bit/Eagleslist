@@ -6,38 +6,58 @@ namespace Eagleslist
 {
     public class CredentialManager
     {
+        private static User _nonPersistentUser;
+
         ~CredentialManager()
         {
-
-        }
-
-        public static User getCurrentUser()
-        {
-            return ReadUser();
-        }
-
-        public static void setCurrentUser(User user)
-        {
-            if (user == null)
+            var currentUser = GetCurrentUser();
+            if (!File.Exists(GetWriteFilePath()) && currentUser?.SessionID != null)
             {
-                if (File.Exists(GetWriteFilePath()))
+                RequestManager.AttemptLogout(currentUser.SessionID);
+            }
+        }
+
+        public static bool UserIsLoggedIn => GetCurrentUser() != null;
+
+        public static User GetCurrentUser()
+        {
+            if (_nonPersistentUser != null)
+            {
+                return _nonPersistentUser;
+            }
+
+            return File.Exists(GetWriteFilePath()) ? ReadUser() : null;
+        }
+
+        public static void SetCurrentUser(User user, bool persist)
+        {
+            if (persist)
+            {
+                _nonPersistentUser = null;
+
+                if (user == null)
                 {
-                    File.Delete(GetWriteFilePath());
+                    DeletePersistingUser();
+                }
+                else
+                {
+                    WriteUser(user);
                 }
             }
             else
             {
-                WriteUser(user);
+                DeletePersistingUser();
+                _nonPersistentUser = user;
             }
         }
 
         private static User ReadUser()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(User));
+            var serializer = new XmlSerializer(typeof(User));
 
             if (File.Exists(GetWriteFilePath()))
             {
-                using (StreamReader reader = new StreamReader(GetWriteFilePath()))
+                using (var reader = new StreamReader(GetWriteFilePath()))
                 {
                     return (User)serializer.Deserialize(reader);
                 }
@@ -46,41 +66,46 @@ namespace Eagleslist
             return null;
         }
 
+        private static void DeletePersistingUser()
+        {
+            if (File.Exists(GetWriteFilePath()))
+            {
+                File.Delete(GetWriteFilePath());
+            }
+        }
+
         private static void WriteUser(User user)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(User));
+            var serializer = new XmlSerializer(typeof(User));
             MakeWritePath(); // Will create all intermediate directories and override the existing file.
 
-            using (StreamWriter writer = new StreamWriter(GetWriteFilePath()))
+            using (var writer = new StreamWriter(GetWriteFilePath()))
             {
                 serializer.Serialize(writer, user);
-                Console.WriteLine("Wrote to: {0}", GetWriteFilePath());
             }
         }
 
         private static void MakeWritePath()
         {
-            DirectoryInfo info = Directory.CreateDirectory(GetWriteFolderPath());
+            var info = Directory.CreateDirectory(GetWriteFolderPath());
 
-            if (info.Exists)
-            {
-                FileStream stream = File.Create(GetWriteFilePath());
-                stream.Dispose();
-            }
+            if (!info.Exists) return;
+            var stream = File.Create(GetWriteFilePath());
+            stream.Dispose();
         }
 
         private static string GetWriteFolderPath()
         {
-            string basePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string eagleslistMainComponent = "Eagleslist";
-            string eagleslistDataComponent = "data";
+            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            const string eagleslistMainComponent = "Eagleslist";
+            const string eagleslistDataComponent = "data";
 
             return Path.Combine(basePath, eagleslistMainComponent, eagleslistDataComponent);
         }
 
         private static string GetWriteFilePath()
         {
-            string filePath = "user.xml";
+            const string filePath = "user.xml";
             return Path.Combine(GetWriteFolderPath(), filePath);
         }
     }

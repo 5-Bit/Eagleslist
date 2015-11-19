@@ -8,44 +8,13 @@ using System.Windows.Media;
 
 namespace Eagleslist
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private List<UserControl> PrimaryPanels = new List<UserControl>();
-        private List<UserControl> SecondaryPanels = new List<UserControl>();
+        private readonly List<UserControl> _primaryPanels = new List<UserControl>();
+        private readonly List<UserControl> _secondaryPanels = new List<UserControl>();
         internal List<Button> PrimaryNavigationControls = new List<Button>();
 
-        private LinkedList<object> navigationStack = new LinkedList<object>();
-
-        internal User CurrentUser
-        {
-            get
-            {
-                return CredentialManager.getCurrentUser();
-            }
-
-            set
-            {
-                CredentialManager.setCurrentUser(value); // UI changes below dependent on this.
-                topBar.accountComboBox.IsDropDownOpen = false;
-
-                if (value != null)
-                {
-                    topBar.SetLoggedInUI();
-                }
-                else
-                {
-                    topBar.SetLoggedOutUI();
-                }
-            }
-        }
-
-        internal bool userIsLoggedIn
-        {
-            get
-            {
-                return CurrentUser != null;
-            }
-        }
+        private LinkedList<object> _navigationStack = new LinkedList<object>();
 
         public MainWindow()
         {
@@ -57,7 +26,23 @@ namespace Eagleslist
             topBar.ContainingWindow = this;
             sideBarButtonContainer.ContainingWindow = this;
 
-            if (userIsLoggedIn)
+            composeContainer.ContainingWindow = this;
+            composeContainer.LoginTrigger = () => topBar.ShowLoginDialog();
+
+            ReloadLoginStateUi();
+
+            _primaryPanels.Add(searchContainer);
+            _primaryPanels.Add(composeContainer);
+            _primaryPanels.Add(listingsContainer);
+            _primaryPanels.Add(coursesContainer);
+
+            _secondaryPanels.Add(profileContainer);
+            _secondaryPanels.Add(messagesContainer);
+        }
+
+        internal void ReloadLoginStateUi()
+        {
+            if (CredentialManager.UserIsLoggedIn)
             {
                 topBar.SetLoggedInUI();
             }
@@ -65,63 +50,42 @@ namespace Eagleslist
             {
                 topBar.SetLoggedOutUI();
             }
-
-            PrimaryPanels.Add(searchContainer);
-            PrimaryPanels.Add(composeContainer);
-            PrimaryPanels.Add(listingsContainer);
-            PrimaryPanels.Add(coursesContainer);
-
-            SecondaryPanels.Add(profileContainer);
-            SecondaryPanels.Add(messagesContainer);
         }
 
         internal void ContainerDisplayPanelAtIndex(int index)
         {
-            if (index < PrimaryPanels.Count)
+            if (index < _primaryPanels.Count)
             {
-                for (int iterator = 0; iterator < PrimaryPanels.Count; iterator++)
+                for (var iterator = 0; iterator < _primaryPanels.Count; iterator++)
                 {
-                    PrimaryPanels[iterator].Visibility = index == iterator 
+                    _primaryPanels[iterator].Visibility = index == iterator 
                         ? Visibility.Visible : Visibility.Collapsed;
 
-                    if (iterator != 0)
-                    {
-                        Button button = PrimaryNavigationControls[iterator];
+                    if (iterator == 0) continue;
+                    var button = PrimaryNavigationControls[iterator];
 
-                        if (iterator == index)
-                        {
-                            button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ECEEF3"));
-                        }
-                        else
-                        {
-                            button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                        }
-                    }
+                    button.Background = iterator == index 
+                        ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ECEEF3")) 
+                        : new SolidColorBrush(Color.FromRgb(255, 255, 255));
                 }
 
-                for (int iterator = 0; iterator < SecondaryPanels.Count; iterator++)
+                foreach (var control in _secondaryPanels)
                 {
-                    SecondaryPanels[iterator].Visibility = Visibility.Collapsed;
+                    control.Visibility = Visibility.Collapsed;
                 }
             }
             else
             {
-                for (int iterator = 1; iterator < PrimaryPanels.Count; iterator++)
+                for (var iterator = 1; iterator < _primaryPanels.Count; iterator++)
                 {
-                    Button button = PrimaryNavigationControls[iterator];
+                    var button = PrimaryNavigationControls[iterator];
                     button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                 }
 
-                for (int iterator = 0; iterator < SecondaryPanels.Count; iterator++)
+                for (var iterator = 0; iterator < _secondaryPanels.Count; iterator++)
                 {
-                    if (index - PrimaryPanels.Count == iterator)
-                    {
-                        SecondaryPanels[iterator].Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        SecondaryPanels[iterator].Visibility = Visibility.Collapsed;
-                    }
+                    _secondaryPanels[iterator].Visibility = index - _primaryPanels.Count == iterator ?
+                        Visibility.Visible : Visibility.Collapsed;
                 }
             }
         }
@@ -130,46 +94,46 @@ namespace Eagleslist
         {
             if (index == 0)
             {
-                profileContainer.currentProfileUser = CurrentUser;
+                profileContainer.currentProfileUser = CredentialManager.GetCurrentUser();
             }
 
-            ContainerDisplayPanelAtIndex(PrimaryPanels.Count + index);
+            ContainerDisplayPanelAtIndex(_primaryPanels.Count + index);
         }
 
-        private static string GravatarURLFromUser(User user, int size)
+        private static string GravatarUrlFromUser(User user, int size)
         {
-            string root = "http://www.gravatar.com/avatar";
-            string hash = GravatarMD5StringFromString(user.Email);
+            const string root = "http://www.gravatar.com/avatar";
+            var hash = GravatarMd5StringFromString(user.Email);
 
-            return string.Format("{0}/{1}?s={2}", root, hash, size);
+            return $"{root}/{hash}?s={size}";
         }
 
-        private static string GravatarMD5StringFromString(string input)
+        private static string GravatarMd5StringFromString(string input)
         {
-            using (MD5 md5Hash = MD5.Create())
+            using (var md5Hash = MD5.Create())
             {
-                string hash = GetMd5Hash(md5Hash, input.Trim().ToLower());
+                var hash = GetMd5Hash(md5Hash, input.Trim().ToLower());
                 return VerifyMd5Hash(md5Hash, input, hash) ? hash : null;
             }
         }
 
-        private static string GetMd5Hash(MD5 md5Hash, string input)
+        private static string GetMd5Hash(HashAlgorithm md5Hash, string input)
         {
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-            StringBuilder sBuilder = new StringBuilder();
+            var data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+            var sBuilder = new StringBuilder();
 
-            for (int i = 0; i < data.Length; i++)
+            foreach (var b in data)
             {
-                sBuilder.Append(data[i].ToString("x2"));
+                sBuilder.Append(b.ToString("x2"));
             }
 
             return sBuilder.ToString();
         }
 
-        private static bool VerifyMd5Hash(MD5 md5Hash, string input, string hash)
+        private static bool VerifyMd5Hash(HashAlgorithm md5Hash, string input, string hash)
         {
-            string hashOfInput = GetMd5Hash(md5Hash, input);
-            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+            var hashOfInput = GetMd5Hash(md5Hash, input);
+            var comparer = StringComparer.OrdinalIgnoreCase;
 
             return comparer.Compare(hashOfInput, hash) == 0;
         }

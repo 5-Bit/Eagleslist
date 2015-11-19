@@ -26,20 +26,22 @@ namespace Eagleslist
             {
                 if (user.AuthError == null || user.AuthError.Length == 0)
                 {
-                    MainWindow mainWindow = (MainWindow)Owner;
-                    mainWindow.CurrentUser = user;
-
-                    this.DialogResult = true;
+                    CredentialManager.SetCurrentUser(user, StaySignedInCheckbox.IsChecked ?? false);
+                    DialogResult = true;
                     Close();
-                } else
+                }
+                else
                 {
-                    Console.WriteLine("Login failed");
+                    DialogResult = false;
                 }
             }
             else
             {
-                Console.WriteLine("Login failed");
+                DialogResult = false;
             }
+
+            MainWindow window = (MainWindow)Owner;
+            window.ReloadLoginStateUi();
         }
 
         private void InputFieldChanged(object sender, RoutedEventArgs e)

@@ -1,18 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Eagleslist.Controls
 {
@@ -21,12 +10,12 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class ListingCreationControl : UserControl
     {
+        internal Func<bool> LoginTrigger;
         private ListingCreation Draft = new ListingCreation();
 
         public ListingCreationControl()
         {
             InitializeComponent();
-
             NewListingConditionComboBox.ItemsSource = Enum.GetValues(typeof(BookCondition));
         }
 
@@ -65,22 +54,82 @@ namespace Eagleslist.Controls
 
         }
 
+        private void CreateListingButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (CredentialManager.GetCurrentUser().SessionID != null)
+            {
+                ShowConfirmPostDialog();
+            } 
+            else
+            {
+                if (LoginTrigger != null && LoginTrigger())
+                {
+                    ShowConfirmPostDialog();
+                }
+            }
+        }
+
+        private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private async void ShowConfirmPostDialog()
+        {
+            const string text = "You are about to post a new listing to Eagleslist. Are you sure that you want to continue?";
+            const string caption = "Eagleslist - Post New Listing";
+
+            const MessageBoxButton buttons = MessageBoxButton.YesNo;
+            const MessageBoxImage icon = MessageBoxImage.Warning;
+            var result = MessageBox.Show(text, caption, buttons, icon);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            var sessionId = CredentialManager.GetCurrentUser().SessionID;
+            var condition = NewListingConditionComboBox.Items[NewListingConditionComboBox.SelectedIndex].ToString();
+            var listing = new Listing(
+                NewListingTitleBox.Text, NewListingContentBox.Text, null,
+                null, null, null, NewListingISBNBox.Text, 
+                NewListingPriceBox.Text, condition, DateTime.Now, -1, -1
+            );
+
+            var response = await RequestManager.PostNewListing(listing, sessionId);
+
+            if (response == null || !string.IsNullOrWhiteSpace(response.Error))
+            {
+                Console.WriteLine("failed to post");
+                Console.WriteLine(response.Error);
+            }
+            else
+            {
+                Console.WriteLine("new listing post succeded");
+            }
+        }
+
         private static void ChooseImages()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-
-            dialog.Title = "Eagleslist - Select Images";
-            dialog.Multiselect = true;
-            dialog.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg";
-
-            bool? x = dialog.ShowDialog();
-
-            if (x.HasValue && x.Value)
+            var dialog = new OpenFileDialog
             {
-                foreach (String file in dialog.FileNames)
-                {
+                Title = "Eagleslist - Select Images",
+                Multiselect = true,
+                Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg"
+            };
 
-                }
+
+            var x = dialog.ShowDialog();
+
+            if (!x.HasValue || !x.Value) return;
+
+            foreach (var file in dialog.FileNames)
+            {
+
             }
         }
     }

@@ -18,7 +18,7 @@ namespace Eagleslist.Controls
 
         internal void SetLoggedInUI()
         {
-            accountOverlayButton.Content = ContainingWindow.CurrentUser.Handle;
+            accountOverlayButton.Content = CredentialManager.GetCurrentUser()?.Handle;
             ToggleVisibleAccountComboBoxItems();
         }
 
@@ -30,7 +30,7 @@ namespace Eagleslist.Controls
 
         private void ToggleVisibleAccountComboBoxItems()
         {
-            string tag = ContainingWindow.userIsLoggedIn ? "LoggedIn" : "LoggedOut";
+            string tag = CredentialManager.UserIsLoggedIn ? "LoggedIn" : "LoggedOut";
 
             foreach (ComboBoxItem item in accountComboBox.Items)
             {
@@ -99,22 +99,25 @@ namespace Eagleslist.Controls
 
             if (result == MessageBoxResult.Yes)
             {
-                if (ContainingWindow.CurrentUser.SessionID != null)
+                string currentSessionID = CredentialManager.GetCurrentUser()?.SessionID;
+                if (currentSessionID != null)
                 {
-                    string sessionID = String.Copy(ContainingWindow.CurrentUser.SessionID);
+                    string sessionID = String.Copy(currentSessionID);
                     RequestManager.AttemptLogout(sessionID);
                 }
 
-                ContainingWindow.CurrentUser = null;
+                CredentialManager.SetCurrentUser(null, true);
+                ContainingWindow?.ReloadLoginStateUi();
             }
         }
 
-        private void ShowLoginDialog()
+        internal bool ShowLoginDialog()
         {
             LoginPrompt prompt = new LoginPrompt();
             prompt.Owner = ContainingWindow;
 
-            bool? _ = prompt.ShowDialog();
+            bool? success = prompt.ShowDialog();
+            return success.HasValue && success.Value;
         }
 
         private void ShowSignUpDialog()

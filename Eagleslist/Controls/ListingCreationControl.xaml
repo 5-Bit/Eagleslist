@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Eagleslist.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="640">
+             d:DesignHeight="400" d:DesignWidth="640"
+             IsVisibleChanged="VisibilityChanged">
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                   Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
@@ -30,8 +31,13 @@
             </Grid.ColumnDefinitions>
 
             <Label Margin="20, 10, 20, 10" Content="New Listing" FontSize="18"
-                           Grid.ColumnSpan="4" Grid.Row="0" VerticalAlignment="Center"/>
+                   Grid.Row="0" VerticalAlignment="Center"/>
 
+            <Label x:Name="DraftSavedLabel" Content="Draft Saved 3 minutes ago" 
+                   Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"
+                   HorizontalAlignment="Right" VerticalAlignment="Center"
+                   FontSize="10" Foreground="Gray" Margin="20, 10, 20, 10"/>
+            
             <StackPanel Margin="20, 0, 10, 0" HorizontalAlignment="Stretch" 
                                 Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
                 <Label Content="Post Title"/>
@@ -89,58 +95,8 @@
 
             <DockPanel Grid.ColumnSpan="4" Grid.Row="5" VerticalAlignment="Center" Margin="20, 20, 20, 20">
                 <Button Content="Post Listing" HorizontalAlignment="Right" Width="100"
-                                x:Name="PostNewListingButton" IsEnabled="False">
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <BeginStoryboard>
-                                <!--<Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="composeGrid"
-                                                             Storyboard.TargetProperty="(Grid.Height)" 
-                                                             From="{Binding ElementName=composeGrid, Path=ActualHeight}"
-                                                             To="0" Duration="0:0:0.35" AutoReverse="False"/>
-                                        </Storyboard>-->
-
-                                <Storyboard >
-                                    <!-- <DoubleAnimation Storyboard.TargetName="composeGrid"
-                                                             Storyboard.TargetProperty="(Grid.Height)"
-                                                             From="{Binding ElementName=composeGrid, Path=ActualHeight}"
-                                                             To="0" Duration="0:0:0.35"/>-->
-                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="composeGrid"
-                                                                              Storyboard.TargetProperty="Margin"
-                                                                              BeginTime="00:00:00">
-
-                                        <SplineThicknessKeyFrame KeyTime="00:00:00" Value="0, 0, 0, 0" />
-                                        <SplineThicknessKeyFrame KeyTime="00:00:0.25" Value="0, 0, 0, 0" />
-                                    </ThicknessAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Button.Triggers>
-                </Button>
-                <!--<Button Content="Preview" HorizontalAlignment="Right" Width="100">
-                            <Button.Triggers>
-                                <EventTrigger RoutedEvent="Button.Click">
-                                    <BeginStoryboard>
-                                        -->
-                <!--<Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="composeGrid"
-                                                             Storyboard.TargetProperty="(Grid.Height)" 
-                                                             From="{Binding ElementName=composeGrid, Path=ActualHeight}"
-                                                             To="0" Duration="0:0:0.35" AutoReverse="False"/>
-                                        </Storyboard>-->
-                <!--
-                                        <Storyboard >
-                                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="composeGrid"
-                                                                              Storyboard.TargetProperty="Margin"
-                                                                              BeginTime="00:00:00">
-                                                <SplineThicknessKeyFrame KeyTime="00:00:00" Value="0, 0, 0, 0" />
-                                                <SplineThicknessKeyFrame KeyTime="00:00:0.25" Value="0, -500, 0, 0" />
-                                            </ThicknessAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Button.Triggers>
-                        </Button>-->
+                        x:Name="PostNewListingButton" IsEnabled="False"
+                        Click="CreateListingButtonClicked"/>
             </DockPanel>
         </Grid>
     </ScrollViewer>

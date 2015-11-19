@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Eagleslist
 {
-    class ListingCreation
+    public class ListingCreation
     {
         public string Title { get; set; }
         public string Content { get; set; }
@@ -78,7 +78,7 @@ namespace Eagleslist
                     CultureInfo.CurrentUICulture
                 );
 
-                return converted;
+                return converted >= Decimal.Zero ? converted : -1;
             }
             catch (Exception)
             {

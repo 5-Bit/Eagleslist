@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Eagleslist
 {
     public class Listing
@@ -9,18 +11,19 @@ namespace Eagleslist
         public string Email { get; private set; }
         public string Bio { get; private set; }
         public string ImageURL { get; private set; }
+        public string ISBN { get; private set; }
         public string Price { get; private set; }
         public string Condition { get; private set; }
-        public string CreateDate { get; private set; }
+        public DateTime CreateDate { get; private set; }
 
         public int ListingID { get; private set; }
         public int UserID { get; private set; }
 
-        public Listing(string title, string Content, string Handle,
-            string Email, string Bio, string ImageURL, string Price, string Condition,
-            int ListingID, int UserID, string CreateDate)
+        public Listing(string Title, string Content, string Handle,
+            string Email, string Bio, string ImageURL, string ISBN, string Price, string Condition,
+            DateTime CreateDate, int ListingID, int UserID)
         {
-            this.Title = title;
+            this.Title = Title;
             this.Content = Content;
             this.Handle = Handle;
             this.Email = Email;

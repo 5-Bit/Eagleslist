@@ -10,7 +10,7 @@ namespace Eagleslist.Controls
     /// <summary>
     /// Interaction logic for ListingControl.xaml
     /// </summary>
-    public partial class ListingControl : UserControl
+    public partial class ListingControl
     {
         public ListingControl()
         {
@@ -19,50 +19,38 @@ namespace Eagleslist.Controls
 
         public void SetListing(Listing listing)
         {
-            if (listing == null)
-            {
-                Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                Visibility = Visibility.Visible;
-            }
+            Visibility = listing == null ? Visibility.Collapsed : Visibility.Visible;
 
             listingTitleLabel.Content = listing?.Title;
             listingAskingPrice.Content = listing?.Price;
             listingConditionLabel.Content = listing?.Condition;
             listingContentTextBlock.Text = listing?.Content;
-            listingTimePostedLabel.Content = HumanizeDateString(listing?.CreateDate);
+            listingTimePostedLabel.Content = HumanizeDateString(listing?.CreateDate.ToString(CultureInfo.InvariantCulture));
         }
 
-        private string HumanizeDateString(string input)
+        private static string HumanizeDateString(string input)
         {
             if (input == null)
             {
                 return null;
             }
 
-            DateTime date = DateTime.Parse(input, null, DateTimeStyles.RoundtripKind);
-
-            if (date == null)
-            {
-                return null;
-            }
+            var date = DateTime.Parse(input, null, DateTimeStyles.RoundtripKind);
 
             return date.Humanize();
         }
 
         private async void SetCurrentListingImage(Listing listing)
         {
-            BitmapImage image = null;
+            BitmapImage image;
 
-            Uri result = null;
-            bool success = Uri.TryCreate(listing.ImageURL, UriKind.Absolute, out result)
+            Uri result;
+            var success = Uri.TryCreate(listing.ImageURL, UriKind.Absolute, out result)
                 && (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps);
 
             if (success)
             {
-                image = await RequestManager.GetBitmapFromURI(result);
+                image = await RequestManager.GetBitmapFromUri(result);
             }
             else
             {
