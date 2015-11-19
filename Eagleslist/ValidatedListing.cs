@@ -3,13 +3,18 @@ namespace Eagleslist
 {
     public class ValidatedListing
     {
-        public string SessionID { get; private set; }
-        public Listing Listing { get; private set; }
 
-        public ValidatedListing(string SessionID, Listing Listing)
+        // ReSharper disable once InconsistentNaming
+        // ReSharper disable once NotAccessedField.Local
+        private string SessionID;
+        // ReSharper disable once NotAccessedField.Local
+        // ReSharper disable once InconsistentNaming
+        private Listing Listing;
+
+        public ValidatedListing(string sessionId, Listing listing)
         {
-            this.SessionID = SessionID;
-            this.Listing = Listing;
+            this.SessionID = sessionId;
+            this.Listing = listing;
         }
     }
 }

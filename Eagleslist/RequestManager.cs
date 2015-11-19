@@ -110,12 +110,21 @@ namespace Eagleslist
                         false, false, response.Error
                     );
                 }
-                else
-                {
-                    var request = new LoginRequest(registration.Email, registration.Password);
 
-                    return await AttemptLogin(request);
-                }
+                var request = new LoginRequest(registration.Email, registration.Password);
+                return await AttemptLogin(request);
+            }
+        }
+
+        public static async Task<List<Comment>> GetCommentsForListing(Listing listing, string sessionId)
+        {
+            using (var client = new HttpClient(DefaultRequestHandler()))
+            {
+                var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/getAll";
+                var commentRequest = new CommentRequest(sessionId);
+                var response = await SendObjectAsJson<CommentRequestResponse>(commentRequest, url, client.PostAsync);
+
+                return !string.IsNullOrEmpty(response?.Error) ? new List<Comment>() : response?.Comments;
             }
         }
 
@@ -126,7 +135,14 @@ namespace Eagleslist
 
         private static Task<List<Listing>> ListingsFromJson(string json)
         {
-            return Task.Run(() => JsonConvert.DeserializeObject<Dictionary<string, List<Listing>>>(json)["Listings"]);
+            try
+            {
+                return Task.Run(() => JsonConvert.DeserializeObject<Dictionary<string, List<Listing>>>(json)["Listings"]);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         private static WebRequestHandler DefaultRequestHandler()
