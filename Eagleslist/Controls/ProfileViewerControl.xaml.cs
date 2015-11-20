@@ -7,7 +7,7 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class ProfileViewerControl : UserControl
     {
-        internal User currentProfileUser
+        internal User CurrentProfileUser
         {
             set
             {

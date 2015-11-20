@@ -3,46 +3,116 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Eagleslist.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500">
-    
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="150"/>
-        </Grid.ColumnDefinitions>
+    <UserControl.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>            
+        </Style>
+    </UserControl.Resources>
 
-        <StackPanel Grid.Column="0" Grid.Row="0">
-            <Label x:Name="listingTitleLabel" FontSize="21.333" Content="Post Title"/>
-            <DockPanel>
-                <Label Content="Condition: "/>
-                <Label x:Name="listingConditionLabel" Content="condition text"/>
-            </DockPanel>
+    <ScrollViewer>
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <DockPanel>
-                <Label Content="Price: "/>
-                <Label x:Name="listingAskingPrice" Content="some dollar amount"/>
-            </DockPanel>
+            <Grid Grid.Row="0" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <Label x:Name="listingTimePostedLabel" Content="undetermined"/>
-        </StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
 
-        <Border Height="150" Width="150" Background="Gray" 
+                <StackPanel Grid.Column="0" Grid.Row="0">
+                    <Label x:Name="ListingTitleLabel" Padding="0" FontSize="21.333" Content="Post Title"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Condition: " Padding="0" VerticalAlignment="Center"/>
+                        <Label x:Name="ListingConditionLabel" Content="condition text"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Price: " Padding="0" VerticalAlignment="Center"/>
+                        <Label x:Name="ListingAskingPrice" Content="some dollar amount"/>
+                    </StackPanel>
+
+                    <Label x:Name="ListingTimePostedLabel" Padding="0" Content="undetermined" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <Border Height="150" Width="150" Background="Gray" 
                             HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0">
-            <Image x:Name="listingImageView" Source="../images/missing.png" 
+                    <Image x:Name="ListingImageView" Source="../images/missing.png" 
                                RenderOptions.BitmapScalingMode="HighQuality"
                                Stretch="UniformToFill" HorizontalAlignment="Center"/>
-        </Border>
+                </Border>
 
-        <TextBlock x:Name="listingContentTextBlock" Text="Body text for post." Margin="10" 
+                <TextBlock x:Name="ListingContentTextBlock" Text="Body text for post." Margin="0" Padding="0" 
                                IsEnabled="False" TextWrapping="WrapWithOverflow"
                                TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
-                               Grid.Row="1" Grid.ColumnSpan="2"/>
-    </Grid>
+                               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+            </Grid>
+            
+            <Grid x:Name="CommentsSectionGrid" Grid.Row="1" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Comments" FontSize="16"/>
+
+                <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                          BorderThickness="0" x:Name="CommentsListView"
+                          Width="{Binding ElementName=CommentsSectionGrid, Path=ActualWidth}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0 10 0 10" HorizontalAlignment="Stretch" Background="{StaticResource lightBackground2}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <DockPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource lightBackground}"
+                                           Width="{Binding ElementName=CommentsSectionGrid, Path=ActualWidth}">
+                                    
+                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                    <Label Content="{Binding UserName}" 
+                                       HorizontalAlignment="Left" Padding="0" DockPanel.Dock="Left"/>
+                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                    <Label Content="{Binding CreateDate}"  
+                                       HorizontalAlignment="Right" Padding="0" DockPanel.Dock="Right"/>
+                                </DockPanel>
+
+                                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
+                                           TextWrapping="WrapWithOverflow" TextTrimming="WordEllipsis"
+                                           FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"
+                                           Grid.Row="1" Grid.Column="0" Margin="0"
+                                           Foreground="Black" Padding="0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

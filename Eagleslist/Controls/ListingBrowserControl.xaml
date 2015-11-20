@@ -25,7 +25,7 @@
                   Height="{Binding ElementName=BrowseListingContainer, Path=ActualHeight}" 
                   SelectionChanged="ListingsViewSelectionChanged" 
                   SelectedIndex="{Binding Path=SelectedIndexValue}" 
-                  ItemsSource="{Binding Path=Items}" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -76,6 +76,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <local:ListingControl Grid.Column="1" Margin="20" x:Name="CurrentListing"/>
+        <local:ListingControl Grid.Column="1" Margin="0" x:Name="CurrentListing"/>
     </Grid>
 </UserControl>

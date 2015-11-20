@@ -43,11 +43,11 @@ namespace Eagleslist
         {
             if (CredentialManager.UserIsLoggedIn)
             {
-                topBar.SetLoggedInUI();
+                topBar.SetLoggedInUi();
             }
             else
             {
-                topBar.SetLoggedOutUI();
+                topBar.SetLoggedOutUi();
             }
         }
 
@@ -93,7 +93,7 @@ namespace Eagleslist
         {
             if (index == 0)
             {
-                profileContainer.currentProfileUser = CredentialManager.GetCurrentUser();
+                profileContainer.CurrentProfileUser = CredentialManager.GetCurrentUser();
             }
 
             ContainerDisplayPanelAtIndex(_primaryPanels.Count + index);

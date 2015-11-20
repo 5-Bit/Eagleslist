@@ -14,7 +14,7 @@
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="searchButton" HorizontalContentAlignment="Stretch"
+        <Button x:Name="SearchButton" HorizontalContentAlignment="Stretch"
                     BorderThickness="0" Click="NavigationButtonClicked" Grid.Row="0"
                     Padding="0" Style="{StaticResource TopPanelButtonStyle}"
                     VerticalAlignment="Stretch" Tag="0">
@@ -28,7 +28,7 @@
             </DockPanel>
         </Button>
 
-        <Button x:Name="composeButton" HorizontalContentAlignment="Stretch" 
+        <Button x:Name="ComposeButton" HorizontalContentAlignment="Stretch" 
                     BorderThickness="0" Click="NavigationButtonClicked" Grid.Row="1"
                     Padding="0" Style="{StaticResource SidePanelButtonStyle}" Tag="1">
 
@@ -36,7 +36,7 @@
                 <Canvas VerticalAlignment="Stretch">
                     <Frame Background="{StaticResource FGCUGreen}" Padding="0" Margin="0" 
                            HorizontalAlignment="Left" Width="2" Height="41" Canvas.Left="0"
-                           Visibility="{Binding ElementName=composeButton, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"/>
+                           Visibility="{Binding ElementName=ComposeButton, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"/>
                 </Canvas>
 
 
@@ -48,7 +48,7 @@
             </Grid>
         </Button>
 
-        <Button x:Name="listingsButton" HorizontalContentAlignment="Stretch"
+        <Button x:Name="ListingsButton" HorizontalContentAlignment="Stretch"
                 BorderThickness="0" Click="NavigationButtonClicked"  Grid.Row="2"
                 Padding="0" Style="{StaticResource SidePanelButtonStyle}" Tag="2">
             
@@ -56,7 +56,7 @@
                 <Canvas VerticalAlignment="Stretch">
                     <Frame Background="{StaticResource FGCUGreen}" Padding="0" Margin="0" 
                            HorizontalAlignment="Left" Width="2" Height="41"
-                           Visibility="{Binding ElementName=listingsButton, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"/>
+                           Visibility="{Binding ElementName=ListingsButton, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"/>
                 </Canvas>
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -67,7 +67,7 @@
             </Grid>
         </Button>
 
-        <Button x:Name="coursesButton" HorizontalContentAlignment="Stretch"
+        <Button x:Name="CoursesButton" HorizontalContentAlignment="Stretch"
                 BorderThickness="0" Click="NavigationButtonClicked" Grid.Row="3"
                 Padding="0" Style="{StaticResource SidePanelButtonStyle}" Tag="3">
 
@@ -75,7 +75,7 @@
                 <Canvas VerticalAlignment="Stretch">
                     <Frame Background="{StaticResource FGCUGreen}" Padding="0" Margin="0" 
                            HorizontalAlignment="Left" Width="2" Height="41"
-                           Visibility="{Binding ElementName=coursesButton, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"/>
+                           Visibility="{Binding ElementName=CoursesButton, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"/>
                 </Canvas>
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">

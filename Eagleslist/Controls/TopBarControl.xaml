@@ -37,23 +37,23 @@
                         Foreground="White" Grid.Column="1" Margin="0"/>
 
         <Canvas Grid.Column="2" HorizontalAlignment="Right">
-            <Button Click="accountDropDownClicked" MinWidth="60" Padding="10 0"
+            <Button Click="AccountDropDownClicked" MinWidth="60" Padding="10 0"
                             HorizontalAlignment="Center" Canvas.ZIndex="2" Foreground="White"
                             Canvas.Right="0" 
-                            x:Name="accountOverlayButton" VerticalAlignment="Center"
+                            x:Name="AccountOverlayButton" VerticalAlignment="Center"
                             Style="{StaticResource TopPanelButtonStyle}"
                             Height="{Binding ElementName=TopBarContainerGrid, Path=ActualHeight}">
                 Account
             </Button>
 
-            <ComboBox x:Name="accountComboBox"
+            <ComboBox x:Name="AccountComboBox"
                               HorizontalAlignment="Right" Canvas.ZIndex="1" Canvas.Right="0"
-                              Width="{Binding ElementName=accountOverlayButton, Path=ActualWidth}"
-                              Canvas.Top="0" Canvas.Bottom="0" Height="{Binding ElementName=accountOverlayButton, Path=ActualHeight}"
+                              Width="{Binding ElementName=AccountOverlayButton, Path=ActualWidth}"
+                              Canvas.Top="0" Canvas.Bottom="0" Height="{Binding ElementName=AccountOverlayButton, Path=ActualHeight}"
                               Background="{StaticResource FGCUGreen}" Foreground="{StaticResource FGCUGreen}" 
                               BorderThickness="0" Margin="0, 0, 0, 0" IsEnabled="False" 
                               ItemsSource="{Binding Path=accountComboBoxItems}"
-                              SelectionChanged="accountComboBoxSelectionChanged">
+                              SelectionChanged="AccountComboBoxSelectionChanged">
 
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">

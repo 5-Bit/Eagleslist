@@ -11,7 +11,7 @@ namespace Eagleslist.Controls
     public partial class ListingCreationControl : UserControl
     {
         internal Func<bool> LoginTrigger;
-        private ListingCreation Draft = new ListingCreation();
+        private ListingCreation _draft = new ListingCreation();
 
         public ListingCreationControl()
         {
@@ -21,32 +21,32 @@ namespace Eagleslist.Controls
 
         private void NewListingTitleChanged(object sender, RoutedEventArgs e)
         {
-            Draft.Title = NewListingTitleBox.Text;
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
+            _draft.Title = NewListingTitleBox.Text;
+            PostNewListingButton.IsEnabled = _draft.RepresentsValidListing();
         }
 
         private void NewListingPriceChanged(object sender, RoutedEventArgs e)
         {
-            Draft.Price = NewListingPriceBox.Text;
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
+            _draft.Price = NewListingPriceBox.Text;
+            PostNewListingButton.IsEnabled = _draft.RepresentsValidListing();
         }
 
         private void NewListingContentChanged(object sender, RoutedEventArgs e)
         {
-            Draft.Content = NewListingContentBox.Text;
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
+            _draft.Content = NewListingContentBox.Text;
+            PostNewListingButton.IsEnabled = _draft.RepresentsValidListing();
         }
 
         private void NewListingConditionChanged(object sender, RoutedEventArgs e)
         {
-            Draft.Condition = BookConditionMethods.FromInt(NewListingConditionComboBox.SelectedIndex);
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
+            _draft.Condition = BookConditionMethods.FromInt(NewListingConditionComboBox.SelectedIndex);
+            PostNewListingButton.IsEnabled = _draft.RepresentsValidListing();
         }
 
-        private void NewListingISBNChanged(object sender, RoutedEventArgs e)
+        private void NewListingIsbnChanged(object sender, RoutedEventArgs e)
         {
-            Draft.ISBN = NewListingISBNBox.Text;
-            PostNewListingButton.IsEnabled = Draft.RepresentsValidListing();
+            _draft.ISBN = NewListingIsbnBox.Text;
+            PostNewListingButton.IsEnabled = _draft.RepresentsValidListing();
         }
 
         private void NewListingImagesChanged(object sender, RoutedEventArgs e)
@@ -95,11 +95,17 @@ namespace Eagleslist.Controls
 
             var sessionId = CredentialManager.GetCurrentUser().SessionID;
             var condition = NewListingConditionComboBox.Items[NewListingConditionComboBox.SelectedIndex].ToString();
-            var listing = new Listing(
-                NewListingTitleBox.Text, NewListingContentBox.Text, null,
-                null, null, null, NewListingISBNBox.Text, 
-                NewListingPriceBox.Text, condition, DateTime.Now, -1, -1
-            );
+
+            var listing = new Listing
+            {
+                Title = NewListingTitleBox.Text,
+                Content = NewListingContentBox.Text,
+                ISBN = NewListingIsbnBox.Text,
+                Price = NewListingPriceBox.Text,
+                Condition = condition,
+                CreateDate = DateTime.Now
+            };
+
 
             var response = await RequestManager.PostNewListing(listing, sessionId);
 

@@ -10,19 +10,19 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class SideBarControl : UserControl
     {
-        private MainWindow Container;
+        private MainWindow _container;
         internal MainWindow ContainingWindow
         {
             get
             {
-                return Container;
+                return _container;
             }
             set
             {
-                Container = value;
+                _container = value;
 
                 List<Button> buttons = new List<Button> {
-                    searchButton, composeButton, listingsButton, coursesButton
+                    SearchButton, ComposeButton, ListingsButton, CoursesButton
                 };
 
                 if (value?.PrimaryNavigationControls.Count < buttons.Count)
@@ -37,7 +37,7 @@ namespace Eagleslist.Controls
             InitializeComponent();
 
 
-            SelectControlButton(searchButton);
+            SelectControlButton(SearchButton);
         }
 
         private void NavigationButtonClicked(object sender, RoutedEventArgs e)

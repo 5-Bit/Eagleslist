@@ -16,15 +16,15 @@ namespace Eagleslist.Controls
             InitializeComponent();
         }
 
-        internal void SetLoggedInUI()
+        internal void SetLoggedInUi()
         {
-            accountOverlayButton.Content = CredentialManager.GetCurrentUser()?.Handle;
+            AccountOverlayButton.Content = CredentialManager.GetCurrentUser()?.Handle;
             ToggleVisibleAccountComboBoxItems();
         }
 
-        internal void SetLoggedOutUI()
+        internal void SetLoggedOutUi()
         {
-            accountOverlayButton.Content = "Account";
+            AccountOverlayButton.Content = "Account";
             ToggleVisibleAccountComboBoxItems();
         }
 
@@ -32,7 +32,7 @@ namespace Eagleslist.Controls
         {
             string tag = CredentialManager.UserIsLoggedIn ? "LoggedIn" : "LoggedOut";
 
-            foreach (ComboBoxItem item in accountComboBox.Items)
+            foreach (ComboBoxItem item in AccountComboBox.Items)
             {
                 if (item.Tag.Equals(tag))
                 {
@@ -55,14 +55,14 @@ namespace Eagleslist.Controls
             ContainingWindow.ShowSecondaryPanelAtIndex(1);
         }
 
-        private void accountDropDownClicked(object sender, RoutedEventArgs e)
+        private void AccountDropDownClicked(object sender, RoutedEventArgs e)
         {
-            accountComboBox.IsDropDownOpen = !accountComboBox.IsDropDownOpen;
+            AccountComboBox.IsDropDownOpen = !AccountComboBox.IsDropDownOpen;
         }
 
-        private void accountComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AccountComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch (accountComboBox.SelectedIndex)
+            switch (AccountComboBox.SelectedIndex)
             {
                 case 0:
                     ShowLoginDialog();
@@ -83,8 +83,8 @@ namespace Eagleslist.Controls
                     break;
             }
 
-            accountComboBox.IsDropDownOpen = false;
-            accountComboBox.SelectedIndex = -1;
+            AccountComboBox.IsDropDownOpen = false;
+            AccountComboBox.SelectedIndex = -1;
         }
 
         private void ShowSignOutDialog()
@@ -99,11 +99,11 @@ namespace Eagleslist.Controls
 
             if (result == MessageBoxResult.Yes)
             {
-                string currentSessionID = CredentialManager.GetCurrentUser()?.SessionID;
-                if (currentSessionID != null)
+                string currentSessionId = CredentialManager.GetCurrentUser()?.SessionID;
+                if (currentSessionId != null)
                 {
-                    string sessionID = String.Copy(currentSessionID);
-                    RequestManager.AttemptLogout(sessionID);
+                    string sessionId = String.Copy(currentSessionId);
+                    RequestManager.AttemptLogout(sessionId);
                 }
 
                 CredentialManager.SetCurrentUser(null, true);
