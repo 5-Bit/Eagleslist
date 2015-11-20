@@ -12,7 +12,7 @@
                   Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
                   Height="{Binding ElementName=composeContainer, Path=ActualHeight}"
                   Background="{StaticResource lightBackground}">
-        <Grid x:Name="composeGrid" HorizontalAlignment="Stretch" Width="Auto">
+        <Grid x:Name="ComposeGrid" HorizontalAlignment="Stretch" Width="Auto">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="62" />
@@ -65,7 +65,7 @@
                 <Label Content="ISBN (optional)"/>
                 
                 <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" 
-                         FontSize="13.333" x:Name="NewListingISBNBox" TextChanged="NewListingISBNChanged"/>
+                         FontSize="13.333" x:Name="NewListingIsbnBox" TextChanged="NewListingIsbnChanged"/>
                 
             </StackPanel>
 

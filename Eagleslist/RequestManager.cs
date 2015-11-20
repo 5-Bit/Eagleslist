@@ -122,7 +122,7 @@ namespace Eagleslist
             {
                 var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/getAll";
                 var commentRequest = new CommentRequest(sessionId);
-                var response = await SendObjectAsJson<CommentRequestResponse>(commentRequest, url, client.PostAsync);
+                var response = await SendObjectAsJson<CommentRequestResponse>(commentRequest, url, client.PutAsync);
 
                 return !string.IsNullOrEmpty(response?.Error) ? new List<Comment>() : response?.Comments;
             }

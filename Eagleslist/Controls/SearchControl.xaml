@@ -22,10 +22,10 @@
 
             <DockPanel Width="200" Margin="0, 10, 0, 0">
                 <Border BorderThickness="2" CornerRadius="10">
-                    <TextBox x:Name="searchTextBox" Width="150"
-                                     Height="{Binding ElementName=searchSubmitButton, Path=ActualHeight}"/>
+                    <TextBox x:Name="SearchTextBox" Width="150"
+                                     Height="{Binding ElementName=SearchSubmitButton, Path=ActualHeight}"/>
                 </Border>
-                <Button x:Name="searchSubmitButton" Content="Search" Height="22"
+                <Button x:Name="SearchSubmitButton" Content="Search" Height="22"
                                 Click="SearchSubmitButtonClicked"/>
             </DockPanel>
         </StackPanel>

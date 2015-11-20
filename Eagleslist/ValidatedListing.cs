@@ -6,10 +6,10 @@ namespace Eagleslist
 
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once NotAccessedField.Local
-        private string SessionID;
+        public string SessionID;
         // ReSharper disable once NotAccessedField.Local
         // ReSharper disable once InconsistentNaming
-        private Listing Listing;
+        public Listing Listing;
 
         public ValidatedListing(string sessionId, Listing listing)
         {
