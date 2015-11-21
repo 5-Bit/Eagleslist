@@ -68,7 +68,6 @@ namespace Eagleslist
             {
                 const string url = RootUrl + "apidb/users/auth";
                 var response = await SendObjectAsJson<AuthResponse>(request, url, client.PutAsync);
-
                
                 if (response.UserID <= 0)
                 {
@@ -165,7 +164,7 @@ namespace Eagleslist
                 return null;
             }
 
-            var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/getAll";
+            var url = RootUrl + $"apidb/listingcomments/{listing.ListingID}/getAll";
             return await GetJson<CommentRequestResponse>(url);
         }
 

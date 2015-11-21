@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Eagleslist
 {
@@ -24,29 +25,45 @@ namespace Eagleslist
 
             if (user != null)
             {
-                if (user.AuthError == null || user.AuthError.Length == 0)
+                if (string.IsNullOrEmpty(user.AuthError))
                 {
                     CredentialManager.SetCurrentUser(user, StaySignedInCheckbox.IsChecked ?? false);
                     DialogResult = true;
-                    Close();
                 }
                 else
                 {
-                    DialogResult = false;
+                    Console.WriteLine(user.AuthError);
+                    LoginFailed();
                 }
             }
             else
             {
-                DialogResult = false;
+                Console.WriteLine("user is null");
+                LoginFailed();
             }
 
             MainWindow window = (MainWindow)Owner;
             window.ReloadLoginStateUi();
         }
 
+        private void LoginFailed()
+        {
+            InvalidLoginLabel.Visibility = Visibility.Visible;
+            passwordField.Password = string.Empty;
+            passwordField.Focus();
+        }
+
         private void InputFieldChanged(object sender, RoutedEventArgs e)
         {
             SignInButton.IsEnabled = handleField.Text.Length > 0 && passwordField.Password.Length > 0;
+        }
+
+        private void FieldKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && SignInButton.IsEnabled)
+            {
+                SignInClicked(null, null);
+            }
         }
     }
 }

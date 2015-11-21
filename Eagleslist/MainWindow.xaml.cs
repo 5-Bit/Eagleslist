@@ -27,6 +27,7 @@ namespace Eagleslist
             sideBarButtonContainer.ContainingWindow = this;
 
             composeContainer.LoginTrigger = () => topBar.ShowLoginDialog();
+            listingsContainer.LoginTrigger = () => topBar.ShowLoginDialog();
 
             ReloadLoginStateUi();
 

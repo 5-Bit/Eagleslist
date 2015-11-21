@@ -14,6 +14,7 @@ namespace Eagleslist.Controls
     {
         private ObservableCollection<Comment> _comments = new ObservableCollection<Comment>();
         private Listing _listing;
+        internal Func<bool> LoginTrigger;
 
         public ListingControl()
         {
@@ -105,7 +106,17 @@ namespace Eagleslist.Controls
 
         private void PostCommentButtonClicked(object sender, RoutedEventArgs e)
         {
-            PostNewComment();
+            if (CredentialManager.GetCurrentUser()?.SessionID != null)
+            {
+                PostNewComment();
+            }
+            else
+            {
+                if (LoginTrigger != null && LoginTrigger())
+                {
+                    PostNewComment();
+                }
+            }
         }
 
         private async void PostNewComment()

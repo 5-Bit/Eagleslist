@@ -56,7 +56,7 @@ namespace Eagleslist.Controls
 
         private void CreateListingButtonClicked(object sender, RoutedEventArgs e)
         {
-            if (CredentialManager.GetCurrentUser().SessionID != null)
+            if (CredentialManager.GetCurrentUser()?.SessionID != null)
             {
                 ShowConfirmPostDialog();
             } 

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,6 +11,12 @@ namespace Eagleslist.Controls
     public partial class ListingBrowserControl
     {
         private ObservableCollection<Listing> _listings = new ObservableCollection<Listing>();
+        internal Func<bool> LoginTrigger {
+            set
+            {
+                CurrentListing.LoginTrigger = value;
+            }
+        }
 
         public ListingBrowserControl()
         {
