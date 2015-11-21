@@ -43,15 +43,24 @@ namespace Eagleslist.Controls
                 return;
             }
 
-            var comments = await RequestManager.GetCommentsForListing(_listing);
-            if (comments != null)
-            {
-                _comments = new ObservableCollection<Comment>(comments);
-            }
-            else
+            var response = await RequestManager.GetCommentsForListing(_listing);
+
+            if (!string.IsNullOrEmpty(response?.Error))
             {
                 _comments = null;
             }
+            else
+            {
+                if (response.Comments != null)
+                {
+                    _comments = new ObservableCollection<Comment>(response.Comments);
+                }
+                else
+                {
+                    _comments = null;
+                }
+            }
+
             CommentsListView.ItemsSource = _comments;
         }
 
@@ -106,7 +115,7 @@ namespace Eagleslist.Controls
                 return;
             }
             Console.WriteLine("Current listing ID: " + _listing.ListingID);
-            var comment = new Comment(-1, -1, null, NewCommentTextBox.Text, _listing.ListingID, DateTime.Now, DateTime.MinValue);
+            var comment = new Comment(-1, -1, null, NewCommentTextBox.Text, _listing.ListingID, DateTime.Now, DateTime.MaxValue.ToUniversalTime());
 
             Console.WriteLine(comment);
             //{

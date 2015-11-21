@@ -11,9 +11,9 @@ namespace Eagleslist
         public string Content { get; set; }
         public int ParentListingID { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
-        public Comment(int id, int userId, string userName, string content, int parentListingId, DateTime createDate, DateTime endDate)
+        public Comment(int id, int userId, string userName, string content, int parentListingId, DateTime createDate, DateTime? endDate)
         {
             this.ID = id;
             this.UserID = userId;
