@@ -69,6 +69,7 @@ namespace Eagleslist
                 const string url = RootUrl + "apidb/users/auth";
                 var response = await SendObjectAsJson<AuthResponse>(request, url, client.PutAsync);
 
+               
                 if (response.UserID <= 0)
                 {
                     return null;
@@ -142,7 +143,14 @@ namespace Eagleslist
             using (var client = new HttpClient(DefaultRequestHandler()))
             {
                 var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/add";
-                var commentRequest = new CommentRequest(session, comment);
+                var commentRequest = new Dictionary<string, object>()
+                {
+                    { "SessionID", session },
+                    { "Comment", comment }
+                };
+
+                Console.WriteLine(JsonConvert.SerializeObject(commentRequest));
+
                 var response = await SendObjectAsJson<CommentCreationResponse>(commentRequest, url, client.PostAsync);
                 Console.WriteLine(response.Error);
                 return !string.IsNullOrEmpty(response?.Error) ? null : response;
@@ -151,20 +159,13 @@ namespace Eagleslist
 
         public static async Task<List<Comment>> GetCommentsForListing(Listing listing)
         {
-            var session = CredentialManager.GetCurrentUser()?.SessionID;
-            if (listing == null || session == null)
+            if (listing == null)
             {
                 return null;
             }
 
-            using (var client = new HttpClient(DefaultRequestHandler()))
-            {
-                var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/getAll";
-                var commentRequest = new CommentRequest(session, null);
-                var response = await SendObjectAsJson<CommentRequestResponse>(commentRequest, url, client.PutAsync);
-
-                return !string.IsNullOrEmpty(response?.Error) ? new List<Comment>() : response?.Comments;
-            }
+            var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/getAll";
+            return await GetJson<List<Comment>>(url);
         }
 
         private static Task<List<User>> UsersFromJson(string json)
