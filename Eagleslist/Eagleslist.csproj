@@ -82,6 +82,7 @@
     <Compile Include="Books\Book.cs" />
     <Compile Include="Books\BookCondition.cs" />
     <Compile Include="Comment.cs" />
+    <Compile Include="CommentCreationResponse.cs" />
     <Compile Include="CommentRequest.cs" />
     <Compile Include="CommentRequestResponse.cs" />
     <Compile Include="Controls\CoursesBrowserControl.xaml.cs">

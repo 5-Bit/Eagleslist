@@ -13,6 +13,7 @@ namespace Eagleslist.Controls
     public partial class ListingControl
     {
         private ObservableCollection<Comment> _comments = new ObservableCollection<Comment>();
+        private Listing _listing;
 
         public ListingControl()
         {
@@ -28,24 +29,23 @@ namespace Eagleslist.Controls
             ListingConditionLabel.Content = listing?.Condition;
             ListingContentTextBlock.Text = listing?.Content;
             ListingTimePostedLabel.Content = HumanizeDateString(listing?.CreateDate.ToString(CultureInfo.InvariantCulture));
-            SetCurrentListingImage(listing);
-            CommentsSectionGrid.Visibility = Visibility.Collapsed;
-            GetComments(listing);
+
+            _listing = listing;
+
+            SetCurrentListingImage();
+            GetComments();
         }
 
-        private async void GetComments(Listing listing)
+        private async void GetComments()
         {
-            var session = CredentialManager.GetCurrentUser()?.SessionID;
-            if (listing == null || session == null)
+            if (_listing == null)
             {
                 return;
             }
 
-            var comments = await RequestManager.GetCommentsForListing(listing, session);
+            var comments = await RequestManager.GetCommentsForListing(_listing);
             _comments = new ObservableCollection<Comment>(comments);
             CommentsListView.ItemsSource = _comments;
-
-            CommentsSectionGrid.Visibility = comments?.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private static string HumanizeDateString(string input)
@@ -60,16 +60,16 @@ namespace Eagleslist.Controls
             return date.Humanize();
         }
 
-        private async void SetCurrentListingImage(Listing listing)
+        private async void SetCurrentListingImage()
         {
-            if (listing == null)
+            if (_listing == null || _listing.ImageURL == null)
             {
                 SetDefaultImage();
                 return;
             }
 
             Uri result;
-            var success = Uri.TryCreate(listing.ImageURL, UriKind.Absolute, out result)
+            var success = Uri.TryCreate(_listing.ImageURL, UriKind.Absolute, out result)
                 && (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps);
 
             if (success)
@@ -85,6 +85,41 @@ namespace Eagleslist.Controls
         private void SetDefaultImage()
         {
             ListingImageView.Source = new BitmapImage(new Uri("pack://application:,,,/images/missing.png"));
+        }
+
+        private void PostCommentButtonClicked(object sender, RoutedEventArgs e)
+        {
+            PostNewComment();
+        }
+
+        private async void PostNewComment()
+        {
+            if (_listing == null)
+            {
+                return;
+            }
+            Console.WriteLine("Current listing ID: " + _listing.ListingID);
+            var comment = new Comment()
+            {
+                Content = NewCommentTextBox.Text,
+                ParentListingID = _listing.ListingID,
+                CreateDate = DateTime.Now,
+                EndDate = DateTime.MinValue
+            };
+
+            CommentCreationResponse response = await RequestManager.PostNewCommentOnListing(comment, _listing);
+
+            if (response == null || !string.IsNullOrWhiteSpace(response.Error))
+            {
+                Console.WriteLine(response?.Error);
+                // something went wrong
+            }
+            else
+            {
+                Console.WriteLine("Posting new comment");
+                GetComments();
+                NewCommentTextBox.Text = string.Empty;
+            }
         }
     }
 }

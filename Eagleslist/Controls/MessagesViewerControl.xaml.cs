@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,26 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class MessagesViewerControl : UserControl
     {
+        private ObservableCollection<Comment> _comments = new ObservableCollection<Comment>();
+
         public MessagesViewerControl()
         {
             InitializeComponent();
+            ReloadContent();
+        }
+
+        private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                ReloadContent();
+            }
+        }
+
+        private async void ReloadContent()
+        {
+
+            MessagesListView.ItemsSource = _comments;
         }
     }
 }

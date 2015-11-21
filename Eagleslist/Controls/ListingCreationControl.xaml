@@ -77,7 +77,7 @@
             <TextBox Background="White" Grid.ColumnSpan="4" Grid.Row="3" 
                      VerticalAlignment="Stretch" Margin="20, 0, 20, 20"
                      MinHeight="150" TextWrapping="Wrap" x:Name="NewListingContentBox"
-                     TextChanged="NewListingContentChanged"/>
+                     TextChanged="NewListingContentChanged" AcceptsReturn="True" AcceptsTab="True"/>
 
             <ListView x:Name="NewListingImagesListView" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
                       Margin="20 0" Height="80" 
