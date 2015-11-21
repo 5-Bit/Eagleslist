@@ -106,7 +106,6 @@ namespace Eagleslist.Controls
                 CreateDate = DateTime.Now
             };
 
-
             var response = await RequestManager.PostNewListing(listing, sessionId);
 
             if (response == null || !string.IsNullOrWhiteSpace(response.Error))

@@ -116,12 +116,51 @@ namespace Eagleslist
             }
         }
 
-        public static async Task<List<Comment>> GetCommentsForListing(Listing listing, string sessionId)
+        //public static async Task<List<Comment>> GetMessagesForCurrentUser()
+        //{
+        //    using (var client = new HttpClient(DefaultRequestHandler()))
+        //    {
+        //        var session = CredentialManager.GetCurrentUser()?.SessionID;
+
+        //        if (session == null)
+        //        {
+        //            return null;
+        //        }
+
+        //        var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/getAll";
+        //    }
+        //}
+
+        public static async Task<CommentCreationResponse> PostNewCommentOnListing(Comment comment, Listing listing)
         {
+            var session = CredentialManager.GetCurrentUser()?.SessionID;
+            if (comment == null || listing == null || session == null)
+            {
+                return null;
+            }
+
+            using (var client = new HttpClient(DefaultRequestHandler()))
+            {
+                var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/add";
+                var commentRequest = new CommentRequest(session, comment);
+                var response = await SendObjectAsJson<CommentCreationResponse>(commentRequest, url, client.PostAsync);
+                Console.WriteLine(response.Error);
+                return !string.IsNullOrEmpty(response?.Error) ? null : response;
+            }
+        }
+
+        public static async Task<List<Comment>> GetCommentsForListing(Listing listing)
+        {
+            var session = CredentialManager.GetCurrentUser()?.SessionID;
+            if (listing == null || session == null)
+            {
+                return null;
+            }
+
             using (var client = new HttpClient(DefaultRequestHandler()))
             {
                 var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/getAll";
-                var commentRequest = new CommentRequest(sessionId);
+                var commentRequest = new CommentRequest(session, null);
                 var response = await SendObjectAsJson<CommentRequestResponse>(commentRequest, url, client.PutAsync);
 
                 return !string.IsNullOrEmpty(response?.Error) ? new List<Comment>() : response?.Comments;
@@ -209,7 +248,7 @@ namespace Eagleslist
             {
                 var json = JsonConvert.SerializeObject(obj);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-
+                Console.WriteLine(await content.ReadAsStringAsync());
                 var response = await action(url, content);
                 var responseString = await response.Content.ReadAsStringAsync();
 

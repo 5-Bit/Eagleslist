@@ -65,6 +65,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -72,46 +73,86 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Comments" FontSize="16"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Comments" FontSize="16" Padding="0"/>
 
                 <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                           BorderThickness="0" x:Name="CommentsListView"
                           Width="{Binding ElementName=CommentsSectionGrid, Path=ActualWidth}"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsManipulationEnabled="False">
+                    
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter></ItemsPresenter>
+                        </ControlTemplate>
+                    </ListView.Template>
                     
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="0 10 0 10" HorizontalAlignment="Stretch" Background="{StaticResource lightBackground2}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 0 0"
+                                    BorderBrush="{StaticResource lightBackground}" BorderThickness="2">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid Margin="0" HorizontalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
 
-                                <DockPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource lightBackground}"
-                                           Width="{Binding ElementName=CommentsSectionGrid, Path=ActualWidth}">
-                                    
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <DockPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource lightBackground}"
+                                               Width="{Binding ElementName=CommentsSectionGrid, Path=ActualWidth}">
+
+                                        <Label Content="{Binding UserName}" HorizontalAlignment="Left" Padding="5" 
+                                               DockPanel.Dock="Left"/>
+
+                                        <Label Content="{Binding CreateDate}" HorizontalAlignment="Right" Padding="5" 
+                                               DockPanel.Dock="Right"/>
+                                    </DockPanel>
+
                                     <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                    <Label Content="{Binding UserName}" 
-                                       HorizontalAlignment="Left" Padding="0" DockPanel.Dock="Left"/>
-                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                    <Label Content="{Binding CreateDate}"  
-                                       HorizontalAlignment="Right" Padding="0" DockPanel.Dock="Right"/>
-                                </DockPanel>
-
-                                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
+                                    <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
                                            TextWrapping="WrapWithOverflow" TextTrimming="WordEllipsis"
                                            FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"
                                            Grid.Row="1" Grid.Column="0" Margin="0"
-                                           Foreground="Black" Padding="0"/>
-                            </Grid>
+                                           Foreground="Black" Padding="5 10"/>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
+                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 0 0"
+                        BorderBrush="{StaticResource lightBackground}" BorderThickness="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch"
+                                    Background="{StaticResource lightBackground}">
+                            <Label Content="Add A Comment" Margin="10 0 0 0" Padding="0 4"/>
+                        </StackPanel>
+
+                        <TextBox Grid.Row="1" MinHeight="60" Background="White" Margin="10 10"
+                                 TextWrapping="WrapWithOverflow" AcceptsReturn="True" AcceptsTab="True"
+                                 x:Name="NewCommentTextBox"/>
+
+
+                        <DockPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="10 0 10 10"
+                                   VerticalAlignment="Center">
+                            <Label x:Name="NewCommentInfoLabel" Content="140 characters remaining"
+                                   FontSize="10" Foreground="Gray" Padding="0" VerticalContentAlignment="Center"
+                                   Margin="0"/>
+
+                            <Button x:Name="PostCommentButton" Content="Comment" Click="PostCommentButtonClicked"
+                                HorizontalAlignment="Right"/>
+                        </DockPanel>
+                    </Grid>
+                </Border>
             </Grid>
         </Grid>
     </ScrollViewer>

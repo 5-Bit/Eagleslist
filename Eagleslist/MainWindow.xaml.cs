@@ -75,10 +75,15 @@ namespace Eagleslist
             }
             else
             {
-                for (var iterator = 1; iterator < _primaryPanels.Count; iterator++)
+                for (var iterator = 0; iterator < _primaryPanels.Count; iterator++)
                 {
-                    var button = PrimaryNavigationControls[iterator];
-                    button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                    if (iterator != 0)
+                    {
+                        var button = PrimaryNavigationControls[iterator];
+                        button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                    }
+
+                    _primaryPanels[iterator].Visibility = Visibility.Collapsed;
                 }
 
                 for (var iterator = 0; iterator < _secondaryPanels.Count; iterator++)

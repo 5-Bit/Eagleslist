@@ -5,15 +5,92 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Eagleslist.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="640">
+             d:DesignHeight="400" d:DesignWidth="740">
 
-    <Grid Background="{StaticResource lightBackground}">
+    <Grid Background="{StaticResource lightBackground}" x:Name="Container">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <TabControl Grid.Row="0" Grid.Column="0" Height="{Binding ElementName=Container, Path=ActualHeight}" BorderThickness="1" SelectedIndex="0">
+            <TabItem HorizontalAlignment="Center">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Messages</TextBlock>
+                        <Border Border.CornerRadius="10" BorderThickness="0" Height="16" Width="Auto" HorizontalAlignment="Stretch" Background="Red">
+                            <Label Content="1" FontSize="12"/>
+                        </Border>
+                    </StackPanel>
+                </TabItem.Header>
 
-        <Label Content="Hello?"/>
+                <ListView x:Name="MessagesListView" BorderThickness="0" Background="{StaticResource lightBackground}"
+                          VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                          SelectedIndex="{Binding Path=SelectedIndexValue}" 
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0" HorizontalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="24" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="24" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--Title, Content, Price, Condition, CreateDate-->
+                                <Grid Grid.Row="0" Grid.Column="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Title}" Margin="0" HorizontalAlignment="Left" 
+                                   Foreground="Black" Grid.Row="0" Grid.Column="0" TextTrimming="WordEllipsis"/>
+
+                                    <TextBlock Text="{Binding Price}" Margin="0" HorizontalAlignment="Right" 
+                                   Foreground="Black" Grid.Row="0" Grid.Column="1"/>
+                                </Grid>
+
+                                <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
+                                               TextWrapping="WrapWithOverflow" TextTrimming="WordEllipsis"
+                                               FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"
+                                               Grid.Row="1" Grid.Column="0" Margin="0" Foreground="Black"/>
+
+                                <Grid Grid.Row="2" Grid.Column="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Condition}" Margin="0" HorizontalAlignment="Left"
+                                   Grid.Row="0" Grid.Column="0" Foreground="Black"/>
+
+                                    <TextBlock Text="{Binding CreateDate}" Margin="0" HorizontalAlignment="Right"
+                                   Grid.Row="0" Grid.Column="1" Foreground="Black"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </TabItem>
+
+            <TabItem HorizontalAlignment="Center">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Comments</TextBlock>
+                        <Ellipse Width="10" Height="10" Fill="DarkGray"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>
