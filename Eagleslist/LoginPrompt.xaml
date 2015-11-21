@@ -56,30 +56,34 @@
 
         <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20 20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="16"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="16"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0" Content="Invalid credentials. Please try again." x:Name="InvalidLoginLabel"
+                   Margin="0 0 0 5" Visibility="Visible" Foreground="Red"/>
 
-            <Label Grid.Row="0" Content="Username or Email" Padding="0" HorizontalAlignment="Left"
+            <Label Grid.Row="1" Content="Username or Email" Padding="0 0 0 2" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-            <TextBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
-                     x:Name="handleField" TextChanged="InputFieldChanged"/>
+            <TextBox Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                     x:Name="handleField" TextChanged="InputFieldChanged" KeyUp="FieldKeyUp"/>
 
-            <Label Grid.Row="2" Content="Password" Padding="0" HorizontalAlignment="Left"
+            <Label Grid.Row="3" Content="Password" Padding="0 10 0 2" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
-            <PasswordBox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                         x:Name="passwordField" PasswordChanged="InputFieldChanged"/>
+            <PasswordBox Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                         x:Name="passwordField" PasswordChanged="InputFieldChanged" KeyUp="FieldKeyUp"/>
 
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="5" Margin="0 10 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
