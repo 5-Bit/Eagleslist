@@ -43,7 +43,11 @@ namespace Eagleslist.Controls
             var manager = new RequestManager();
             var newListings = await manager.GetListings();
 
-            _listings = new ObservableCollection<Listing>(newListings);
+            if (newListings != null)
+            {
+                _listings = new ObservableCollection<Listing>(newListings);
+            }
+
             ListingsView.ItemsSource = _listings;
 
             if (_listings.Count > 0)

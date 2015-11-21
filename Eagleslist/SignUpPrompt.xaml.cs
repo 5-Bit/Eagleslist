@@ -37,7 +37,7 @@ namespace Eagleslist
             var user = await RequestManager.AttemptRegistration(submission);
             ProgressBar.Visibility = Visibility.Collapsed;
 
-            if (!string.IsNullOrEmpty(user.AuthError)) return;
+            if (!string.IsNullOrEmpty(user?.AuthError)) return;
 
             CredentialManager.SetCurrentUser(user, false);
             var window = (MainWindow)Owner;

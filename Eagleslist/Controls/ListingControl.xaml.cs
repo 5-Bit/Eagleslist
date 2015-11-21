@@ -44,7 +44,14 @@ namespace Eagleslist.Controls
             }
 
             var comments = await RequestManager.GetCommentsForListing(_listing);
-            _comments = new ObservableCollection<Comment>(comments);
+            if (comments != null)
+            {
+                _comments = new ObservableCollection<Comment>(comments);
+            }
+            else
+            {
+                _comments = null;
+            }
             CommentsListView.ItemsSource = _comments;
         }
 
@@ -99,13 +106,15 @@ namespace Eagleslist.Controls
                 return;
             }
             Console.WriteLine("Current listing ID: " + _listing.ListingID);
-            var comment = new Comment()
-            {
-                Content = NewCommentTextBox.Text,
-                ParentListingID = _listing.ListingID,
-                CreateDate = DateTime.Now,
-                EndDate = DateTime.MinValue
-            };
+            var comment = new Comment(-1, -1, null, NewCommentTextBox.Text, _listing.ListingID, DateTime.Now, DateTime.MinValue);
+
+            Console.WriteLine(comment);
+            //{
+            //    Content = NewCommentTextBox.Text,
+            //    ParentListingID = _listing.ListingID,
+            //    CreateDate = DateTime.Now,
+            //    EndDate = DateTime.MinValue
+            //};
 
             CommentCreationResponse response = await RequestManager.PostNewCommentOnListing(comment, _listing);
 
