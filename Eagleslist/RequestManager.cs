@@ -142,7 +142,7 @@ namespace Eagleslist
 
             using (var client = new HttpClient(DefaultRequestHandler()))
             {
-                var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/add";
+                var url = RootUrl + $"apidb/listingcomments/{listing.ListingID}/add";
                 var commentRequest = new Dictionary<string, object>()
                 {
                     { "SessionID", session },
@@ -153,11 +153,12 @@ namespace Eagleslist
 
                 var response = await SendObjectAsJson<CommentCreationResponse>(commentRequest, url, client.PostAsync);
                 Console.WriteLine(response.Error);
+                Console.Write("Posted a comment and response was: " + response);
                 return !string.IsNullOrEmpty(response?.Error) ? null : response;
             }
         }
 
-        public static async Task<List<Comment>> GetCommentsForListing(Listing listing)
+        public static async Task<CommentRequestResponse> GetCommentsForListing(Listing listing)
         {
             if (listing == null)
             {
@@ -165,7 +166,7 @@ namespace Eagleslist
             }
 
             var url = RootUrl + $"/apidb/listingcomments/{listing.ListingID}/getAll";
-            return await GetJson<List<Comment>>(url);
+            return await GetJson<CommentRequestResponse>(url);
         }
 
         private static Task<List<User>> UsersFromJson(string json)
@@ -232,6 +233,7 @@ namespace Eagleslist
                     try
                     {
                         var responseString = await client.GetStringAsync(url);
+                        Console.WriteLine(responseString);
                         return JsonConvert.DeserializeObject<T>(responseString);
                     }
                     catch (Exception e)
