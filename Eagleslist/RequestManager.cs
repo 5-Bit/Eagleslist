@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 using System.Net;
 using System.IO;
 using System.Text;
+using System.Web;
 
 namespace Eagleslist
 {
@@ -26,6 +27,12 @@ namespace Eagleslist
             const string url = RootUrl + "apidb/listings";
             var responseString = await Request(url);
             return await ListingsFromJson(responseString);
+        }
+
+        public static async Task<List<Listing>> SearchForText(string text)
+        {
+            var url = $"{RootUrl}apidb/searchlistings/{HttpUtility.UrlEncode(text)}";
+            return await GetJson<List<Listing>>(url);
         }
 
         public static async Task<BitmapImage> GetBitmapFromUri(Uri uri)
@@ -148,11 +155,28 @@ namespace Eagleslist
                     { "Comment", comment }
                 };
 
-                Console.WriteLine(JsonConvert.SerializeObject(commentRequest));
-
                 var response = await SendObjectAsJson<CommentCreationResponse>(commentRequest, url, client.PostAsync);
-                Console.WriteLine(response.Error);
-                Console.Write("Posted a comment and response was: " + response);
+                return !string.IsNullOrEmpty(response?.Error) ? null : response;
+            }
+        }
+
+        public static async Task<CommentCreationResponse> DeleteComment(Comment comment)
+        {
+            var session = CredentialManager.GetCurrentUser()?.SessionID;
+            if (comment == null || session == null)
+            {
+                return null;
+            }
+
+            using (var client = new HttpClient(DefaultRequestHandler()))
+            {
+                var url = RootUrl + $"apidb/deletecomment/{comment.ID}/";
+                var commentRequest = new Dictionary<string, object>()
+                {
+                    { "SessionID", session }
+                };
+
+                var response = await SendObjectAsJson<CommentCreationResponse>(commentRequest, url, client.PutAsync);
                 return !string.IsNullOrEmpty(response?.Error) ? null : response;
             }
         }
