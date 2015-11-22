@@ -96,7 +96,7 @@
                 <PasswordBox Grid.Row="7" VerticalAlignment="Center" PasswordChanged="UserInputChanged"
                          HorizontalAlignment="Stretch" x:Name="confirmPasswordField"/>
 
-                <Button Grid.Row="8" Content="Sign Up" Height="22" Margin="5 0 0 0" IsEnabled="False"
+                <Button Grid.Row="8" Content="Sign Up" Height="22" Margin="5 0 0 0" IsEnabled="False" IsDefault="True"
                     Padding="5 0" HorizontalAlignment="Right" Click="SignUpButtonClicked" x:Name="SignUpButton"/>
                 
                 <TextBlock Grid.Row="9" x:Name="InputErrorTextBox" MinHeight="0" HorizontalAlignment="Stretch" Height="0"/>
