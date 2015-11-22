@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace Eagleslist.Controls
 {
@@ -10,6 +11,7 @@ namespace Eagleslist.Controls
     public partial class TopBarControl : UserControl
     {
         internal MainWindow ContainingWindow;
+        private SearchButton _searchButton;
 
         public TopBarControl()
         {
@@ -26,6 +28,62 @@ namespace Eagleslist.Controls
         {
             AccountOverlayButton.Content = "Account";
             ToggleVisibleAccountComboBoxItems();
+        }
+
+        internal void SearchButtonClicked(SearchButton button)
+        {
+            _searchButton = button;
+
+            if (button.isSelected)
+            {
+                SearchBox.Focus();
+            }
+
+            ToggleSearchUI();
+            button.isSelected = !button.isSelected;
+        }
+
+        private void ToggleSearchUI()
+        {
+            //var to = (Color)ColorConverter.ConvertFromString(value ? "#006F41" : "#00885A");
+            //var from = (Color)ColorConverter.ConvertFromString(value ? "#00885A" : "#006F41");
+
+            //ColorAnimation animation = new ColorAnimation()
+            //{
+            //    To = to,
+            //    From = from,
+            //    Duration = TimeSpan.FromSeconds(0.15)
+            //};
+
+            //Background.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+
+            var from = 0.0;
+            var to = 0.0;
+
+            if (SearchContainer.Width == SearchContainer.MaxWidth)
+            {
+                from = SearchContainer.MaxWidth;
+                to = SearchContainer.MinWidth;
+            }
+            else
+            {
+                from = SearchContainer.MinWidth;
+                to = SearchContainer.MaxWidth;
+            }
+
+            DoubleAnimation widthAnimation = new DoubleAnimation
+            {
+                From = from,
+                To = to,
+                Duration = TimeSpan.FromSeconds(0.15)
+            };
+
+            Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(Grid.WidthProperty));
+            Storyboard.SetTarget(widthAnimation, SearchContainer);
+
+            Storyboard s = new Storyboard();
+            s.Children.Add(widthAnimation);
+            s.Begin();
         }
 
         private void ToggleVisibleAccountComboBoxItems()

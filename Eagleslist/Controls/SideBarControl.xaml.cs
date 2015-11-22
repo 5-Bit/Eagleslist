@@ -35,8 +35,6 @@ namespace Eagleslist.Controls
         public SideBarControl()
         {
             InitializeComponent();
-
-
             SelectControlButton(SearchButton);
         }
 
@@ -49,6 +47,11 @@ namespace Eagleslist.Controls
         {
             int tag = int.Parse(button.Tag.ToString());
             ContainingWindow?.ContainerDisplayPanelAtIndex(tag);
+        }
+
+        private void SearchButtonClicked(object sender, RoutedEventArgs e)
+        {
+            ContainingWindow.SearchButtonClicked(sender as SearchButton);
         }
     }
 }

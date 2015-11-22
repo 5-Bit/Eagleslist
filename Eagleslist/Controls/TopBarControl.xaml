@@ -7,14 +7,31 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="800">
 
-    <Grid x:Name="TopBarContainerGrid" Panel.ZIndex="1000" Background="{StaticResource darkBackground}">
+    <Grid x:Name="TopBarContainerGrid" Margin="0" Panel.ZIndex="1000" Background="{StaticResource darkBackground}">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="60 0">
+        <Grid x:Name="SearchContainer" Background="{StaticResource FGCUGreen}" 
+              Grid.Column="0" Width="0" MinWidth="0" MaxWidth="400">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="10 0">
+                <TextBox x:Name="SearchBox" VerticalAlignment="Center" Foreground="White"
+                         Background="{StaticResource FGCUGreen}" BorderThickness="0" 
+                         FontSize="20" CaretBrush="White"/>
+                
+                <Separator Background="White" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0" Grid.Column="1">
             <Button BorderThickness="0" Width="60" Height="60"
                         Click="NavigationBackButtonClicked"
                         Style="{StaticResource NavigationButtonStyle}">
@@ -34,15 +51,15 @@
 
         <Label  Content="Eagleslist" VerticalAlignment="Center" HorizontalAlignment="Center"
                         FontSize="25" FontFamily="Segoe UI Semilight" Padding="0" 
-                        Foreground="White" Grid.Column="1" Margin="0"/>
+                        Foreground="White" Grid.Column="2" Margin="0"/>
 
-        <Canvas Grid.Column="2" HorizontalAlignment="Right">
+        <Canvas Grid.Column="3" HorizontalAlignment="Right" Width="{Binding ElementName=AccountOverlayButton, Path=ActualWidth}">
             <Button Click="AccountDropDownClicked" MinWidth="60" Padding="10 0"
-                            HorizontalAlignment="Center" Canvas.ZIndex="2" Foreground="White"
-                            Canvas.Right="0" 
-                            x:Name="AccountOverlayButton" VerticalAlignment="Center"
-                            Style="{StaticResource TopPanelButtonStyle}"
-                            Height="{Binding ElementName=TopBarContainerGrid, Path=ActualHeight}">
+                    HorizontalAlignment="Center" Canvas.ZIndex="2" Foreground="White"
+                    Canvas.Right="0" 
+                    x:Name="AccountOverlayButton" VerticalAlignment="Center"
+                    Style="{StaticResource TopPanelButtonStyle}"
+                    Height="{Binding ElementName=TopBarContainerGrid, Path=ActualHeight}">
                 Account
             </Button>
 
