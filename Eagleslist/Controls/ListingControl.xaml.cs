@@ -74,7 +74,7 @@ namespace Eagleslist.Controls
 
             var date = DateTime.Parse(input, null, DateTimeStyles.RoundtripKind);
 
-            return date.Humanize();
+            return date.Humanize(false);
         }
 
         private async void SetCurrentListingImage()
