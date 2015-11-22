@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Humanizer;
 using System.Globalization;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace Eagleslist.Controls
 {
@@ -13,6 +14,13 @@ namespace Eagleslist.Controls
     public partial class ListingControl
     {
         private ObservableCollection<Comment> _comments = new ObservableCollection<Comment>();
+        internal Listing Listing
+        {
+            get
+            {
+                return _listing;
+            }
+        }
         private Listing _listing;
         internal Func<bool> LoginTrigger;
 
@@ -23,15 +31,18 @@ namespace Eagleslist.Controls
 
         public void SetListing(Listing listing)
         {
-            Visibility = listing == null ? Visibility.Collapsed : Visibility.Visible;
+            _listing = listing;
+            CommentsListView.ItemsSource = null;
+            CurrentListingProgressBar.Visibility = Visibility.Visible;
 
             ListingTitleLabel.Content = listing?.Title;
             ListingAskingPrice.Content = listing?.Price;
             ListingConditionLabel.Content = listing?.Condition;
             ListingContentTextBlock.Text = listing?.Content;
             ListingTimePostedLabel.Content = HumanizeDateString(listing?.CreateDate.ToString(CultureInfo.InvariantCulture));
+            NewCommentTextBox.Text = string.Empty;
 
-            _listing = listing;
+            ScrollViewerContainer.ScrollToHome();
 
             SetCurrentListingImage();
             GetComments();
@@ -41,6 +52,8 @@ namespace Eagleslist.Controls
         {
             if (_listing == null)
             {
+                CurrentListingProgressBar.Visibility = Visibility.Hidden;
+                CommentsListView.ItemsSource = null;
                 return;
             }
 
@@ -62,6 +75,7 @@ namespace Eagleslist.Controls
                 }
             }
 
+            CurrentListingProgressBar.Visibility = Visibility.Hidden;
             CommentsListView.ItemsSource = _comments;
         }
 
@@ -124,17 +138,8 @@ namespace Eagleslist.Controls
             {
                 return;
             }
-            Console.WriteLine("Current listing ID: " + _listing.ListingID);
+
             var comment = new Comment(-1, -1, null, NewCommentTextBox.Text, _listing.ListingID, DateTime.Now, DateTime.MaxValue.ToUniversalTime());
-
-            Console.WriteLine(comment);
-            //{
-            //    Content = NewCommentTextBox.Text,
-            //    ParentListingID = _listing.ListingID,
-            //    CreateDate = DateTime.Now,
-            //    EndDate = DateTime.MinValue
-            //};
-
             CommentCreationResponse response = await RequestManager.PostNewCommentOnListing(comment, _listing);
 
             if (response == null || !string.IsNullOrWhiteSpace(response.Error))
@@ -144,10 +149,48 @@ namespace Eagleslist.Controls
             }
             else
             {
-                Console.WriteLine("Posting new comment");
                 GetComments();
                 NewCommentTextBox.Text = string.Empty;
             }
+        }
+
+        private void NewCommentTextBoxTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            var max = 250;
+            var remainingCharacters = max - NewCommentTextBox.Text.Length;
+
+            if (remainingCharacters >= 0)
+            {
+                var word = "character".ToQuantity(remainingCharacters);
+                NewCommentInfoLabel.Content = $"{word} remaining";
+                NewCommentInfoLabel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+                PostCommentButton.IsEnabled = NewCommentTextBox.Text.Length != 0;
+            }
+            else
+            {
+                var word = "character".ToQuantity(Math.Abs(remainingCharacters));
+                NewCommentInfoLabel.Content = $"{word} over limit";
+                NewCommentInfoLabel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
+                PostCommentButton.IsEnabled = false;
+            }
+        }
+
+        internal bool ShouldAllowExit()
+        {
+            if (string.IsNullOrWhiteSpace(NewCommentTextBox.Text))
+            {
+                return true;
+            }
+
+            const string text = "You are about to navigate away from this listing. Your unsubmitted comment will not be saved. Are you sure you want to proceed?";
+            const string caption = "Eagleslist - Unfinished Comment";
+
+            const MessageBoxButton buttons = MessageBoxButton.YesNo;
+            const MessageBoxImage icon = MessageBoxImage.Warning;
+
+            var result = MessageBox.Show(text, caption, buttons, icon);
+
+            return result == MessageBoxResult.Yes;
         }
     }
 }

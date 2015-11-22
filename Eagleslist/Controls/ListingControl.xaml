@@ -14,7 +14,7 @@
         </Style>
     </UserControl.Resources>
 
-    <ScrollViewer>
+    <ScrollViewer x:Name="ScrollViewerContainer">
         <Grid Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -60,32 +60,38 @@
                                TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
                                Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
             </Grid>
-            
+
             <Grid x:Name="CommentsSectionGrid" Grid.Row="1" Margin="20">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Comments" FontSize="16" Padding="0"/>
 
-                <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                <ProgressBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                             HorizontalAlignment="Stretch" x:Name="CurrentListingProgressBar" 
+                             Visibility="Visible" IsIndeterminate="True" Margin="0 4 0 0"
+                             Background="White" Foreground="{StaticResource FGCUGreen}"/>
+
+                <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                           BorderThickness="0" x:Name="CommentsListView"
                           Width="{Binding ElementName=CommentsSectionGrid, Path=ActualWidth}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsManipulationEnabled="False">
-                    
+
                     <ListView.Template>
                         <ControlTemplate>
                             <ItemsPresenter></ItemsPresenter>
                         </ControlTemplate>
                     </ListView.Template>
-                    
+
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 0 0"
@@ -123,7 +129,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 0 0"
+                <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 0 0"
                         BorderBrush="{StaticResource lightBackground}" BorderThickness="2">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -139,17 +145,17 @@
 
                         <TextBox Grid.Row="1" MinHeight="60" Background="White" Margin="10 10"
                                  TextWrapping="WrapWithOverflow" AcceptsReturn="True" AcceptsTab="True"
-                                 x:Name="NewCommentTextBox"/>
+                                 x:Name="NewCommentTextBox" TextChanged="NewCommentTextBoxTextChanged"/>
 
 
                         <DockPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="10 0 10 10"
                                    VerticalAlignment="Center">
-                            <Label x:Name="NewCommentInfoLabel" Content="140 characters remaining"
+                            <Label x:Name="NewCommentInfoLabel" Content="250 characters remaining"
                                    FontSize="10" Foreground="Gray" Padding="0" VerticalContentAlignment="Center"
                                    Margin="0"/>
 
                             <Button x:Name="PostCommentButton" Content="Comment" Click="PostCommentButtonClicked"
-                                HorizontalAlignment="Right"/>
+                                HorizontalAlignment="Right" IsEnabled="False"/>
                         </DockPanel>
                     </Grid>
                 </Border>

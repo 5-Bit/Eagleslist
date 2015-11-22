@@ -35,18 +35,31 @@ namespace Eagleslist.Controls
         {
             var selectedList = sender as ListView;
 
-            if (selectedList != null && selectedList.SelectedIndex < _listings.Count && selectedList.SelectedIndex >= 0)
+            if (_listings[selectedList.SelectedIndex].Equals(CurrentListing.Listing))
             {
-                CurrentListing.SetListing(_listings[selectedList.SelectedIndex]);
+                return;
+            }
+
+            if (CurrentListing.ShouldAllowExit())
+            {
+                if (selectedList != null && selectedList.SelectedIndex < _listings.Count && selectedList.SelectedIndex >= 0)
+                {
+                    CurrentListing.SetListing(_listings[selectedList.SelectedIndex]);
+                }
+                else
+                {
+                    CurrentListing.SetListing(null);
+                }
             }
             else
             {
-                CurrentListing.SetListing(null);
+                selectedList.SelectedIndex = _listings.IndexOf(CurrentListing.Listing);
             }
         }
 
         private async void GetNewListings()
         {
+            ListingsProgressBar.Visibility = Visibility.Visible;
             var manager = new RequestManager();
             var newListings = await manager.GetListings();
 
@@ -56,6 +69,7 @@ namespace Eagleslist.Controls
             }
 
             ListingsView.ItemsSource = _listings;
+            ListingsProgressBar.Visibility = Visibility.Collapsed;
 
             if (_listings.Count > 0)
             {
