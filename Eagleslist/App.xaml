@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Eagleslist"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
+        <local:HumanizeConverter x:Key="humanize"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>
@@ -14,6 +16,7 @@
         <SolidColorBrush x:Key="darkerBackground" Color="#27292F"/>
         <SolidColorBrush x:Key="lightBackground" Color="#ECEEF3"/>
         <SolidColorBrush x:Key="lightBackground2" Color="#ECECEC"/>
+        <SolidColorBrush x:Key="mediumGray" Color="#DADFE1"/>
 
         <SolidColorBrush x:Key="primaryColor" Color="#446CB3"/>
         <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA"/>

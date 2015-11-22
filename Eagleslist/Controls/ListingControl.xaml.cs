@@ -73,7 +73,6 @@ namespace Eagleslist.Controls
             }
 
             var date = DateTime.Parse(input, null, DateTimeStyles.RoundtripKind);
-
             return date.Humanize(false);
         }
 
