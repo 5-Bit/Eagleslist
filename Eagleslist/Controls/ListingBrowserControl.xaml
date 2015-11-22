@@ -15,17 +15,25 @@
     </UserControl.Resources>
 
     <Grid Background="White" x:Name="BrowseListingContainer">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <ProgressBar Grid.Row="0" Grid.Column="0" IsIndeterminate="True" x:Name="ListingsProgressBar" Visibility="Collapsed"
+                     Background="{StaticResource lightBackground}" Foreground="{StaticResource FGCUGreen}"/>
+        
         <ListView x:Name="ListingsView" BorderThickness="0" Background="{StaticResource lightBackground}"
                   VerticalAlignment="Center" HorizontalAlignment="Stretch"
                   Height="{Binding ElementName=BrowseListingContainer, Path=ActualHeight}" 
                   SelectionChanged="ListingsViewSelectionChanged" 
                   SelectedIndex="{Binding Path=SelectedIndexValue}" 
-                  Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  Grid.Row="1" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -80,6 +88,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <local:ListingControl Grid.Column="1" Margin="0" x:Name="CurrentListing"/>
+        <local:ListingControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0" x:Name="CurrentListing"/>
     </Grid>
 </UserControl>
