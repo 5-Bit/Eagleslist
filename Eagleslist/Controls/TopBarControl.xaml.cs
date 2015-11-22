@@ -33,12 +33,6 @@ namespace Eagleslist.Controls
         internal void SearchButtonClicked(SearchButton button)
         {
             _searchButton = button;
-
-            if (button.isSelected)
-            {
-                SearchBox.Focus();
-            }
-
             ToggleSearchUI();
             button.isSelected = !button.isSelected;
         }
@@ -76,6 +70,14 @@ namespace Eagleslist.Controls
                 From = from,
                 To = to,
                 Duration = TimeSpan.FromSeconds(0.15)
+            };
+
+            widthAnimation.Completed += (object sender, EventArgs e) =>
+            {
+                if (_searchButton.isSelected)
+                {
+                    SearchBox.Focus();
+                }
             };
 
             Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(Grid.WidthProperty));
