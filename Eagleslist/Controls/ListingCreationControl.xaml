@@ -9,8 +9,6 @@
              IsVisibleChanged="VisibilityChanged">
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
-                  Width="{Binding ElementName=composeContainer, Path=ActualWidth}"
-                  Height="{Binding ElementName=composeContainer, Path=ActualHeight}"
                   Background="{StaticResource lightBackground}">
         <Grid x:Name="ComposeGrid" HorizontalAlignment="Stretch" Width="Auto">
 
@@ -41,15 +39,13 @@
             <StackPanel Margin="20, 0, 10, 0" HorizontalAlignment="Stretch" 
                                 Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
                 <Label Content="Post Title"/>
-                <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" 
-                                 FontSize="13.333" x:Name="NewListingTitleBox" TextChanged="NewListingTitleChanged"/>
+                <TextBox FontSize="13.333" x:Name="NewListingTitleBox" TextChanged="NewListingTitleChanged"/>
             </StackPanel>
 
             <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
                                 Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
                 <Label Content="Price ($)"/>
-                <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}"
-                                 FontSize="13.333" x:Name="NewListingPriceBox" TextChanged="NewListingPriceChanged"/>
+                <TextBox FontSize="13.333" x:Name="NewListingPriceBox" TextChanged="NewListingPriceChanged"/>
             </StackPanel>
 
             <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
@@ -64,8 +60,7 @@
                 
                 <Label Content="ISBN (optional)"/>
                 
-                <TextBox Height="{Binding ElementName=conditionComboBox, Path=ActualHeight}" 
-                         FontSize="13.333" x:Name="NewListingIsbnBox" TextChanged="NewListingIsbnChanged"/>
+                <TextBox FontSize="13.333" x:Name="NewListingIsbnBox" TextChanged="NewListingIsbnChanged"/>
                 
             </StackPanel>
 

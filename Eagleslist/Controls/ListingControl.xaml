@@ -107,8 +107,8 @@
                                         <Label Content="{Binding UserName}" HorizontalAlignment="Left" Padding="5" 
                                                DockPanel.Dock="Left"/>
 
-                                        <Label Content="{Binding CreateDate}" HorizontalAlignment="Right" Padding="5" 
-                                               DockPanel.Dock="Right"/>
+                                        <Label Content="{Binding CreateDate, Converter={StaticResource humanize}}" 
+                                               HorizontalAlignment="Right" Padding="5" DockPanel.Dock="Right"/>
                                     </DockPanel>
 
                                     <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->

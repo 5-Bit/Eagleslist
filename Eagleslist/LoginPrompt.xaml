@@ -69,19 +69,19 @@
             </Grid.ColumnDefinitions>
             
             <Label Grid.Row="0" Content="Invalid credentials. Please try again." x:Name="InvalidLoginLabel"
-                   Margin="0 0 0 5" Visibility="Visible" Foreground="Red"/>
+                   Margin="0 0 0 5" Visibility="Collapsed" Foreground="Red"/>
 
             <Label Grid.Row="1" Content="Username or Email" Padding="0 0 0 2" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
             <TextBox Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
-                     x:Name="handleField" TextChanged="InputFieldChanged" KeyUp="FieldKeyUp"/>
+                     x:Name="handleField" TextChanged="InputFieldChanged"/>
 
             <Label Grid.Row="3" Content="Password" Padding="0 10 0 2" HorizontalAlignment="Left"
                    VerticalAlignment="Center" Foreground="{StaticResource primaryDarkColor}"/>
 
             <PasswordBox Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                         x:Name="passwordField" PasswordChanged="InputFieldChanged" KeyUp="FieldKeyUp"/>
+                         x:Name="passwordField" PasswordChanged="InputFieldChanged"/>
 
             <Grid Grid.Row="5" Margin="0 10 0 0">
                 <Grid.ColumnDefinitions>
@@ -95,7 +95,7 @@
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1" Margin="20 0 0 0">
                     <Button Content="Forgot Password" Height="22" Margin="5 0" Padding="5 0"/>
                     <Button Content="Sign In" Height="22" Margin="5 0 0 0" Padding="5 0" 
-                            Click="SignInClicked" x:Name="SignInButton" IsEnabled="False"/>
+                            Click="SignInClicked" x:Name="SignInButton" IsEnabled="False" IsDefault="True"/>
                 </StackPanel>
             </Grid>
         </Grid>

@@ -57,13 +57,5 @@ namespace Eagleslist
         {
             SignInButton.IsEnabled = handleField.Text.Length > 0 && passwordField.Password.Length > 0;
         }
-
-        private void FieldKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter && SignInButton.IsEnabled)
-            {
-                SignInClicked(null, null);
-            }
-        }
     }
 }

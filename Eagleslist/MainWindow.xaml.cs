@@ -142,5 +142,10 @@ namespace Eagleslist
 
             return comparer.Compare(hashOfInput, hash) == 0;
         }
+
+        internal void SearchButtonClicked(SearchButton button)
+        {
+            topBar.SearchButtonClicked(button);
+        }
     }
 }

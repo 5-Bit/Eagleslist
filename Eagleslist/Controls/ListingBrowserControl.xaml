@@ -15,7 +15,6 @@
     </UserControl.Resources>
 
     <Grid Background="White" x:Name="BrowseListingContainer">
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
@@ -70,11 +69,12 @@
                             <TextBlock Text="{Binding Condition}" Margin="0" HorizontalAlignment="Left"
                                    Grid.Row="0" Grid.Column="0" Foreground="Black"/>
 
-                            <TextBlock Text="{Binding CreateDate}" Margin="0" HorizontalAlignment="Right"
+                            <TextBlock Text="{Binding CreateDate, Converter={StaticResource humanize}}" Margin="0" HorizontalAlignment="Right"
                                    Grid.Row="0" Grid.Column="1" Foreground="Black"/>
                         </Grid>
 
-                        <Separator Grid.Row="3" HorizontalAlignment="Stretch" Padding="0" Margin="0" Background="{StaticResource darkBackground}"/>
+                        <Separator Grid.Row="3" HorizontalAlignment="Stretch" Padding="0" Margin="0"
+                                   Background="{StaticResource mediumGray}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
