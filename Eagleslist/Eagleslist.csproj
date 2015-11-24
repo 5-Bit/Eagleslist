@@ -132,6 +132,9 @@
       <DependentUpon>LoginPrompt.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginRequest.cs" />
+    <Compile Include="Navigatable.cs" />
+    <Compile Include="NavigationContext.cs" />
+    <Compile Include="NavigationManager.cs" />
     <Compile Include="NewListingResponse.cs" />
     <Compile Include="RegistrationSubmission.cs" />
     <Compile Include="RequestManager.cs" />
