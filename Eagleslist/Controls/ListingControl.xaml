@@ -6,14 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500">
 
-    <UserControl.Resources>
-        <Style TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="0"/>            
-        </Style>
-    </UserControl.Resources>
-
     <ScrollViewer x:Name="ScrollViewerContainer">
         <Grid Background="White">
             <Grid.RowDefinitions>
@@ -88,16 +80,32 @@
 
                     <ListView.Template>
                         <ControlTemplate>
-                            <ItemsPresenter></ItemsPresenter>
+                            <ItemsPresenter />
                         </ControlTemplate>
                     </ListView.Template>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <!--<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="100 0 10 0"/>-->
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 0 0"
                                     BorderBrush="{StaticResource lightBackground}" BorderThickness="2">
 
-                                <Grid Margin="0" HorizontalAlignment="Stretch">
+                                <Grid Margin="0 0 0 0" HorizontalAlignment="Stretch">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
@@ -110,11 +118,20 @@
                                     <DockPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource lightBackground}"
                                                Width="{Binding ElementName=CommentsSectionGrid, Path=ActualWidth}">
 
-                                        <Label Content="{Binding UserName}" HorizontalAlignment="Left" Padding="5" 
-                                               DockPanel.Dock="Left"/>
+                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                                            <Label Content="{Binding UserName}" HorizontalAlignment="Left" Padding="5 5 0 5"/>
 
-                                        <Label Content="{Binding CreateDate, Converter={StaticResource humanize}}" 
-                                               HorizontalAlignment="Right" Padding="5" DockPanel.Dock="Right"/>
+                                            <Label Content=" commented " HorizontalAlignment="Left" Padding="0 5"/>
+                                            
+                                            <Label Content="{Binding CreateDate, Converter={StaticResource humanize}}" 
+                                               HorizontalAlignment="Left" Padding="0 5 5 5"/>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right">
+                                            <Button Content="delete" Style="{StaticResource LinkButtonStyle}" 
+                                                    Padding="5" Margin="0 0 10 0" Height="20" VerticalContentAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                                        </StackPanel>
                                     </DockPanel>
 
                                     <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
