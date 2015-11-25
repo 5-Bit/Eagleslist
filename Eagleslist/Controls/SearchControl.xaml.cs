@@ -18,7 +18,7 @@ namespace Eagleslist.Controls
     /// <summary>
     /// Interaction logic for SearchControl.xaml
     /// </summary>
-    public partial class SearchControl : UserControl
+    public partial class SearchControl : UserControl, Navigatable
     {
         public SearchControl()
         {
@@ -26,6 +26,11 @@ namespace Eagleslist.Controls
         }
 
         private void SearchSubmitButtonClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void RenderObject(object obj)
         {
 
         }

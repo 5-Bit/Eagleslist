@@ -19,7 +19,7 @@ namespace Eagleslist.Controls
     /// <summary>
     /// Interaction logic for MessagesViewerControl.xaml
     /// </summary>
-    public partial class MessagesViewerControl : UserControl
+    public partial class MessagesViewerControl : UserControl, Navigatable
     {
         private ObservableCollection<Comment> _comments = new ObservableCollection<Comment>();
 
@@ -41,6 +41,11 @@ namespace Eagleslist.Controls
         {
 
             MessagesListView.ItemsSource = _comments;
+        }
+
+        public void RenderObject(object obj)
+        {
+
         }
     }
 }

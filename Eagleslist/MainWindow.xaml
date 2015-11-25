@@ -10,7 +10,7 @@
         Loaded="WindowLoaded"
         Title="" MinWidth="800" MinHeight="480" SnapsToDevicePixels="True">
     
-    <Grid Background="{StaticResource lightBackground}">
+    <Grid Background="{StaticResource lightBackground}" x:Name="ContainerGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
@@ -29,30 +29,6 @@
         <controls:SideBarControl Margin="0, 0, 0, 0" VerticalAlignment="Stretch" HorizontalAlignment="Left" 
               Grid.RowSpan="2" Grid.Column="0" Width="60" Panel.ZIndex="1500"
               Background="White" x:Name="sideBarButtonContainer"/>
-
-        <!-- Side navigation bar -->
-        <controls:SearchControl x:Name="searchContainer" Margin="0, 0, 0, 0"
-                                Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
-
-        <!-- Container for listing creation page -->
-        <controls:ListingCreationControl x:Name="composeContainer" Margin="0, 0, 0, 0"
-                                         Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
-
-        <!-- Container for listing browser page -->
-        <controls:ListingBrowserControl x:Name="listingsContainer" Margin="0, 0, 0, 0" 
-                                        Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
-
-        <!-- Container for courses browser page -->
-        <controls:CoursesBrowserControl x:Name="coursesContainer" Margin="0, 0, 0, 0"
-                                        Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
-
-        <!-- Container for messages page -->
-        <controls:MessagesViewerControl x:Name="messagesContainer" Margin="0, 0, 0, 0"
-                                        Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
-
-        <!-- Container for profile page -->
-        <controls:ProfileViewerControl x:Name="profileContainer" Margin="20" 
-                                       Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
 
         <!-- Bottom credit bar -->
         <controls:CreditBarControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource darkBackground}" VerticalAlignment="Stretch"/>

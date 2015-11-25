@@ -10,12 +10,6 @@ namespace Eagleslist
 {
     public partial class MainWindow
     {
-        private readonly List<UserControl> _primaryPanels = new List<UserControl>();
-        private readonly List<UserControl> _secondaryPanels = new List<UserControl>();
-        internal List<Button> PrimaryNavigationControls = new List<Button>();
-
-        private LinkedList<object> _navigationStack = new LinkedList<object>();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -23,21 +17,36 @@ namespace Eagleslist
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            topBar.ContainingWindow = this;
-            sideBarButtonContainer.ContainingWindow = this;
-
-            composeContainer.LoginTrigger = () => topBar.ShowLoginDialog();
-            listingsContainer.LoginTrigger = () => topBar.ShowLoginDialog();
+            //composeContainer.LoginTrigger = () => topBar.ShowLoginDialog();
+            //listingsContainer.LoginTrigger = () => topBar.ShowLoginDialog();
 
             ReloadLoginStateUi();
+        }
 
-            _primaryPanels.Add(searchContainer);
-            _primaryPanels.Add(composeContainer);
-            _primaryPanels.Add(listingsContainer);
-            _primaryPanels.Add(coursesContainer);
+        internal void RenderNavigationObject(Navigatable obj)
+        {
+            var element = obj as UIElement;
 
-            _secondaryPanels.Add(profileContainer);
-            _secondaryPanels.Add(messagesContainer);
+            if (element == null)
+            {
+                return;
+            }
+
+            for (var index = 0; index < ContainerGrid.Children.Count; index++)
+            {
+                UIElement child = ContainerGrid.Children[index];
+
+                if (Grid.GetRow(child) == 1 && Grid.GetColumn(child) == 1)
+                {
+                    ContainerGrid.Children.RemoveAt(index);
+                    index--;
+                }
+            }
+
+            Grid.SetRow(element, 1);
+            Grid.SetColumn(element, 1);
+
+            ContainerGrid.Children.Add(element);
         }
 
         internal void ReloadLoginStateUi()
@@ -50,59 +59,6 @@ namespace Eagleslist
             {
                 topBar.SetLoggedOutUi();
             }
-        }
-
-        internal void ContainerDisplayPanelAtIndex(int index)
-        {
-            if (index < _primaryPanels.Count)
-            {
-                for (var iterator = 0; iterator < _primaryPanels.Count; iterator++)
-                {
-                    _primaryPanels[iterator].Visibility = index == iterator 
-                        ? Visibility.Visible : Visibility.Collapsed;
-
-                    if (iterator == 0) continue;
-                    var button = PrimaryNavigationControls[iterator];
-
-                    button.Background = iterator == index 
-                        ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ECEEF3")) 
-                        : new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                }
-
-                foreach (var control in _secondaryPanels)
-                {
-                    control.Visibility = Visibility.Collapsed;
-                }
-            }
-            else
-            {
-                for (var iterator = 0; iterator < _primaryPanels.Count; iterator++)
-                {
-                    if (iterator != 0)
-                    {
-                        var button = PrimaryNavigationControls[iterator];
-                        button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    }
-
-                    _primaryPanels[iterator].Visibility = Visibility.Collapsed;
-                }
-
-                for (var iterator = 0; iterator < _secondaryPanels.Count; iterator++)
-                {
-                    _secondaryPanels[iterator].Visibility = index - _primaryPanels.Count == iterator ?
-                        Visibility.Visible : Visibility.Collapsed;
-                }
-            }
-        }
-
-        internal void ShowSecondaryPanelAtIndex(int index)
-        {
-            if (index == 0)
-            {
-                profileContainer.CurrentProfileUser = CredentialManager.GetCurrentUser();
-            }
-
-            ContainerDisplayPanelAtIndex(_primaryPanels.Count + index);
         }
 
         private static string GravatarUrlFromUser(User user, int size)
