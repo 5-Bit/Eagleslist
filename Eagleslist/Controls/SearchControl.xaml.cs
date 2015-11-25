@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Eagleslist.Controls
 {
@@ -20,9 +12,34 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class SearchControl : UserControl, Navigatable
     {
+        private ObservableCollection<Listing> _results = new ObservableCollection<Listing>();
+
         public SearchControl()
         {
             InitializeComponent();
+        }
+
+        public void SearchBoxUpdatedText(string text)
+        {
+            GetSearchResultsForText(text);
+        }
+
+        private async void GetSearchResultsForText(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                _results = null;
+                ResultsListView.ItemsSource = _results;
+                return;
+            }
+
+            var results = await RequestManager.SearchForText(text);
+
+            if (results != null && results.Count != 0)
+            {
+                _results = new ObservableCollection<Listing>(results);
+                ResultsListView.ItemsSource = _results;
+            }
         }
 
         private void SearchSubmitButtonClicked(object sender, RoutedEventArgs e)
@@ -31,6 +48,11 @@ namespace Eagleslist.Controls
         }
 
         public void RenderObject(object obj)
+        {
+            var listings = obj as List<Listing>;
+        }
+
+        private void ResultsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
