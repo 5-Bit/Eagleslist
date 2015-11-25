@@ -32,7 +32,7 @@
         </Grid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0" Grid.Column="1">
-            <Button BorderThickness="0" Width="60" Height="60"
+            <Button BorderThickness="0" Width="60" Height="60" x:Name="NavBackButton"
                         Click="NavigationBackButtonClicked"
                         Style="{StaticResource NavigationButtonStyle}">
 
@@ -40,7 +40,7 @@
                            Stretch="Fill" Margin="14"/>
             </Button>
 
-            <Button BorderThickness="0" Width="60" Height="60" 
+            <Button BorderThickness="0" Width="60" Height="60" x:Name="NavForwardButton"
                         Click="NavigationForwardButtonClicked"
                         Style="{StaticResource NavigationButtonStyle}">
 
@@ -97,8 +97,8 @@
 
                 <ComboBoxItem Content="Sign In" Visibility="Collapsed" Tag="LoggedOut"/>
                 <ComboBoxItem Content="Sign Up" Visibility="Collapsed" Tag="LoggedOut"/>
-                <ComboBoxItem Content="Profile" Visibility="Visible" Tag="LoggedIn"/>
-                <ComboBoxItem Content="Messages" Visibility="Visible" Tag="LoggedIn"/>
+                <ComboBoxItem x:Name="ProfileComboBoxItem" Content="Profile" Visibility="Visible" Tag="LoggedIn"/>
+                <ComboBoxItem x:Name="NotificationsComboBoxItem" Content="Notifications" Visibility="Visible" Tag="LoggedIn"/>
                 <ComboBoxItem Content="Sign Out" Visibility="Visible" Tag="LoggedIn"/>
             </ComboBox>
         </Canvas>

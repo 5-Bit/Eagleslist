@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <Eagleslist:SearchButton x:Name="SearchButton" HorizontalContentAlignment="Stretch"
-                BorderThickness="0" Click="SearchButtonClicked" Grid.Row="0"
+                BorderThickness="0" Click="NavigationButtonClicked" Grid.Row="0"
                 Padding="0" Style="{StaticResource TopPanelButtonStyle}"
                 VerticalAlignment="Stretch" Tag="0">
 
