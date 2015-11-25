@@ -32,7 +32,8 @@ namespace Eagleslist
         public static async Task<List<Listing>> SearchForText(string text)
         {
             var url = $"{RootUrl}apidb/searchlistings/{HttpUtility.UrlEncode(text)}";
-            return await GetJson<List<Listing>>(url);
+            var responseString = await Request(url);
+            return await ListingsFromJson(responseString);
         }
 
         public static async Task<BitmapImage> GetBitmapFromUri(Uri uri)
