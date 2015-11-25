@@ -10,12 +10,28 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class TopBarControl : UserControl
     {
-        internal MainWindow ContainingWindow;
+        internal MainWindow ContainingWindow
+        {
+            get
+            {
+                return ((MainWindow)Application.Current.MainWindow);
+            }
+        }
+
         private SearchButton _searchButton;
 
         public TopBarControl()
         {
             InitializeComponent();
+
+            NavigationManager.AddAssociation<ProfileViewerControl>(ProfileComboBoxItem);
+            NavigationManager.AddAssociation<MessagesViewerControl>(NotificationsComboBoxItem);
+
+            NavigationManager.NavigationStateChangeListener = () =>
+            {
+                NavBackButton.IsEnabled = NavigationManager.CanGoBack;
+                NavForwardButton.IsEnabled = NavigationManager.CanGoForward;
+            };
         }
 
         internal void SetLoggedInUi()
@@ -105,16 +121,6 @@ namespace Eagleslist.Controls
             }
         }
 
-        private void ProfileButtonClicked()
-        {
-            ContainingWindow.ShowSecondaryPanelAtIndex(0);
-        }
-
-        private void MessagesButtonClicked()
-        {
-            ContainingWindow.ShowSecondaryPanelAtIndex(1);
-        }
-
         private void AccountDropDownClicked(object sender, RoutedEventArgs e)
         {
             AccountComboBox.IsDropDownOpen = !AccountComboBox.IsDropDownOpen;
@@ -122,6 +128,7 @@ namespace Eagleslist.Controls
 
         private void AccountComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var comboBox = sender as ComboBox;
             switch (AccountComboBox.SelectedIndex)
             {
                 case 0:
@@ -131,10 +138,8 @@ namespace Eagleslist.Controls
                     ShowSignUpDialog();
                     break;
                 case 2:
-                    ProfileButtonClicked();
-                    break;
                 case 3:
-                    MessagesButtonClicked();
+                    NavigationManager.NavigateFromClick((ComboBoxItem)comboBox.Items[comboBox.SelectedIndex], null);
                     break;
                 case 4:
                     ShowSignOutDialog();
@@ -190,12 +195,12 @@ namespace Eagleslist.Controls
 
         private void NavigationBackButtonClicked(object sender, RoutedEventArgs e)
         {
-
+            NavigationManager.NavigateBack();
         }
 
         private void NavigationForwardButtonClicked(object sender, RoutedEventArgs e)
         {
-
+            NavigationManager.NavigateForward();
         }
     }
 }
