@@ -1,10 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Media;
 
 namespace Eagleslist
 {
