@@ -11,9 +11,9 @@ namespace Eagleslist.Controls
         {
             set
             {
-                ProfileUsername.Text = value.Handle;
-                ProfileEmail.Text = value.Email;
-                ProfileBio.Text = value.Bio;
+                ProfileUsername.Text = value?.Handle;
+                ProfileEmail.Text = value?.Email;
+                ProfileBio.Text = value?.Bio;
             }
         }
 
@@ -24,7 +24,7 @@ namespace Eagleslist.Controls
 
         public void RenderObject(object obj)
         {
-
+            CurrentProfileUser = obj as User;
         }
     }
 }

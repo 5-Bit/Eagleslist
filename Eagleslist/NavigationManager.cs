@@ -87,6 +87,17 @@ namespace Eagleslist
             DropForwardFromCurrentIndex();
 
             var context = new NavigationContext(obj, _buttonAssociations[contentControl]);
+
+            if (_navigationIndex >= 0 && _navigationIndex < _navigationStack.Count)
+            {
+                var previousContext = _navigationStack[_navigationIndex];
+                
+                if (context.Equals(previousContext))
+                {
+                    return;
+                }
+            }
+
             _navigationStack.Add(context);
             _navigationIndex = _navigationStack.Count - 1;
 

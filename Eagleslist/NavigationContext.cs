@@ -2,7 +2,7 @@
 
 namespace Eagleslist
 {
-    public class NavigationContext
+    public class NavigationContext : IEquatable<NavigationContext>
     {
         public object DataObject { get; }
         public Type Type { get; }
@@ -16,6 +16,14 @@ namespace Eagleslist
         public Navigatable Instantiate()
         {
             return Activator.CreateInstance(Type) as Navigatable;
+        }
+
+        public bool Equals(NavigationContext other)
+        {
+            return Type.Equals(other.Type)
+                && DataObject != null 
+                && other.DataObject != null
+                && DataObject.Equals(other.DataObject);
         }
     }
 }

@@ -147,6 +147,8 @@ namespace Eagleslist.Controls
                     ShowSignUpDialog();
                     break;
                 case 2:
+                    NavigationManager.NavigateFromClick((ComboBoxItem)comboBox.Items[comboBox.SelectedIndex], CredentialManager.GetCurrentUser());
+                    break;
                 case 3:
                     NavigationManager.NavigateFromClick((ComboBoxItem)comboBox.Items[comboBox.SelectedIndex], null);
                     break;
