@@ -21,6 +21,26 @@
         <SolidColorBrush x:Key="primaryColor" Color="#446CB3"/>
         <SolidColorBrush x:Key="sideBarHoverColor" Color="#DADADA"/>
 
+        <Style TargetType="{x:Type Button}" x:Key="LinkButtonStyle">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource FGCUBlue}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Blue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style TargetType="{x:Type Button}" x:Key="NavigationButtonStyle">
             <Setter Property="Background" Value="{StaticResource darkBackground}"/>
             <Setter Property="Template">
