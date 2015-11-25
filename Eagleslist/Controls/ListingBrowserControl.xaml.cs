@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,7 +9,7 @@ namespace Eagleslist.Controls
     /// <summary>
     /// Interaction logic for ListingBrowserControl.xaml
     /// </summary>
-    public partial class ListingBrowserControl
+    public partial class ListingBrowserControl : Navigatable
     {
         private ObservableCollection<Listing> _listings = new ObservableCollection<Listing>();
         internal Func<bool> LoginTrigger {
@@ -23,6 +24,11 @@ namespace Eagleslist.Controls
             InitializeComponent();
         }
 
+        public void RenderObject(object obj)
+        {
+
+        }
+
         private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Visibility == Visibility.Visible)
@@ -35,7 +41,9 @@ namespace Eagleslist.Controls
         {
             var selectedList = sender as ListView;
 
-            if (_listings[selectedList.SelectedIndex].Equals(CurrentListing.Listing))
+            if (selectedList.SelectedIndex < _listings.Count && selectedList.SelectedIndex >= 0
+                && CurrentListing.Listing != null
+                && _listings[selectedList.SelectedIndex].Equals(CurrentListing.Listing))
             {
                 return;
             }
