@@ -1,48 +1,129 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Eagleslist
 {
-    public class NavigationManagers<T> : Object
+    public class NavigationManager
     {
-        private static int _navigationIndex = -1;
+        private static MainWindow _mainWindow
+        {
+            get
+            {
+                return ((MainWindow)Application.Current.MainWindow);
+            }
+        }
+
+        private static int _navIndexBacking = -1;
+        private static int _navigationIndex
+        {
+            get
+            {
+                return _navIndexBacking;
+            }
+
+            set
+            {
+                _navIndexBacking = value;
+
+                if (NavigationStateChangeListener != null)
+                {
+                    NavigationStateChangeListener();
+                }
+            }
+        }
+
         private static List<NavigationContext> _navigationStack = new List<NavigationContext>();
         private static Dictionary<ContentControl, Type> _buttonAssociations = new Dictionary<ContentControl, Type>();
 
-        public static Instantiatable Instantiate<Instantiatable>() where Instantiatable : new()
+        public static Action _navigationStateChangeListener;
+        public static Action NavigationStateChangeListener
         {
-            var theObject = (Instantiatable)Activator.CreateInstance(typeof(Instantiatable));
-            return theObject;
+            get
+            {
+                return _navigationStateChangeListener;
+            }
+
+            set
+            {
+                _navigationStateChangeListener = value;
+
+                if (_navigationStateChangeListener != null)
+                {
+                    _navigationStateChangeListener();
+                }
+            }
         }
 
-        public static void AddAssociation<T, U>(ContentControl button) where T : Navigatable<T, U>
+        public static bool CanGoBack
         {
-            _buttonAssociations.Add(button, typeof(Instantiatable));
-            //_buttonAssociations.Add(button, type);
+            get
+            {
+                return _navigationIndex > 0;
+            }
         }
 
-        public static void DropAssociations()
+        public static bool CanGoForward
+        {
+            get
+            {
+                return _navigationIndex >= 0 && _navigationIndex < _navigationStack.Count - 1;
+            }
+        }
+
+        public static void AddAssociation<T>(ContentControl button) where T : Navigatable, new()
+        {
+            _buttonAssociations.Add(button, typeof(T));
+        }
+
+        public static void ClearAllAssociations()
         {
             _buttonAssociations.Clear();
         }
 
-        public static void NavigateFromClick(ContentControl contentControl)
+        public static void NavigateFromClick(ContentControl contentControl, object obj)
         {
+            DropForwardFromCurrentIndex();
 
+            var context = new NavigationContext(obj, _buttonAssociations[contentControl]);
+            _navigationStack.Add(context);
+            _navigationIndex = _navigationStack.Count - 1;
+
+            RenderContext(context);
+        }
+
+        private static void DropForwardFromCurrentIndex()
+        {
+            if (_navigationIndex >= 0 && _navigationIndex < _navigationStack.Count)
+            {
+                //_navigationStack.RemoveRange(_navigationIndex + 1, _navigationStack.Count - _navigationIndex + 1);
+                _navigationStack = _navigationStack.GetRange(0, _navigationIndex + 1);
+            } 
+        }
+
+        private static void RenderContext(NavigationContext context)
+        {
+            var nextNavItem = context.Instantiate();
+            nextNavItem.RenderObject(context.DataObject);
+
+            _mainWindow.RenderNavigationObject(nextNavItem);
         }
 
         public static void NavigateBack()
         {
-
+            if (_navigationIndex - 1 >= 0)
+            {
+                RenderContext(_navigationStack[--_navigationIndex]);
+            }
         }
 
         public static void NavigateForward()
         {
-
+            if (_navigationIndex + 1 < _navigationStack.Count)
+            {
+                RenderContext(_navigationStack[++_navigationIndex]);
+            }
         }
     }
 }
