@@ -18,11 +18,16 @@ namespace Eagleslist.Controls
     /// <summary>
     /// Interaction logic for CoursesBrowserControl.xaml
     /// </summary>
-    public partial class CoursesBrowserControl : UserControl
+    public partial class CoursesBrowserControl : UserControl, Navigatable
     {
         public CoursesBrowserControl()
         {
             InitializeComponent();
+        }
+
+        public void RenderObject(object obj)
+        {
+
         }
     }
 }
