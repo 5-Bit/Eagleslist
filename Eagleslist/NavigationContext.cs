@@ -1,13 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Eagleslist
 {
     public class NavigationContext
     {
+        public object DataObject { get; }
+        public Type Type { get; }
 
+        public NavigationContext(object dataObject, Type type)
+        {
+            DataObject = dataObject;
+            Type = type;
+        }
+
+        public Navigatable Instantiate()
+        {
+            return Activator.CreateInstance(Type) as Navigatable;
+        }
     }
 }
