@@ -8,7 +8,7 @@ namespace Eagleslist.Controls
     /// <summary>
     /// Interaction logic for ListingCreationControl.xaml
     /// </summary>
-    public partial class ListingCreationControl : UserControl
+    public partial class ListingCreationControl : UserControl, Navigatable
     {
         internal Func<bool> LoginTrigger;
         private ListingCreation _draft = new ListingCreation();
@@ -147,6 +147,11 @@ namespace Eagleslist.Controls
             {
 
             }
+        }
+
+        public void RenderObject(object obj)
+        {
+
         }
     }
 }
