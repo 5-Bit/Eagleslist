@@ -7,6 +7,19 @@
              xmlns:Eagleslist="clr-namespace:Eagleslist"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="60">
+
+    <UserControl.Resources>
+        <RoutedUICommand x:Key="SearchCommand" Text="Search for books or classes"/>
+    </UserControl.Resources>
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{StaticResource SearchCommand}" Executed="SearchCommandExecuted"/>
+    </UserControl.CommandBindings>
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{StaticResource SearchCommand}"/>
+    </UserControl.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -16,7 +29,7 @@
         </Grid.RowDefinitions>
 
         <Eagleslist:SearchButton x:Name="SearchButton" HorizontalContentAlignment="Stretch"
-                BorderThickness="0" Click="NavigationButtonClicked" Grid.Row="0"
+                BorderThickness="0" Click="SearchButtonClicked" Grid.Row="0"
                 Padding="0" Style="{StaticResource TopPanelButtonStyle}"
                 VerticalAlignment="Stretch" Tag="0">
 

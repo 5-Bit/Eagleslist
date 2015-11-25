@@ -30,7 +30,11 @@
               Grid.RowSpan="2" Grid.Column="0" Width="60" Panel.ZIndex="1500"
               Background="White" x:Name="sideBarButtonContainer"/>
 
-        <!-- Bottom credit bar -->
+        <ScrollViewer x:Name="TutorialView" Grid.Row="1" Grid.Column="1">
+
+        </ScrollViewer>
+
+            <!-- Bottom credit bar -->
         <controls:CreditBarControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource darkBackground}" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>

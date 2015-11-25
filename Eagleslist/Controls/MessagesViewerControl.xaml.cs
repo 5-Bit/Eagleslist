@@ -37,7 +37,7 @@ namespace Eagleslist.Controls
             }
         }
 
-        private async void ReloadContent()
+        private void ReloadContent()
         {
 
             MessagesListView.ItemsSource = _comments;

@@ -10,7 +10,7 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class TopBarControl : UserControl
     {
-        internal MainWindow ContainingWindow
+        private MainWindow ContainingWindow
         {
             get
             {
@@ -51,6 +51,15 @@ namespace Eagleslist.Controls
             _searchButton = button;
             ToggleSearchUI();
             button.isSelected = !button.isSelected;
+
+            if (button.isSelected)
+            {
+                NavigationManager.NavigateFromClick(button, null);
+            }
+            else
+            {
+                NavigationManager.NavigateBack();
+            }
         }
 
         private void ToggleSearchUI()
@@ -201,6 +210,24 @@ namespace Eagleslist.Controls
         private void NavigationForwardButtonClicked(object sender, RoutedEventArgs e)
         {
             NavigationManager.NavigateForward();
+        }
+
+        private void SearchBoxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var grid = ContainingWindow.ContainerGrid;
+
+            foreach (UIElement element in grid.Children)
+            {
+                if (Grid.GetRow(element) == 1 && Grid.GetColumn(element) == 1)
+                {
+                    var searchControl = element as SearchControl;
+
+                    if (searchControl != null)
+                    {
+                        searchControl.SearchBoxUpdatedText((sender as TextBox)?.Text);
+                    }
+                }
+            }
         }
     }
 }
