@@ -86,9 +86,8 @@
 
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
-                            <!--<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             <Setter Property="Margin" Value="0"/>
-                            <Setter Property="Padding" Value="100 0 10 0"/>-->
 
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -112,7 +111,7 @@
                                     </Grid.RowDefinitions>
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <DockPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource lightBackground}"
@@ -134,10 +133,9 @@
                                         </StackPanel>
                                     </DockPanel>
 
-                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                     <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
-                                           TextWrapping="WrapWithOverflow" TextTrimming="WordEllipsis"
-                                           FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"
+                                           TextWrapping="WrapWithOverflow" VerticalAlignment="Stretch"
+                                           FontSize="11" LineHeight="13"
                                            Grid.Row="1" Grid.Column="0" Margin="0"
                                            Foreground="Black" Padding="5 10"/>
                                 </Grid>
