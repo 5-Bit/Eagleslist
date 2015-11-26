@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Eagleslist.Controls;
 
 namespace Eagleslist
 {
@@ -84,20 +85,45 @@ namespace Eagleslist
 
         public static void NavigateFromClick(ContentControl contentControl, object obj)
         {
-            DropForwardFromCurrentIndex();
+            //if (contentControl is SearchButton)
+            //{
+            //    var searchButton = (SearchButton)contentControl;
+            //    Console.WriteLine(searchButton.isSelected);
 
-            var context = new NavigationContext(obj, _buttonAssociations[contentControl]);
+            //    if (searchButton.isSelected)
+            //    {
+            //        if (_navigationIndex >= 0
+            //            && _navigationIndex < _navigationStack.Count
+            //            && _navigationStack[_navigationIndex].Type.Equals(typeof(SearchControl)))
+            //        {
+            //            NavigateBack();
+            //            return;
+            //        }
 
-            if (_navigationIndex >= 0 && _navigationIndex < _navigationStack.Count)
+            //        return;
+            //    }
+            //}
+            
+            if (contentControl is SearchButton)
             {
-                var previousContext = _navigationStack[_navigationIndex];
-                
-                if (context.Equals(previousContext))
+                var searchButton = (SearchButton)contentControl;
+                Console.WriteLine(searchButton.isSelected);
+                if (!searchButton.isSelected)
                 {
+                    if (_navigationIndex >= 0
+                        && _navigationIndex < _navigationStack.Count
+                        && _navigationStack[_navigationIndex].Type.Equals(typeof(SearchControl)))
+                    {
+                        NavigateBack();
+                    }
+
                     return;
                 }
             }
 
+            DropForwardFromCurrentIndex();
+
+            var context = new NavigationContext(obj, _buttonAssociations[contentControl]);
             _navigationStack.Add(context);
             _navigationIndex = _navigationStack.Count - 1;
 
@@ -108,7 +134,6 @@ namespace Eagleslist
         {
             if (_navigationIndex >= 0 && _navigationIndex < _navigationStack.Count)
             {
-                //_navigationStack.RemoveRange(_navigationIndex + 1, _navigationStack.Count - _navigationIndex + 1);
                 _navigationStack = _navigationStack.GetRange(0, _navigationIndex + 1);
             } 
         }
