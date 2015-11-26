@@ -51,15 +51,7 @@ namespace Eagleslist.Controls
             _searchButton = button;
             ToggleSearchUI();
             button.isSelected = !button.isSelected;
-
-            if (button.isSelected)
-            {
-                NavigationManager.NavigateFromClick(button, null);
-            }
-            else
-            {
-                NavigationManager.NavigateBack();
-            }
+            NavigationManager.NavigateFromClick(button, null);
         }
 
         private void ToggleSearchUI()
