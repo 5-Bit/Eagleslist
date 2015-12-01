@@ -128,8 +128,9 @@
 
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right">
                                             <Button Content="delete" Style="{StaticResource LinkButtonStyle}" 
+                                                    Visibility="{Binding UserID, Converter={StaticResource visiblize}}"
                                                     Padding="5" Margin="0 0 10 0" Height="20" VerticalContentAlignment="Center"
-                                                    VerticalAlignment="Center"/>
+                                                    VerticalAlignment="Center" Click="DeleteCommentButtonClicked"/>
                                         </StackPanel>
                                     </DockPanel>
 

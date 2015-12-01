@@ -177,8 +177,7 @@ namespace Eagleslist
                     { "SessionID", session }
                 };
 
-                var response = await SendObjectAsJson<CommentCreationResponse>(commentRequest, url, client.PutAsync);
-                return !string.IsNullOrEmpty(response?.Error) ? null : response;
+                return await SendObjectAsJson<CommentCreationResponse>(commentRequest, url, client.PutAsync);
             }
         }
 
