@@ -58,6 +58,7 @@ namespace Eagleslist.Controls
                 return;
             }
 
+            CurrentListingProgressBar.Visibility = Visibility.Visible;
             var response = await RequestManager.GetCommentsForListing(_listing);
 
             if (!string.IsNullOrEmpty(response?.Error))
