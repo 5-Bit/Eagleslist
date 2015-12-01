@@ -5,6 +5,7 @@ using Humanizer;
 using System.Globalization;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace Eagleslist.Controls
 {
@@ -191,6 +192,26 @@ namespace Eagleslist.Controls
             var result = MessageBox.Show(text, caption, buttons, icon);
 
             return result == MessageBoxResult.Yes;
+        }
+
+        private void DeleteCommentButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var comment = button.DataContext as Comment;
+            DeleteComment(comment);
+        }
+
+        private async void DeleteComment(Comment comment)
+        {
+            var response = await RequestManager.DeleteComment(comment);
+            
+            if (response != null)
+            {
+                if (string.IsNullOrWhiteSpace(response.Error))
+                {
+                    GetComments();
+                }
+            }
         }
     }
 }
