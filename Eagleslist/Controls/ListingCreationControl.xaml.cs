@@ -162,5 +162,26 @@ namespace Eagleslist.Controls
         {
             LoginTrigger = () => ContainingWindow.topBar.ShowLoginDialog();
         }
+
+        private void AttemptAutofillButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (ShowAutoFill())
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private bool ShowAutoFill()
+        {
+            AutoFillPrompt prompt = new AutoFillPrompt();
+            prompt.Owner = ContainingWindow;
+
+            bool? success = prompt.ShowDialog();
+            return success.HasValue && success.Value;
+        }
     }
 }
