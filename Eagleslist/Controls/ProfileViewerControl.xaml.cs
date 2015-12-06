@@ -12,7 +12,7 @@ namespace Eagleslist.Controls
             set
             {
                 ProfileUsername.Text = value?.Handle;
-                ProfileEmail.Text = value?.Email;
+                //ProfileEmail.Text = value?.Email;
                 ProfileBio.Text = value?.Bio;
             }
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,8 +10,16 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class ListingBrowserControl : Navigatable
     {
+        private MainWindow ContainingWindow
+        {
+            get
+            {
+                return (MainWindow)Application.Current.MainWindow;
+            }
+        }
+
         private ObservableCollection<Listing> _listings = new ObservableCollection<Listing>();
-        internal Func<bool> LoginTrigger {
+        private Func<bool> LoginTrigger {
             set
             {
                 CurrentListing.LoginTrigger = value;
@@ -26,7 +33,7 @@ namespace Eagleslist.Controls
 
         public void RenderObject(object obj)
         {
-
+            LoginTrigger = () => ContainingWindow.topBar.ShowLoginDialog();
         }
 
         private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
