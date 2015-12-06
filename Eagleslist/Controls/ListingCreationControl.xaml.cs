@@ -10,7 +10,16 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class ListingCreationControl : UserControl, Navigatable
     {
-        internal Func<bool> LoginTrigger;
+        private MainWindow ContainingWindow
+        {
+            get
+            {
+                return ((MainWindow)Application.Current.MainWindow);
+            }
+        }
+
+
+        private Func<bool> LoginTrigger;
         private ListingCreation _draft = new ListingCreation();
 
         public ListingCreationControl()
@@ -151,7 +160,7 @@ namespace Eagleslist.Controls
 
         public void RenderObject(object obj)
         {
-
+            LoginTrigger = () => ContainingWindow.topBar.ShowLoginDialog();
         }
     }
 }
