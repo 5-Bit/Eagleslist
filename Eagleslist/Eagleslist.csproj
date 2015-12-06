@@ -79,6 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ArrayToSentenceStringConverter.cs" />
     <Compile Include="AuthResponse.cs" />
     <Compile Include="Books\Book.cs" />
     <Compile Include="Books\BookCondition.cs" />
