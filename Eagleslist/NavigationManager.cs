@@ -84,26 +84,7 @@ namespace Eagleslist
         }
 
         public static void NavigateFromClick(ContentControl contentControl, object obj)
-        {
-            //if (contentControl is SearchButton)
-            //{
-            //    var searchButton = (SearchButton)contentControl;
-            //    Console.WriteLine(searchButton.isSelected);
-
-            //    if (searchButton.isSelected)
-            //    {
-            //        if (_navigationIndex >= 0
-            //            && _navigationIndex < _navigationStack.Count
-            //            && _navigationStack[_navigationIndex].Type.Equals(typeof(SearchControl)))
-            //        {
-            //            NavigateBack();
-            //            return;
-            //        }
-
-            //        return;
-            //    }
-            //}
-            
+        {            
             if (contentControl is SearchButton)
             {
                 var searchButton = (SearchButton)contentControl;
