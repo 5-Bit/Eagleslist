@@ -7,6 +7,7 @@
     <Application.Resources>
         <local:HumanizeConverter x:Key="humanize"/>
         <local:OwnerIdToVisibilityConverter x:Key="visiblize"/>
+        <local:ArrayToSentenceStringConverter x:Key="sentencizer"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <SolidColorBrush x:Key="FGCUBlue" Color="#00287A"/>

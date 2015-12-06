@@ -256,12 +256,10 @@ namespace Eagleslist
                     try
                     {
                         var responseString = await client.GetStringAsync(url);
-                        Console.WriteLine(responseString);
                         return JsonConvert.DeserializeObject<T>(responseString);
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
                         return default(T);
                     }
                 }
@@ -274,7 +272,7 @@ namespace Eagleslist
             {
                 var json = JsonConvert.SerializeObject(obj);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                Console.WriteLine(await content.ReadAsStringAsync());
+
                 var response = await action(url, content);
                 var responseString = await response.Content.ReadAsStringAsync();
 
@@ -282,9 +280,24 @@ namespace Eagleslist
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
                 return default(T);
             }
+        }
+
+        public static async Task<List<GoogleBook>> GetBooksMatchingTitle(string title)
+        {
+            var url = $"https://www.googleapis.com/books/v1/volumes?q=title:{HttpUtility.UrlEncode(title)}";
+            var response = await GetJson<GoogleBookResponse>(url);
+
+            return response?.items ?? new List<GoogleBook>();
+        }
+
+        public static async Task<List<GoogleBook>> GetBooksMatchingIsbn(string isbn)
+        {
+            var url = $"https://www.googleapis.com/books/v1/volumes?q=isbn:{HttpUtility.UrlEncode(isbn)}";
+            var response = await GetJson<GoogleBookResponse>(url);
+
+            return response?.items ?? new List<GoogleBook>();
         }
     }
 }

@@ -94,6 +94,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <local:ListingControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0" x:Name="CurrentListing"/>
+        <local:ListingControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0"
+                              x:Name="CurrentListing" Visibility="Hidden"/>
     </Grid>
 </UserControl>

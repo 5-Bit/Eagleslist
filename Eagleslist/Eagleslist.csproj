@@ -79,7 +79,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ArrayToSentenceStringConverter.cs" />
     <Compile Include="AuthResponse.cs" />
+    <Compile Include="AutoFillPrompt.xaml.cs">
+      <DependentUpon>AutoFillPrompt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Books\Book.cs" />
     <Compile Include="Books\BookCondition.cs" />
     <Compile Include="Comment.cs" />
@@ -125,6 +129,8 @@
     <Compile Include="Flags\Flag.cs" />
     <Compile Include="Flags\FlagResolution.cs" />
     <Compile Include="Flags\FlagType.cs" />
+    <Compile Include="GoogleBook.cs" />
+    <Compile Include="GoogleBookResponse.cs" />
     <Compile Include="HumanizeConverter.cs" />
     <Compile Include="Listing.cs" />
     <Compile Include="Listing Creation\ListingCreation.cs" />
@@ -145,6 +151,10 @@
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="ValidatedListing.cs" />
+    <Page Include="AutoFillPrompt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\CoursesBrowserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

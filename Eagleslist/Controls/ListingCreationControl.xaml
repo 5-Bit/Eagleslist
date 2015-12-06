@@ -31,6 +31,8 @@
             <Label Margin="20, 10, 20, 10" Content="New Listing" FontSize="18"
                    Grid.Row="0" VerticalAlignment="Center"/>
 
+            <Button Grid.Row="0" Grid.Column="1" Content="autofill" Click="AttemptAutofillButtonClicked"/>
+            
             <Label x:Name="DraftSavedLabel" Content="Draft Saved 3 minutes ago" 
                    Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"
                    HorizontalAlignment="Right" VerticalAlignment="Center"

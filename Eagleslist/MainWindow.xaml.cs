@@ -15,9 +15,6 @@ namespace Eagleslist
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            //composeContainer.LoginTrigger = () => topBar.ShowLoginDialog();
-            //listingsContainer.LoginTrigger = () => topBar.ShowLoginDialog();
-
             ReloadLoginStateUi();
         }
 
