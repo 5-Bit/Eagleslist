@@ -52,6 +52,7 @@ namespace Eagleslist.Controls
                 && CurrentListing.Listing != null
                 && _listings[selectedList.SelectedIndex].Equals(CurrentListing.Listing))
             {
+                CurrentListing.Visibility = Visibility.Hidden;
                 return;
             }
 
@@ -59,10 +60,12 @@ namespace Eagleslist.Controls
             {
                 if (selectedList != null && selectedList.SelectedIndex < _listings.Count && selectedList.SelectedIndex >= 0)
                 {
+                    CurrentListing.Visibility = Visibility.Visible;
                     CurrentListing.SetListing(_listings[selectedList.SelectedIndex]);
                 }
                 else
                 {
+                    CurrentListing.Visibility = Visibility.Hidden;
                     CurrentListing.SetListing(null);
                 }
             }
