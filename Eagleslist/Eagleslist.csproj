@@ -127,6 +127,7 @@
     <Compile Include="Flags\FlagResolution.cs" />
     <Compile Include="Flags\FlagType.cs" />
     <Compile Include="GoogleBook.cs" />
+    <Compile Include="GoogleBookResponse.cs" />
     <Compile Include="HumanizeConverter.cs" />
     <Compile Include="Listing.cs" />
     <Compile Include="Listing Creation\ListingCreation.cs" />
