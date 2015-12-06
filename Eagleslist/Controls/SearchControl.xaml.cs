@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,11 +41,6 @@ namespace Eagleslist.Controls
             }
         }
 
-        private void SearchSubmitButtonClicked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         public void RenderObject(object obj)
         {
             var listings = obj as List<Listing>;
@@ -54,7 +48,30 @@ namespace Eagleslist.Controls
 
         private void ResultsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var selectedList = sender as ListView;
 
+            if (selectedList.SelectedIndex < _results.Count && selectedList.SelectedIndex >= 0
+                && CurrentListing.Listing != null
+                && _results[selectedList.SelectedIndex].Equals(CurrentListing.Listing))
+            {
+                return;
+            }
+
+            if (CurrentListing.ShouldAllowExit())
+            {
+                if (selectedList != null && selectedList.SelectedIndex < _results.Count && selectedList.SelectedIndex >= 0)
+                {
+                    CurrentListing.SetListing(_results[selectedList.SelectedIndex]);
+                }
+                else
+                {
+                    CurrentListing.SetListing(null);
+                }
+            }
+            else
+            {
+                selectedList.SelectedIndex = _results.IndexOf(CurrentListing.Listing);
+            }
         }
     }
 }
