@@ -53,5 +53,15 @@ namespace Eagleslist
 
             Close();
         }
+
+        // Show user a promt text, but make it disappear when they focus into the search box.
+        private bool textIsUserInput = false;
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (!textIsUserInput) { 
+                SearchBox.Text = "";
+                textIsUserInput = true;
+            }
+        }
     }
 }

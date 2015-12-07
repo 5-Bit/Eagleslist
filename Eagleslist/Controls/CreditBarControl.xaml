@@ -16,12 +16,13 @@
         </Grid.RowDefinitions>
 
         <TextBlock HorizontalAlignment="Center"
+                   Padding="1,0,1,2"
                    VerticalAlignment="Center" Background="{StaticResource darkerBackground}"
                    FontSize="9.333" Grid.Row="0" Grid.Column="0">
             
-            <Hyperlink NavigateUri="https://5BitStudios.com" RequestNavigate="CreditLinkClicked"
+            <Hyperlink NavigateUri="https://5-bit.github.io" RequestNavigate="CreditLinkClicked"
                        TextDecorations="None" Foreground="DarkGray">
-                &lt; /&gt; with &#10084; by 5Bit Studios
+                &lt;/&gt; with &#10084; by 5Bit Studios
             </Hyperlink>
         </TextBlock>
     </Grid>

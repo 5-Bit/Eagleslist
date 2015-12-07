@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Row="0" Grid.Column="0" Text="fsadfasd" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="SearchBox"/>
+            <TextBox Grid.Row="0" Grid.Column="0" Text="Search here..." HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="SearchBox" GotFocus="SearchBox_GotFocus"/>
             <Button Grid.Row="0" Grid.Column="1" Content="Search" HorizontalAlignment="Right" Click="SearchButtonClicked"/>
         </Grid>
 

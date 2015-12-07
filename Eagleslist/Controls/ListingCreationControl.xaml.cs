@@ -126,7 +126,7 @@ namespace Eagleslist.Controls
 
         private static string GetDraftWriteFolderPath()
         {
-            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             const string eagleslistMainComponent = "Eagleslist";
             const string eagleslistDataComponent = "data";
 

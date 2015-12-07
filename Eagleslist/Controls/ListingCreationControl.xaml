@@ -74,20 +74,6 @@
                      MinHeight="150" TextWrapping="Wrap" x:Name="NewListingContentBox"
                      TextChanged="NewListingContentChanged" AcceptsReturn="True" AcceptsTab="True"/>
 
-            <ListView x:Name="NewListingImagesListView" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
-                      Margin="20 0" Height="80" 
-                      SelectedIndex="{Binding Path=SelectedIndexValue}" 
-                      ItemsSource="{Binding Path=Items}">
-
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
             <DockPanel Grid.ColumnSpan="4" Grid.Row="5" VerticalAlignment="Center" Margin="20, 20, 20, 20">
                 <Button Grid.Row="0" Grid.Column="1" Content="Lookup Book Info" 
                         Click="AttemptAutofillButtonClicked" DockPanel.Dock="Left" Width="100"/>

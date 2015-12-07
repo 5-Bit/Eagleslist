@@ -4,11 +4,11 @@ using System.Xml.Serialization;
 
 namespace Eagleslist
 {
-    public class CredentialManager
+    public static class CredentialManager
     {
         private static User _nonPersistentUser;
 
-        ~CredentialManager()
+        public static void Burninate()
         {
             var currentUser = GetCurrentUser();
             if (!File.Exists(GetWriteFilePath()) && currentUser?.SessionID != null)
@@ -96,7 +96,7 @@ namespace Eagleslist
 
         private static string GetWriteFolderPath()
         {
-            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             const string eagleslistMainComponent = "Eagleslist";
             const string eagleslistDataComponent = "data";
 
