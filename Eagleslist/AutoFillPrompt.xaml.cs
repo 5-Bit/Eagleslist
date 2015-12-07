@@ -27,6 +27,11 @@ namespace Eagleslist
 
         private async void PerformSearch()
         {
+            if (string.IsNullOrWhiteSpace(SearchBox.Text))
+            {
+                return;
+            }
+
             var results = await RequestManager.GetBooksMatchingTitle(SearchBox.Text);
             Console.WriteLine(results.Count);
             
