@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Linq;
 using Humanizer;
 using System.Windows.Controls;
 
@@ -28,6 +29,7 @@ namespace Eagleslist
         {
             var results = await RequestManager.GetBooksMatchingTitle(SearchBox.Text);
             Console.WriteLine(results.Count);
+            
             _listings = new ObservableCollection<GoogleBook>(results);
             ResultsListView.ItemsSource = _listings;
 
@@ -42,6 +44,7 @@ namespace Eagleslist
             Console.WriteLine(book.volumeInfo.description);
             Console.WriteLine(book.ISBN);
             Console.WriteLine(book.Title);
+            Console.WriteLine(book.volumeInfo.imageLinks.smallThumbnail);
 
             if (result != null)
             {

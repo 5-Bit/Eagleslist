@@ -10,6 +10,7 @@ namespace Eagleslist
             public string subtitle { get; set; }
             public List<string> authors { get; set; }
             public string description { get; set; }
+            public ImageLinks imageLinks { get; set; }
             public List<Dictionary<string, string>> industryIdentifiers { get; set; }
         }
 
@@ -21,8 +22,6 @@ namespace Eagleslist
 
         public string id { get; set; }
         public VolumeInfo volumeInfo { get; set; }
-        public ImageLinks imageLinks { get; set; }
-
 
         public string Title
         {

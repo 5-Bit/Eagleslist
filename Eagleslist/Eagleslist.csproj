@@ -132,6 +132,7 @@
     <Compile Include="GoogleBook.cs" />
     <Compile Include="GoogleBookResponse.cs" />
     <Compile Include="HumanizeConverter.cs" />
+    <Compile Include="ImageLoadConverter.cs" />
     <Compile Include="Listing.cs" />
     <Compile Include="Listing Creation\ListingCreation.cs" />
     <Compile Include="LoginPrompt.xaml.cs">

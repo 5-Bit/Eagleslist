@@ -55,7 +55,9 @@
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10" Background="Red">
-                            <Image Width="46" Height="60" Source="{Binding Path=imageLinks.smallThumbnail}"/>
+                            <StackPanel>
+                            <Image Width="46" Height="60" Source="{Binding volumeInfo.imageLinks.smallThumbnail, IsAsync=True}"/>
+                            </StackPanel>
                         </Border>
 
                         <Grid Grid.Row="0" Grid.Column="1" Margin="10">
