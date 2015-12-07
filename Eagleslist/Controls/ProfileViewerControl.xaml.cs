@@ -57,5 +57,18 @@ namespace Eagleslist.Controls
         {
             CurrentProfileUser = obj as User;
         }
+
+        // Save the user's profile changes.
+        private async void SaveProfile_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (await RequestManager.IsAuthenticated()) {
+                User user = CredentialManager.GetCurrentUser();
+                user.Bio = ProfileBio.Text;
+                user.Handle = ProfileUsername.Text;
+                user.ImageURL = ProfileImageURL.Text;
+                string error = (await RequestManager.SaveNewUserInformation(user)).Error;
+                if 
+            }
+        }
     }
 }

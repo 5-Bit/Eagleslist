@@ -142,7 +142,7 @@ namespace Eagleslist.Controls
             }
 
             var comment = new Comment(-1, -1, null, NewCommentTextBox.Text, _listing.ListingID, DateTime.Now, DateTime.MaxValue.ToUniversalTime());
-            CommentCreationResponse response = await RequestManager.PostNewCommentOnListing(comment, _listing);
+            ErrorResponse response = await RequestManager.PostNewCommentOnListing(comment, _listing);
 
             if (response == null || !string.IsNullOrWhiteSpace(response.Error))
             {

@@ -21,7 +21,7 @@
 
             <Border Width="100" Height="100" Background="Red" ClipToBounds="True"
                         Grid.Row="0" Grid.Column="0" Margin="20 20 10 20">
-                <Image x:Name="ProfileImage"/>
+                <Image x:Name="ProfileImage" Source="{Binding ElementName=ProfileImageURL, Path=Text}"/>
             </Border>
 
             <Grid Grid.Row="0" Grid.Column="1" Margin="10 20 20 20">
@@ -31,13 +31,17 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Username" VerticalAlignment="Center" 
-                       x:Name="ProfileUsername" FontSize="21.333" FontWeight="Bold"
-                       HorizontalAlignment="Left"/>
+                <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
+                    <TextBox DockPanel.Dock="Left" Text="Username" VerticalAlignment="Center" 
+                           x:Name="ProfileUsername" FontSize="21.333" FontWeight="Bold"
+                           HorizontalAlignment="Left"/>
+                    <TextBox Text="Image (URL)" VerticalAlignment="Stretch" x:Name="ProfileImageURL" 
+                              FontSize="18" Margin="10,0,0,0" HorizontalAlignment="Stretch"></TextBox>
+                </DockPanel>
 
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="(n) listings" HorizontalAlignment="Right"
                        VerticalAlignment="Center"/>
@@ -50,8 +54,9 @@
                 <!--<TextBlock Text="Email" VerticalAlignment="Center" x:Name="ProfileEmail"/>-->
                 <!--</DockPanel>-->
 
-                <TextBlock Text="Bio" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0"
-                               TextWrapping="Wrap" x:Name="ProfileBio"/>
+                <TextBox Text="Bio" VerticalAlignment="Top" MinLines="4" Grid.Row="1" Grid.Column="0"
+                               TextWrapping="Wrap" x:Name="ProfileBio" />
+                <Button Grid.Row="1" Grid.Column="1" MaxHeight="30" MaxWidth="100" Click="SaveProfile_Click" >Save</Button>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource lightBackground}" Margin="20">
