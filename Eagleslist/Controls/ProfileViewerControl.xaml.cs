@@ -89,7 +89,10 @@ namespace Eagleslist.Controls
                 SaveButton.Content = "Saved!";
                 tRestoreSaveToNormal.Start();
             }
-            else {
+            else
+            {
+                SaveButton.Content = "Failed to save";
+                tRestoreSaveToNormal.Start();
                 MessageBox.Show("You're not logged in.");
             }
         }
