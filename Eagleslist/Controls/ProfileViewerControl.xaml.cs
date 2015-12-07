@@ -2,6 +2,8 @@
 using System.Windows.Controls;
 using Humanizer;
 using System.Windows;
+using System;
+using System.Windows.Threading;
 
 namespace Eagleslist.Controls
 {
@@ -25,8 +27,8 @@ namespace Eagleslist.Controls
                 _currentProfileUser = value;
 
                 ProfileUsername.Text = value?.Handle;
-                //ProfileEmail.Text = value?.Email;
                 ProfileBio.Text = value?.Bio;
+                ProfileImageURL.Text = value?.ImageURL;
 
                 GetListings();
             }
@@ -52,6 +54,14 @@ namespace Eagleslist.Controls
         public ProfileViewerControl()
         {
             InitializeComponent();
+            tRestoreSaveToNormal.Tick += TRestoreSaveToNormal_Tick;
+            tRestoreSaveToNormal.Interval = TimeSpan.FromSeconds(1);
+        }
+
+        private void TRestoreSaveToNormal_Tick(object sender, System.EventArgs e)
+        {
+            SaveButton.Content = "Save";
+            tRestoreSaveToNormal.Stop();
         }
 
         public void RenderObject(object obj)
@@ -59,19 +69,28 @@ namespace Eagleslist.Controls
             CurrentProfileUser = obj as User;
         }
 
+        DispatcherTimer tRestoreSaveToNormal = new DispatcherTimer(); 
         // Save the user's profile changes.
-        private async void SaveProfile_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void SaveProfile_Click(object sender, RoutedEventArgs e)
         {
-            if (await RequestManager.IsAuthenticated()) {
+            SaveButton.Content = "Saving...";
+            if (await RequestManager.IsAuthenticated())
+            {
                 User user = CredentialManager.GetCurrentUser();
                 user.Bio = ProfileBio.Text;
                 user.Handle = ProfileUsername.Text;
                 user.ImageURL = ProfileImageURL.Text;
                 string error = (await RequestManager.SaveNewUserInformation(user))?.Error;
-                if (error == null || error != "") {
+                if (error == null || error != "")
+                {
                     MessageBox.Show("Unable to save the profile information, please try again.");
                 }
                 CredentialManager.SetCurrentUser(user, CredentialManager.IsPersisting);
+                SaveButton.Content = "Saved!";
+                tRestoreSaveToNormal.Start();
+            }
+            else {
+                MessageBox.Show("You're not logged in.");
             }
         }
     }
