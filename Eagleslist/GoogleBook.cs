@@ -2,18 +2,25 @@
 
 namespace Eagleslist
 {
-    public class VolumeInfo
-    {
-        public string title { get; set; }
-        public string subtitle { get; set; }
-        public List<string> authors { get; set; }
-    }
-
     public class GoogleBook
     {
+        public class VolumeInfo
+        {
+            public string title { get; set; }
+            public string subtitle { get; set; }
+            public List<string> authors { get; set; }
+        }
+
+        public class ImageLinks
+        {
+            public string smallThumbnail { get; set; }
+            public string thumbnail { get; set; }
+        }
+
         public string id { get; set; }
         public string description { get; set; }
         public VolumeInfo volumeInfo { get; set; }
+        public ImageLinks imageLinks { get; set; }
 
         public List<Dictionary<string, string>> industryIdentifiers { get; set; }
 
