@@ -44,6 +44,9 @@ namespace Eagleslist
 
                 if (Grid.GetRow(child) == 1 && Grid.GetColumn(child) == 1)
                 {
+                    var current = ContainerGrid.Children[index];
+                    current.Visibility = Visibility.Hidden;
+
                     ContainerGrid.Children.RemoveAt(index);
                     index--;
                 }
