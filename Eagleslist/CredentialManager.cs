@@ -29,6 +29,14 @@ namespace Eagleslist
             return File.Exists(GetWriteFilePath()) ? ReadUser() : null;
         }
 
+        public static bool IsPersisting
+        {
+            get
+            {
+                return _nonPersistentUser == null && File.Exists(GetWriteFilePath());
+            }
+        }
+
         public static void SetCurrentUser(User user, bool persist)
         {
             if (persist)
