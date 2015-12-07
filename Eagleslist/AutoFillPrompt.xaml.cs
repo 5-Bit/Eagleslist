@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using Humanizer;
+using System.Windows.Controls;
 
 namespace Eagleslist
 {
@@ -11,6 +12,7 @@ namespace Eagleslist
     public partial class AutoFillPrompt : Window
     {
         private ObservableCollection<GoogleBook> _listings = new ObservableCollection<GoogleBook>();
+        public Action<GoogleBook> result;
 
         public AutoFillPrompt()
         {
@@ -30,6 +32,23 @@ namespace Eagleslist
             ResultsListView.ItemsSource = _listings;
 
             ResultCountTextBlock.Text = "result".ToQuantity(_listings.Count) + " found";
+        }
+
+        private void SelectBookButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var book = button.DataContext as GoogleBook;
+
+            Console.WriteLine(book.volumeInfo.description);
+            Console.WriteLine(book.ISBN);
+            Console.WriteLine(book.Title);
+
+            if (result != null)
+            {
+                result(book);
+            }
+
+            Close();
         }
     }
 }

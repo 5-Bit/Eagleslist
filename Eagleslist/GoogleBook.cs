@@ -9,6 +9,8 @@ namespace Eagleslist
             public string title { get; set; }
             public string subtitle { get; set; }
             public List<string> authors { get; set; }
+            public string description { get; set; }
+            public List<Dictionary<string, string>> industryIdentifiers { get; set; }
         }
 
         public class ImageLinks
@@ -18,11 +20,9 @@ namespace Eagleslist
         }
 
         public string id { get; set; }
-        public string description { get; set; }
         public VolumeInfo volumeInfo { get; set; }
         public ImageLinks imageLinks { get; set; }
 
-        public List<Dictionary<string, string>> industryIdentifiers { get; set; }
 
         public string Title
         {
@@ -60,12 +60,12 @@ namespace Eagleslist
         {
             get
             {
-                if (industryIdentifiers == null)
+                if (volumeInfo.industryIdentifiers == null)
                 {
                     return null;
                 }
 
-                foreach (var industryId in industryIdentifiers)
+                foreach (var industryId in volumeInfo.industryIdentifiers)
                 {
                     if (industryId["type"] != null && industryId["type"].Equals("ISBN_10"))
                     {
@@ -81,12 +81,12 @@ namespace Eagleslist
         {
             get
             {
-                if (industryIdentifiers == null)
+                if (volumeInfo.industryIdentifiers == null)
                 {
                     return null;
                 }
 
-                foreach (var industryId in industryIdentifiers)
+                foreach (var industryId in volumeInfo.industryIdentifiers)
                 {
                     if (industryId["type"] != null && industryId["type"].Equals("ISBN_13"))
                     {

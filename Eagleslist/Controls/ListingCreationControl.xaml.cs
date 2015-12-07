@@ -165,23 +165,21 @@ namespace Eagleslist.Controls
 
         private void AttemptAutofillButtonClicked(object sender, RoutedEventArgs e)
         {
-            if (ShowAutoFill())
-            {
-
-            }
-            else
-            {
-
-            }
+            ShowAutoFill();        
         }
 
-        private bool ShowAutoFill()
+        private void ShowAutoFill()
         {
             AutoFillPrompt prompt = new AutoFillPrompt();
             prompt.Owner = ContainingWindow;
+            prompt.result = (book) =>
+            {
+                NewListingTitleBox.Text = book.Title;
+                NewListingIsbnBox.Text = book.ISBN;
+                NewListingContentBox.Text = book.volumeInfo.description;
+            };
 
             bool? success = prompt.ShowDialog();
-            return success.HasValue && success.Value;
         }
     }
 }
