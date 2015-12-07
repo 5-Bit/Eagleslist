@@ -34,6 +34,18 @@ namespace Eagleslist.Controls
             };
         }
 
+        public void UpdateProfileUi()
+        {
+            if (CredentialManager.UserIsLoggedIn)
+            {
+                SetLoggedInUi();
+            }
+            else
+            {
+                SetLoggedOutUi();
+            }
+        }
+
         internal void SetLoggedInUi()
         {
             AccountOverlayButton.Content = CredentialManager.GetCurrentUser()?.Handle;
