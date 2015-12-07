@@ -74,6 +74,21 @@ namespace Eagleslist
             }
         }
 
+        internal async static Task<ErrorResponse> SaveNewUserInformation(User user)
+        {
+            using (var client = new HttpClient(DefaultRequestHandler()))
+            {
+                var session = CredentialManager.GetCurrentUser()?.SessionID;
+                const string url = RootUrl + "apidb/editProfile";
+                var payload = new Dictionary<string, object>() {
+                    { "SessionID", session },
+                    { "User", user }
+                };
+                
+                return await SendObjectAsJson<ErrorResponse>(payload, url, client.PutAsync);
+            }
+        }
+
         public static async Task<List<Listing>> FetchListingsByUser(User user)
         {
             using (var client = new HttpClient(DefaultRequestHandler()))
@@ -186,7 +201,7 @@ namespace Eagleslist
         //    }
         //}
 
-        public static async Task<CommentCreationResponse> PostNewCommentOnListing(Comment comment, Listing listing)
+        public static async Task<ErrorResponse> PostNewCommentOnListing(Comment comment, Listing listing)
         {
             var session = CredentialManager.GetCurrentUser()?.SessionID;
             if (comment == null || listing == null || session == null)
@@ -203,12 +218,12 @@ namespace Eagleslist
                     { "Comment", comment }
                 };
 
-                var response = await SendObjectAsJson<CommentCreationResponse>(commentRequest, url, client.PostAsync);
+                var response = await SendObjectAsJson<ErrorResponse>(commentRequest, url, client.PostAsync);
                 return !string.IsNullOrEmpty(response?.Error) ? null : response;
             }
         }
 
-        public static async Task<CommentCreationResponse> DeleteComment(Comment comment)
+        public static async Task<ErrorResponse> DeleteComment(Comment comment)
         {
             var session = CredentialManager.GetCurrentUser()?.SessionID;
             if (comment == null || session == null)
@@ -224,7 +239,7 @@ namespace Eagleslist
                     { "SessionID", session }
                 };
 
-                return await SendObjectAsJson<CommentCreationResponse>(commentRequest, url, client.PutAsync);
+                return await SendObjectAsJson<ErrorResponse>(commentRequest, url, client.PutAsync);
             }
         }
 

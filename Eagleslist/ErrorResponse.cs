@@ -1,7 +1,7 @@
 ﻿
 namespace Eagleslist
 {
-    public class CommentCreationResponse
+    public class ErrorResponse
     {
         public string Error { get; set; }
     }
