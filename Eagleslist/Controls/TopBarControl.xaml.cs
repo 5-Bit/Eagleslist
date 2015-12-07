@@ -25,7 +25,7 @@ namespace Eagleslist.Controls
             InitializeComponent();
 
             NavigationManager.AddAssociation<ProfileViewerControl>(ProfileComboBoxItem);
-            NavigationManager.AddAssociation<MessagesViewerControl>(NotificationsComboBoxItem);
+            //NavigationManager.AddAssociation<MessagesViewerControl>(NotificationsComboBoxItem);
 
             NavigationManager.NavigationStateChangeListener = () =>
             {
