@@ -49,9 +49,56 @@ namespace Eagleslist
             return image;
         }
 
+        public static async Task<bool> IsAuthenticated()
+        {
+            var user = CredentialManager.GetCurrentUser();
+
+            if (user == null || user.SessionID == null)
+            {
+                return false;
+            }
+
+            using (var client = new HttpClient(DefaultRequestHandler()))
+            {
+                var auth = new AuthResponse(null, user.SessionID, user.ID);
+                var fetched = await FetchUserById(auth, client);
+
+                if (fetched == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return !string.IsNullOrWhiteSpace(fetched.SessionID);
+                }
+            }
+        }
+
+        public static async Task<List<Listing>> FetchListingsByUser(User user)
+        {
+            using (var client = new HttpClient(DefaultRequestHandler()))
+            {
+                var session = CredentialManager.GetCurrentUser()?.SessionID;
+                if (session == null)
+                {
+                    return new List<Listing>();
+                }
+
+                var payload = new Dictionary<string, object>()
+                {
+                    { "SessionID", session }
+                };
+
+                var url = $"{RootUrl}apidb/users/listings/{user.ID}";
+                var returnObject = await SendObjectAsJson<Dictionary<string, List<Listing>>>(payload, url, client.PutAsync);
+
+                return returnObject["Listings"] ?? new List<Listing>();
+            }
+        }
+
         private static async Task<User> FetchUserById(AuthResponse auth, HttpClient client)
         {
-            string url = $"{RootUrl}apidb/users/id/{auth.UserID}";
+            var url = $"{RootUrl}apidb/users/id/{auth.UserID}";
             var user = await SendObjectAsJson<User>(auth, url, client.PutAsync);
 
             user?.AddAuth(auth);
@@ -286,7 +333,7 @@ namespace Eagleslist
 
         public static async Task<List<GoogleBook>> GetBooksMatchingTitle(string title)
         {
-            var url = $"https://www.googleapis.com/books/v1/volumes?q=title:{HttpUtility.UrlEncode(title)}";
+            var url = $"https://www.googleapis.com/books/v1/volumes?q={HttpUtility.UrlEncode(title)}&maxResults=40&orderBy=relevance";
             var response = await GetJson<GoogleBookResponse>(url);
 
             return response?.items ?? new List<GoogleBook>();

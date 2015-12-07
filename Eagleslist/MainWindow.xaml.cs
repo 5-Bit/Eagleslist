@@ -10,7 +10,18 @@ namespace Eagleslist
     {
         public MainWindow()
         {
+            CheckAuth();
             InitializeComponent();
+        }
+
+        private async void CheckAuth()
+        {
+            bool authed = await RequestManager.IsAuthenticated();
+
+            if (!authed)
+            {
+                CredentialManager.SetCurrentUser(null, false);
+            }
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
