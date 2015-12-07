@@ -119,6 +119,7 @@ namespace Eagleslist.Controls
                 };
 
                 string json = JsonConvert.SerializeObject(draft);
+                Directory.CreateDirectory(GetDraftWriteFolderPath());
                 File.WriteAllText(GetDraftWriteFilePath(), json);
             }
         }
