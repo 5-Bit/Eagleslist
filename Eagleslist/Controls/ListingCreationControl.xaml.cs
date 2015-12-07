@@ -1,5 +1,9 @@
-﻿using Microsoft.Win32;
+﻿using Humanizer;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,7 +21,6 @@ namespace Eagleslist.Controls
                 return ((MainWindow)Application.Current.MainWindow);
             }
         }
-
 
         private Func<bool> LoginTrigger;
         private ListingCreation _draft = new ListingCreation();
@@ -82,12 +85,57 @@ namespace Eagleslist.Controls
         {
             if (Visibility == Visibility.Visible)
             {
+                Console.WriteLine(GetDraftWriteFilePath());
+                if (File.Exists(GetDraftWriteFilePath()))
+                {
+                    var jsonString = File.ReadAllText(GetDraftWriteFilePath());
+                    var draft = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
 
+                    NewListingTitleBox.Text = draft["title"];
+                    NewListingPriceBox.Text = draft["price"];
+                    NewListingIsbnBox.Text = draft["isbn"];
+                    NewListingConditionComboBox.SelectedIndex = Convert.ToInt32(draft["condition"]);
+                    NewListingContentBox.Text = draft["body"];
+
+                    if (draft["time"] != null)
+                    {
+                        DraftSavedLabel.Content = "draft saved " + Convert.ToDateTime(draft["time"]).Humanize(false);
+                    }
+                    else
+                    {
+                        DraftSavedLabel.Content = "draft saved";
+                    }
+                }
             }
             else
             {
+                var draft = new Dictionary<string, string>() {
+                    { "title", NewListingTitleBox.Text },
+                    { "price", NewListingPriceBox.Text },
+                    { "isbn", NewListingIsbnBox.Text },
+                    { "condition", NewListingConditionComboBox.SelectedIndex.ToString() },
+                    { "body", NewListingContentBox.Text },
+                    { "time", DateTime.Now.ToString() }
+                };
 
+                string json = JsonConvert.SerializeObject(draft);
+                File.WriteAllText(GetDraftWriteFilePath(), json);
             }
+        }
+
+        private static string GetDraftWriteFolderPath()
+        {
+            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            const string eagleslistMainComponent = "Eagleslist";
+            const string eagleslistDataComponent = "data";
+
+            return Path.Combine(basePath, eagleslistMainComponent, eagleslistDataComponent);
+        }
+
+        private static string GetDraftWriteFilePath()
+        {
+            const string filePath = "draft.json";
+            return Path.Combine(GetDraftWriteFolderPath(), filePath);
         }
 
         private async void ShowConfirmPostDialog()
@@ -125,15 +173,20 @@ namespace Eagleslist.Controls
             }
             else
             {
-                Console.WriteLine("new listing post succeded");
+                NewListingTitleBox.Text = string.Empty;
+                NewListingPriceBox.Text = string.Empty;
+                NewListingConditionComboBox.SelectedIndex = 0;
+                NewListingIsbnBox.Text = string.Empty;
+                NewListingContentBox.Text = string.Empty;
+                DraftSavedLabel.Content = "no draft";
+
+                NavigationManager.NavigateFromClick(ContainingWindow.sideBarButtonContainer.ListingsButton, null);
             }
         }
 
         private static void ShowListingCreationFailedDialog()
         {
-            const string text = @"Looks like something went wrong. Please try posting this listing again later.
-                                  If it still doesn't work, please let us know by emailing us at help@5BitStudios.com.
-                                  Please note that a draft of your post has been saved, so you won't have to retype it later.";
+            const string text = "Looks like something went wrong. Please try posting this listing again later. If it still doesn't work, please let us know by emailing us at help@5BitStudios.com. Please note that a draft of your post has been saved, so you won't have to retype it later.";
             const string caption = "Eagleslist - Post New Listing Failed";
 
             MessageBox.Show(text, caption, MessageBoxButton.OK, MessageBoxImage.Error);
