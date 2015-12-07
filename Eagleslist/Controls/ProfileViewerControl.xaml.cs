@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using Humanizer;
+using System.Windows;
 
 namespace Eagleslist.Controls
 {
@@ -66,8 +67,11 @@ namespace Eagleslist.Controls
                 user.Bio = ProfileBio.Text;
                 user.Handle = ProfileUsername.Text;
                 user.ImageURL = ProfileImageURL.Text;
-                string error = (await RequestManager.SaveNewUserInformation(user)).Error;
-                // TODO: Finish here 
+                string error = (await RequestManager.SaveNewUserInformation(user))?.Error;
+                if (error == null || error != "") {
+                    MessageBox.Show("Unable to save the profile information, please try again.");
+                }
+                CredentialManager.SetCurrentUser(user, CredentialManager.IsPersisting);
             }
         }
     }
