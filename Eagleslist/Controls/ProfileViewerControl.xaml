@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Border Width="100" Height="100" Background="Red" ClipToBounds="True"
+            <Border Width="100" Height="100" Background="{StaticResource mediumGray}" ClipToBounds="True"
                         Grid.Row="0" Grid.Column="0" Margin="20 20 10 20">
                 <Image x:Name="ProfileImage" Source="{Binding ElementName=ProfileImageURL, Path=Text}"/>
             </Border>
@@ -56,7 +56,7 @@
 
                 <TextBox Text="Bio" VerticalAlignment="Top" MinLines="4" Grid.Row="1" Grid.Column="0"
                                TextWrapping="Wrap" x:Name="ProfileBio" />
-                <Button Grid.Row="1" Grid.Column="1" MaxHeight="30" MaxWidth="100" Click="SaveProfile_Click" >Save</Button>
+                <Button Grid.Row="1" Grid.Column="1" MaxHeight="30" x:Name="SaveButton" MaxWidth="100" Click="SaveProfile_Click" >Save</Button>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource lightBackground}" Margin="20">
@@ -86,16 +86,52 @@
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Margin="0" HorizontalAlignment="Stretch">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
+
+                                <!--Title, Content, Price, Condition, CreateDate-->
+                                <Grid Grid.Row="0" Grid.Column="0" Margin="5 5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Title}" Margin="0" HorizontalAlignment="Left" 
+                                           Foreground="Black" Grid.Row="0" Grid.Column="0" TextTrimming="CharacterEllipsis"/>
+
+                                    <TextBlock Text="{Binding Price}" Margin="0" HorizontalAlignment="Right" 
+                                           Foreground="Black" Grid.Row="0" Grid.Column="1"/>
+                                </Grid>
+
+                                <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
+                                       TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis"
+                                       FontSize="11" LineStackingStrategy="BlockLineHeight" LineHeight="13"
+                                       Grid.Row="1" Grid.Column="0" Margin="5" Foreground="Black" MaxHeight="60"/>
+
+                                <Grid Grid.Row="2" Grid.Column="0" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Condition}" Margin="0" HorizontalAlignment="Left"
+                                       Grid.Row="0" Grid.Column="0" Foreground="Black"/>
+
+                                    <TextBlock Text="{Binding CreateDate, Converter={StaticResource humanize}}" Margin="0" HorizontalAlignment="Right"
+                                       Grid.Row="0" Grid.Column="1" Foreground="Black"/>
+                                </Grid>
+
+                                <Separator Grid.Row="3" HorizontalAlignment="Stretch" Padding="0" Margin="0"
+                                       Background="{StaticResource mediumGray}"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
