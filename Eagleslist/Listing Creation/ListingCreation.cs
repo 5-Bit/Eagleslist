@@ -59,7 +59,7 @@ namespace Eagleslist
 
         public bool IsISBNValid()
         {
-            Regex pattern = new Regex("(ISBN[-]*(1[03])*[ ]*(: ){0,1})*(([0-9Xx][- ]*){13}|([0-9Xx][- ]*){10})");
+            Regex pattern = new Regex(@"(\d{10}|\d{13})");
             return string.IsNullOrWhiteSpace(ISBN) || pattern.IsMatch(ISBN);
         }
 

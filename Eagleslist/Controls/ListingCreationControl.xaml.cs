@@ -119,13 +119,14 @@ namespace Eagleslist.Controls
                 };
 
                 string json = JsonConvert.SerializeObject(draft);
+                Directory.CreateDirectory(GetDraftWriteFolderPath());
                 File.WriteAllText(GetDraftWriteFilePath(), json);
             }
         }
 
         private static string GetDraftWriteFolderPath()
         {
-            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             const string eagleslistMainComponent = "Eagleslist";
             const string eagleslistDataComponent = "data";
 
