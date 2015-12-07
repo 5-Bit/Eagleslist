@@ -33,11 +33,16 @@ namespace Eagleslist.Controls
 
             var results = await RequestManager.SearchForText(text);
 
-            if (results != null && results.Count != 0)
+            if (results == null)
+            {
+                _results = new ObservableCollection<Listing>();
+            }
+            else
             {
                 _results = new ObservableCollection<Listing>(results);
-                ResultsListView.ItemsSource = _results;
             }
+
+            ResultsListView.ItemsSource = _results;
         }
 
         public void RenderObject(object obj)
