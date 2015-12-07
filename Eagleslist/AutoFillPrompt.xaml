@@ -85,7 +85,7 @@
                         </Grid>
 
                         <Button Grid.Row="0" Grid.Column="2" Height="30" Width="60" 
-                                Margin="10" VerticalAlignment="Center" Content="Select"/>
+                                Margin="10" VerticalAlignment="Center" Content="Select" Click="SelectBookButtonClicked"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
