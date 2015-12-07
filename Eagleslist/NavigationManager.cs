@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Eagleslist.Controls;
+using System.Linq;
 
 namespace Eagleslist
 {
@@ -84,7 +85,7 @@ namespace Eagleslist
         }
 
         public static void NavigateFromClick(ContentControl contentControl, object obj)
-        {            
+        {      
             if (contentControl is SearchButton)
             {
                 var searchButton = (SearchButton)contentControl;
@@ -105,6 +106,25 @@ namespace Eagleslist
             DropForwardFromCurrentIndex();
 
             var context = new NavigationContext(obj, _buttonAssociations[contentControl]);
+
+            if (_navigationStack.Count > 0 && context.Equals(_navigationStack.Last()))
+            {
+                Console.WriteLine("Contexts compared as same");
+                return;
+            }
+
+            if (_navigationStack.Count > 0 && _navigationStack.Last().Type.Equals(typeof(SearchControl)))
+            {
+                if (!context.Type.Equals(typeof(SearchControl)))
+                {
+                    Console.WriteLine("falsing search selection +++++++++++++++++++++++++++++++++++++++++++");
+                    _mainWindow.sideBarButtonContainer.SearchButton.isSelected = false;
+                    _mainWindow.topBar.ToggleSearchUI();
+
+                    _navigationStack.RemoveAt(_navigationStack.Count - 1);
+                }
+            }
+
             _navigationStack.Add(context);
             _navigationIndex = _navigationStack.Count - 1;
 

@@ -12,6 +12,14 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class ProfileViewerControl : UserControl, Navigatable
     {
+        private MainWindow _mainWindow
+        {
+            get
+            {
+                return ((MainWindow)Application.Current.MainWindow);
+            }
+        }
+
         private ObservableCollection<Listing> _listings = new ObservableCollection<Listing>();
 
         private User _currentProfileUser;
@@ -87,6 +95,7 @@ namespace Eagleslist.Controls
                 }
                 CredentialManager.SetCurrentUser(user, CredentialManager.IsPersisting);
                 SaveButton.Content = "Saved!";
+                _mainWindow.topBar.UpdateProfileUi();
                 tRestoreSaveToNormal.Start();
             }
             else
