@@ -20,7 +20,7 @@
 
         <Grid Grid.Row="0" Grid.Column="0" Height="40" Background="{StaticResource FGCUGreen}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -28,8 +28,21 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Row="0" Grid.Column="0" Text="Search here..." HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="SearchBox" GotFocus="SearchBox_GotFocus"/>
-            <Button Grid.Row="0" Grid.Column="1" Content="Search" HorizontalAlignment="Right" Click="SearchButtonClicked"/>
+            <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10 0">
+                <TextBox x:Name="SearchBox" VerticalAlignment="Center" Foreground="White"
+                         Background="{StaticResource FGCUGreen}" BorderThickness="0" 
+                         FontSize="14" CaretBrush="White"
+                         Text="Search here..." GotFocus="SearchBox_GotFocus"/>
+
+                <Separator Background="White" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+
+            <!--<TextBox Grid.Row="0" Grid.Column="0" Text="Search here..." HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="SearchBox" GotFocus="SearchBox_GotFocus"/>-->
+            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch"
+                    BorderThickness="0" Style="{StaticResource TopPanelButtonStyle}"
+                    Click="SearchButtonClicked" Width="40" VerticalAlignment="Stretch" IsDefault="True">
+                <Image Source="/images/search.png" Height="20" Width="20"/>
+            </Button>
         </Grid>
 
 
