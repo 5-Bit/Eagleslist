@@ -20,11 +20,10 @@ namespace Eagleslist
 
         public bool Equals(NavigationContext other)
         {
-            return this == other
-                || (Type.Equals(other.Type)
-                && DataObject != null 
-                && other.DataObject != null
-                && DataObject.Equals(other.DataObject));
+            return (Type.Equals(other.Type)
+                && ((DataObject == null 
+                && other.DataObject == null)
+                || DataObject.Equals(other.DataObject)));
         }
     }
 }

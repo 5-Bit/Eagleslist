@@ -54,7 +54,7 @@ namespace Eagleslist.Controls
             NavigationManager.NavigateFromClick(button, null);
         }
 
-        private void ToggleSearchUI()
+        internal void ToggleSearchUI()
         {
             //var to = (Color)ColorConverter.ConvertFromString(value ? "#006F41" : "#00885A");
             //var from = (Color)ColorConverter.ConvertFromString(value ? "#00885A" : "#006F41");
