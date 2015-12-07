@@ -138,7 +138,7 @@
                                            TextWrapping="WrapWithOverflow" VerticalAlignment="Stretch"
                                            FontSize="11" LineHeight="13"
                                            Grid.Row="1" Grid.Column="0" Margin="0"
-                                           Foreground="Black" Padding="5 10"/>
+                                           Foreground="Black" Padding="5 10" ClipToBounds="True"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
