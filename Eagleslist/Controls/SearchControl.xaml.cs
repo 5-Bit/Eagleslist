@@ -27,8 +27,7 @@ namespace Eagleslist.Controls
         {
             if (string.IsNullOrWhiteSpace(text))
             {
-                _results = null;
-                ResultsListView.ItemsSource = _results;
+                ResultsListView.ItemsSource = null;
                 return;
             }
 
@@ -50,8 +49,10 @@ namespace Eagleslist.Controls
         {
             var selectedList = sender as ListView;
 
-            if (selectedList.SelectedIndex < _results.Count && selectedList.SelectedIndex >= 0
-                && CurrentListing.Listing != null
+            if (selectedList.SelectedIndex < _results.Count 
+                && selectedList.SelectedIndex >= 0
+                && CurrentListing?.Listing != null
+                && _results != null
                 && _results[selectedList.SelectedIndex].Equals(CurrentListing.Listing))
             {
                 CurrentListing.Visibility = Visibility.Hidden;
@@ -73,7 +74,7 @@ namespace Eagleslist.Controls
             }
             else
             {
-                selectedList.SelectedIndex = _results.IndexOf(CurrentListing.Listing);
+                selectedList.SelectedIndex = _results?.IndexOf(CurrentListing.Listing) ?? 0;
             }
         }
     }

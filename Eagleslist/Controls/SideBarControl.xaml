@@ -81,7 +81,7 @@
             </Grid>
         </Button>
 
-        <Button x:Name="CoursesButton" HorizontalContentAlignment="Stretch"
+        <Button x:Name="CoursesButton" HorizontalContentAlignment="Stretch" Visibility="Collapsed"
                 BorderThickness="0" Click="NavigationButtonClicked" Grid.Row="3"
                 Padding="0" Style="{StaticResource SidePanelButtonStyle}" Tag="3">
 

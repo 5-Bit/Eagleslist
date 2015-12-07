@@ -26,14 +26,14 @@ namespace Eagleslist
         {
             const string url = RootUrl + "apidb/listings";
             var responseString = await Request(url);
-            return await ListingsFromJson(responseString);
+            return ListingsFromJson(responseString);
         }
 
         public static async Task<List<Listing>> SearchForText(string text)
         {
             var url = $"{RootUrl}apidb/searchlistings/{HttpUtility.UrlEncode(text)}";
             var responseString = await Request(url);
-            return await ListingsFromJson(responseString);
+            return ListingsFromJson(responseString);
         }
 
         public static async Task<BitmapImage> GetBitmapFromUri(Uri uri)
@@ -244,16 +244,21 @@ namespace Eagleslist
             return Task.Run(() => JsonConvert.DeserializeObject<Dictionary<string, List<User>>>(json)["Users"]);
         }
 
-        private static Task<List<Listing>> ListingsFromJson(string json)
+        private static List<Listing> ListingsFromJson(string json)
         {
-            try
+            var dictionary = JsonConvert.DeserializeObject<Dictionary<string, List<Listing>>>(json);
+
+            if (dictionary != null)
             {
-                return Task.Run(() => JsonConvert.DeserializeObject<Dictionary<string, List<Listing>>>(json)["Listings"]);
-            }
-            catch (Exception e)
-            {
+                if (dictionary["Listings"] != null)
+                {
+                    return dictionary["Listings"];
+                }
+
                 return null;
             }
+
+            return null;
         }
 
         private static WebRequestHandler DefaultRequestHandler()

@@ -91,7 +91,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Height="20" Text="(n) results"
+        <TextBlock Grid.Row="2" Grid.Column="0" Height="20" Text="0 results found"
                    HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ResultCountTextBlock"/>
     </Grid>
 </Window>
