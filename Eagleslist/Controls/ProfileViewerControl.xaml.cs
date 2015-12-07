@@ -67,7 +67,7 @@ namespace Eagleslist.Controls
                 user.Handle = ProfileUsername.Text;
                 user.ImageURL = ProfileImageURL.Text;
                 string error = (await RequestManager.SaveNewUserInformation(user)).Error;
-                if 
+                // TODO: Finish here 
             }
         }
     }
