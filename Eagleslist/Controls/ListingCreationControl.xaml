@@ -31,7 +31,7 @@
             <Label Margin="20, 10, 20, 10" Content="New Listing" FontSize="18"
                    Grid.Row="0" VerticalAlignment="Center"/>
             
-            <Label x:Name="DraftSavedLabel" Content="Draft Saved 3 minutes ago" 
+            <Label x:Name="DraftSavedLabel" Content="no draft saved" 
                    Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"
                    HorizontalAlignment="Right" VerticalAlignment="Center"
                    FontSize="10" Foreground="Gray" Margin="20, 10, 20, 10"/>
