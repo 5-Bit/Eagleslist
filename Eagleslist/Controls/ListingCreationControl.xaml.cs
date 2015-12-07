@@ -14,6 +14,7 @@ namespace Eagleslist.Controls
     /// </summary>
     public partial class ListingCreationControl : UserControl, Navigatable
     {
+        private string _imageUrl;
         private MainWindow ContainingWindow
         {
             get
@@ -91,19 +92,27 @@ namespace Eagleslist.Controls
                     var jsonString = File.ReadAllText(GetDraftWriteFilePath());
                     var draft = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
 
-                    NewListingTitleBox.Text = draft["title"];
-                    NewListingPriceBox.Text = draft["price"];
-                    NewListingIsbnBox.Text = draft["isbn"];
-                    NewListingConditionComboBox.SelectedIndex = Convert.ToInt32(draft["condition"]);
-                    NewListingContentBox.Text = draft["body"];
+                    try
+                    {
+                        NewListingTitleBox.Text = draft["title"];
+                        NewListingPriceBox.Text = draft["price"];
+                        NewListingIsbnBox.Text = draft["isbn"];
+                        NewListingConditionComboBox.SelectedIndex = Convert.ToInt32(draft["condition"]);
+                        NewListingContentBox.Text = draft["body"];
+                        _imageUrl = draft["imageUrl"] ?? "";
 
-                    if (draft["time"] != null)
-                    {
-                        DraftSavedLabel.Content = "draft saved " + Convert.ToDateTime(draft["time"]).Humanize(false);
+                        if (draft["time"] != null)
+                        {
+                            DraftSavedLabel.Content = "draft saved " + Convert.ToDateTime(draft["time"]).Humanize(false);
+                        }
+                        else
+                        {
+                            DraftSavedLabel.Content = "draft saved";
+                        }
                     }
-                    else
+                    catch
                     {
-                        DraftSavedLabel.Content = "draft saved";
+
                     }
                 }
             }
@@ -115,7 +124,8 @@ namespace Eagleslist.Controls
                     { "isbn", NewListingIsbnBox.Text },
                     { "condition", NewListingConditionComboBox.SelectedIndex.ToString() },
                     { "body", NewListingContentBox.Text },
-                    { "time", DateTime.Now.ToString() }
+                    { "time", DateTime.Now.ToString() },
+                    { "imageUrl", _imageUrl ?? "" }
                 };
 
                 string json = JsonConvert.SerializeObject(draft);
@@ -161,7 +171,8 @@ namespace Eagleslist.Controls
                 ISBN = NewListingIsbnBox.Text,
                 Price = NewListingPriceBox.Text,
                 Condition = condition,
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now,
+                ImageURL = _imageUrl ?? ""
             };
 
             var response = await RequestManager.PostNewListing(listing, sessionId);
@@ -180,6 +191,7 @@ namespace Eagleslist.Controls
                 NewListingIsbnBox.Text = string.Empty;
                 NewListingContentBox.Text = string.Empty;
                 DraftSavedLabel.Content = "no draft";
+                _imageUrl = string.Empty;
 
                 NavigationManager.NavigateFromClick(ContainingWindow.sideBarButtonContainer.ListingsButton, null);
             }
@@ -231,6 +243,7 @@ namespace Eagleslist.Controls
                 NewListingTitleBox.Text = book.Title;
                 NewListingIsbnBox.Text = book.ISBN;
                 NewListingContentBox.Text = book.volumeInfo.description;
+                _imageUrl = book.volumeInfo.imageLinks.smallThumbnail ?? "";
             };
 
             bool? success = prompt.ShowDialog();
