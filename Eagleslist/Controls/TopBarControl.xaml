@@ -82,7 +82,7 @@
                                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                                     <Border Background="{TemplateBinding Background}" BorderThickness="0" Padding="4">
                                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                                                  VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+                                                          VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -98,7 +98,7 @@
                 <ComboBoxItem Content="Sign In" Visibility="Collapsed" Tag="LoggedOut"/>
                 <ComboBoxItem Content="Sign Up" Visibility="Collapsed" Tag="LoggedOut"/>
                 <ComboBoxItem x:Name="ProfileComboBoxItem" Content="Profile" Visibility="Visible" Tag="LoggedIn"/>
-                <ComboBoxItem x:Name="NotificationsComboBoxItem" Content="Notifications" Visibility="Visible" Tag="LoggedIn"/>
+                <!--<ComboBoxItem x:Name="NotificationsComboBoxItem" Content="Notifications" Visibility="Visible" Tag="LoggedIn"/>-->
                 <ComboBoxItem Content="Sign Out" Visibility="Visible" Tag="LoggedIn"/>
             </ComboBox>
         </Canvas>
