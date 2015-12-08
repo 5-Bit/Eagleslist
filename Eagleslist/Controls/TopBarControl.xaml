@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="800">
 
-    <Grid x:Name="TopBarContainerGrid" Margin="0" Panel.ZIndex="1000" Background="{StaticResource darkBackground}">
+    <Grid x:Name="TopBarContainerGrid" Margin="0" Panel.ZIndex="5" Background="{StaticResource darkBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
