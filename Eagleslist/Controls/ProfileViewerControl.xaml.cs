@@ -5,6 +5,7 @@ using System.Windows;
 using System;
 using System.Windows.Threading;
 using System.Windows.Media;
+using System.Collections.Generic;
 
 namespace Eagleslist.Controls
 {
@@ -22,6 +23,7 @@ namespace Eagleslist.Controls
         }
 
         private ObservableCollection<Listing> _listings = new ObservableCollection<Listing>();
+        private Dictionary<string, string> _editDraft = null;
 
         private User _currentProfileUser;
         internal User CurrentProfileUser
@@ -94,6 +96,13 @@ namespace Eagleslist.Controls
             EditButton.Visibility = Visibility.Hidden;
             EditingContainer.Visibility = Visibility.Visible;
             SetEditingUi();
+
+            _editDraft = new Dictionary<string, string>()
+            {
+                { "handle", ProfileUsername.Text ?? string.Empty },
+                { "url", ProfileImageURL.Text ?? string.Empty },
+                { "bio", ProfileBio.Text ?? string.Empty }
+            };
         }
 
         private void CancelEdit_Click(object sender, RoutedEventArgs e)
@@ -101,6 +110,12 @@ namespace Eagleslist.Controls
             EditButton.Visibility = Visibility.Visible;
             EditingContainer.Visibility = Visibility.Hidden;
             SetNotEditingUi();
+
+            ProfileUsername.Text = _editDraft["handle"];
+            ProfileImageURL.Text = _editDraft["url"];
+            ProfileBio.Text = _editDraft["bio"];
+
+            _editDraft = null;
         }
 
         private void SetEditingUi()
@@ -155,8 +170,9 @@ namespace Eagleslist.Controls
                 user.Bio = ProfileBio.Text;
                 user.Handle = ProfileUsername.Text;
                 user.ImageURL = ProfileImageURL.Text;
+
                 string error = (await RequestManager.SaveNewUserInformation(user))?.Error;
-                if (error == null || error != "")
+                if (!string.IsNullOrEmpty(error))
                 {
                     MessageBox.Show("Unable to save the profile information, please try again.");
                 }
@@ -170,6 +186,7 @@ namespace Eagleslist.Controls
 
                 CancelButton.IsEnabled = true;
                 SetNotEditingUi();
+                _editDraft = null;
                 tRestoreSaveToNormal.Start();
             }
             else
@@ -177,6 +194,23 @@ namespace Eagleslist.Controls
                 SaveButton.Content = "Failed to save";
                 tRestoreSaveToNormal.Start();
                 MessageBox.Show("You're not logged in.");
+            }
+        }
+
+        private async void DeleteListingButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var listing = button.DataContext as Listing;
+
+            var success = await RequestManager.DeleteListing(listing);
+
+            if (success)
+            {
+                GetListings();
+            }
+            else
+            {
+                MessageBox.Show("Failed to delete listing. Please make sure you're logged in or try again later");
             }
         }
     }

@@ -86,6 +86,28 @@
                         </Style>
                     </ListView.Resources>
 
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Margin" Value="0 0 0 1"/>
+                            <Setter Property="Padding" Value="0"/>
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter/>
+                        </ControlTemplate>
+                    </ListView.Template>
+
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0" HorizontalAlignment="Stretch">
@@ -107,11 +129,15 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="{Binding Title}" Margin="0" HorizontalAlignment="Left" 
-                                           Foreground="Black" Grid.Row="0" Grid.Column="0" TextTrimming="CharacterEllipsis"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                                        <TextBlock Text="{Binding Title}" Margin="0" Padding="0" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text=" - "/>
+                                        <TextBlock Text="{Binding CreateDate, Converter={StaticResource humanize}}" Padding="0" Margin="0"/>
+                                    </StackPanel>
 
-                                    <TextBlock Text="{Binding Price}" Margin="0" HorizontalAlignment="Right" 
-                                           Foreground="Black" Grid.Row="0" Grid.Column="1"/>
+                                    <Button Style="{StaticResource LinkButtonStyle}" Content="delete"
+                                            Visibility="{Binding UserID, Converter={StaticResource visiblize}}"
+                                            HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Click="DeleteListingButtonClicked"/>                                    
                                 </Grid>
 
                                 <TextBlock Text="{Binding Content}" FontWeight="Normal" HorizontalAlignment="Stretch"
@@ -128,8 +154,6 @@
                                     <TextBlock Text="{Binding Condition}" Margin="0" HorizontalAlignment="Left"
                                        Grid.Row="0" Grid.Column="0" Foreground="Black"/>
 
-                                    <TextBlock Text="{Binding CreateDate, Converter={StaticResource humanize}}" Margin="0" HorizontalAlignment="Right"
-                                       Grid.Row="0" Grid.Column="1" Foreground="Black"/>
                                 </Grid>
 
                                 <Separator Grid.Row="3" HorizontalAlignment="Stretch" Padding="0" Margin="0"
