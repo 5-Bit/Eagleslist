@@ -89,13 +89,14 @@ namespace Eagleslist
             if (contentControl is SearchButton)
             {
                 var searchButton = (SearchButton)contentControl;
-                Console.WriteLine(searchButton.isSelected);
+
                 if (!searchButton.isSelected)
                 {
                     if (_navigationIndex >= 0
                         && _navigationIndex < _navigationStack.Count
                         && _navigationStack[_navigationIndex].Type.Equals(typeof(SearchControl)))
                     {
+                        _navigationStack.RemoveAt(_navigationIndex);
                         NavigateBack();
                     }
 
@@ -109,7 +110,6 @@ namespace Eagleslist
 
             if (_navigationStack.Count > 0 && context.Equals(_navigationStack.Last()))
             {
-                Console.WriteLine("Contexts compared as same");
                 return;
             }
 
@@ -117,7 +117,6 @@ namespace Eagleslist
             {
                 if (!context.Type.Equals(typeof(SearchControl)))
                 {
-                    Console.WriteLine("falsing search selection +++++++++++++++++++++++++++++++++++++++++++");
                     _mainWindow.sideBarButtonContainer.SearchButton.isSelected = false;
                     _mainWindow.topBar.ToggleSearchUI();
 
@@ -151,6 +150,14 @@ namespace Eagleslist
         {
             if (_navigationIndex - 1 >= 0)
             {
+                if (_mainWindow.sideBarButtonContainer.SearchButton.isSelected)
+                {
+                    _mainWindow.sideBarButtonContainer.SearchButton.isSelected = false;
+                    _mainWindow.topBar.ToggleSearchUI();
+
+                    _navigationStack.RemoveAt(_navigationIndex);
+                }
+
                 RenderContext(_navigationStack[--_navigationIndex]);
             }
         }

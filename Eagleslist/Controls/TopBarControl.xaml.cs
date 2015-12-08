@@ -146,12 +146,14 @@ namespace Eagleslist.Controls
             {
                 case 0:
                     ShowLoginDialog();
+                    NavigationManager.NavigateFromClick(ProfileComboBoxItem, CredentialManager.GetCurrentUser());
                     break;
                 case 1:
                     ShowSignUpDialog();
+                    NavigationManager.NavigateFromClick(ProfileComboBoxItem, CredentialManager.GetCurrentUser());
                     break;
                 case 2:
-                    NavigationManager.NavigateFromClick((ComboBoxItem)comboBox.Items[comboBox.SelectedIndex], CredentialManager.GetCurrentUser());
+                    NavigationManager.NavigateFromClick(ProfileComboBoxItem, CredentialManager.GetCurrentUser());
                     break;
                 //case 3:
                 //    NavigationManager.NavigateFromClick((ComboBoxItem)comboBox.Items[comboBox.SelectedIndex], null);
