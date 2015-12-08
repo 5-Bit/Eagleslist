@@ -209,7 +209,18 @@ namespace Eagleslist.Controls
         {
             var button = sender as Button;
             var comment = button.DataContext as Comment;
-            DeleteComment(comment);
+
+            if (CredentialManager.GetCurrentUser()?.SessionID != null)
+            {
+                DeleteComment(comment);
+            }
+            else
+            {
+                if (LoginTrigger != null && LoginTrigger())
+                {
+                    DeleteComment(comment);
+                }
+            }
         }
 
         private async void DeleteComment(Comment comment)
@@ -225,26 +236,50 @@ namespace Eagleslist.Controls
             }
         }
 
-        private async void ListingCreatorProfileClicked(object sender, RoutedEventArgs e)
+        private void ListingCreatorProfileClicked(object sender, RoutedEventArgs e)
         {
             var ownerId = _listing?.UserID;
 
-            if (ownerId != null)
+            if (_listing?.UserID != null)
             {
-                var user = await RequestManager.FetchUserById(ownerId.Value);
-                NavigationManager.NavigateFromClick(_mainWindow.topBar.ProfileComboBoxItem, user);
+                if (CredentialManager.GetCurrentUser()?.SessionID != null)
+                {
+                    NavigateToUserId(ownerId.Value);
+                }
+                else
+                {
+                    if (LoginTrigger != null && LoginTrigger())
+                    {
+                        NavigateToUserId(ownerId.Value);
+                    }
+                }
             }
         }
 
-        private async void CommentCreatorButtonClicked(object sender, RoutedEventArgs e)
+        private async void NavigateToUserId(int userId)
+        {
+            var user = await RequestManager.FetchUserById(userId);
+            NavigationManager.NavigateFromClick(_mainWindow.topBar.ProfileComboBoxItem, user);
+        }
+
+        private void CommentCreatorButtonClicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var comment = button.DataContext as Comment;
 
             if (comment?.UserID != null)
             {
-                var user = await RequestManager.FetchUserById(comment.UserID);
-                NavigationManager.NavigateFromClick(_mainWindow.topBar.ProfileComboBoxItem, user);
+                if (CredentialManager.GetCurrentUser()?.SessionID != null)
+                {
+                    NavigateToUserId(comment.UserID);
+                }
+                else
+                {
+                    if (LoginTrigger != null && LoginTrigger())
+                    {
+                        NavigateToUserId(comment.UserID);
+                    }
+                }
             }
         }
     }
