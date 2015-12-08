@@ -12,6 +12,7 @@ namespace Eagleslist
         {
             CheckAuth();
             InitializeComponent();
+            NavigationManager.NavigateFromClick(sideBarButtonContainer.ComposeButton, null);
         }
 
         private async void CheckAuth()

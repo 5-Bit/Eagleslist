@@ -241,7 +241,7 @@ namespace Eagleslist.Controls
             {
                 NewListingTitleBox.Text = book.Title ?? string.Empty;
                 NewListingIsbnBox.Text = book.ISBN ?? string.Empty;
-                NewListingContentBox.Text = book.volumeInfo.subtitle ?? book.volumeInfo.description ?? string.Empty;
+                NewListingContentBox.Text = book.volumeInfo.description ?? book.volumeInfo.subtitle ?? string.Empty;
                 _imageUrl = book.volumeInfo.imageLinks.smallThumbnail ?? string.Empty;
             };
 
