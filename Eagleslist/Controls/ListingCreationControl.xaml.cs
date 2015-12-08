@@ -36,18 +36,21 @@ namespace Eagleslist.Controls
         {
             _draft.Title = NewListingTitleBox.Text;
             PostNewListingButton.IsEnabled = _draft.RepresentsValidListing();
+            InvalidTitleLabel.Visibility = _draft.IsTitleValid() ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void NewListingPriceChanged(object sender, RoutedEventArgs e)
         {
             _draft.Price = NewListingPriceBox.Text;
             PostNewListingButton.IsEnabled = _draft.RepresentsValidListing();
+            InvalidPriceLabel.Visibility = _draft.IsPriceValid() ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void NewListingContentChanged(object sender, RoutedEventArgs e)
         {
             _draft.Content = NewListingContentBox.Text;
             PostNewListingButton.IsEnabled = _draft.RepresentsValidListing();
+            InvalidContentLabel.Visibility = _draft.IsContentValid() ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void NewListingConditionChanged(object sender, RoutedEventArgs e)
@@ -60,11 +63,7 @@ namespace Eagleslist.Controls
         {
             _draft.ISBN = NewListingIsbnBox.Text;
             PostNewListingButton.IsEnabled = _draft.RepresentsValidListing();
-        }
-
-        private void NewListingImagesChanged(object sender, RoutedEventArgs e)
-        {
-
+            InvalidISBNLabel.Visibility = _draft.IsISBNValid() ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void CreateListingButtonClicked(object sender, RoutedEventArgs e)
@@ -240,10 +239,10 @@ namespace Eagleslist.Controls
             prompt.Owner = ContainingWindow;
             prompt.result = (book) =>
             {
-                NewListingTitleBox.Text = book.Title;
-                NewListingIsbnBox.Text = book.ISBN;
-                NewListingContentBox.Text = book.volumeInfo.description;
-                _imageUrl = book.volumeInfo.imageLinks.smallThumbnail ?? "";
+                NewListingTitleBox.Text = book.Title ?? string.Empty;
+                NewListingIsbnBox.Text = book.ISBN ?? string.Empty;
+                NewListingContentBox.Text = book.volumeInfo.subtitle ?? book.volumeInfo.description ?? string.Empty;
+                _imageUrl = book.volumeInfo.imageLinks.smallThumbnail ?? string.Empty;
             };
 
             try

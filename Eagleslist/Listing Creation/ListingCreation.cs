@@ -41,11 +41,21 @@ namespace Eagleslist
 
         public bool RepresentsValidListing()
         {
-            return !string.IsNullOrWhiteSpace(Title) 
-                && !string.IsNullOrWhiteSpace(Content)
+            return IsTitleValid() 
+                && IsContentValid()
                 && IsPriceValid()
                 && IsConditionValid()
                 && IsISBNValid();
+        }
+
+        public bool IsTitleValid()
+        {
+            return !string.IsNullOrWhiteSpace(Title);
+        }
+
+        public bool IsContentValid()
+        {
+            return !string.IsNullOrWhiteSpace(Content);
         }
 
         public bool IsConditionValid()
