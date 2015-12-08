@@ -36,7 +36,7 @@ namespace Eagleslist.Controls
             CommentsListView.ItemsSource = null;
             CurrentListingProgressBar.Visibility = Visibility.Visible;
 
-            ListingTitleLabel.Content = listing?.Title;
+            ListingTitleLabel.Text = listing?.Title;
             ListingAskingPrice.Content = listing?.Price;
             ListingConditionLabel.Content = listing?.Condition;
             ListingContentTextBlock.Text = listing?.Content;
