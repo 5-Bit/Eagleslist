@@ -22,6 +22,15 @@ namespace Eagleslist.Controls
                 return _listing;
             }
         }
+
+        private MainWindow _mainWindow
+        {
+            get
+            {
+                return ((MainWindow)Application.Current.MainWindow);
+            }
+        }
+
         private Listing _listing;
         internal Func<bool> LoginTrigger;
 
@@ -36,6 +45,7 @@ namespace Eagleslist.Controls
             CommentsListView.ItemsSource = null;
             CurrentListingProgressBar.Visibility = Visibility.Visible;
 
+            UserHandleButton.Content = listing?.Handle;
             ListingTitleLabel.Text = listing?.Title;
             ListingAskingPrice.Content = listing?.Price;
             ListingConditionLabel.Content = listing?.Condition;
@@ -212,6 +222,29 @@ namespace Eagleslist.Controls
                 {
                     GetComments();
                 }
+            }
+        }
+
+        private async void ListingCreatorProfileClicked(object sender, RoutedEventArgs e)
+        {
+            var ownerId = _listing?.UserID;
+
+            if (ownerId != null)
+            {
+                var user = await RequestManager.FetchUserById(ownerId.Value);
+                NavigationManager.NavigateFromClick(_mainWindow.topBar.ProfileComboBoxItem, user);
+            }
+        }
+
+        private async void CommentCreatorButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var comment = button.DataContext as Comment;
+
+            if (comment?.UserID != null)
+            {
+                var user = await RequestManager.FetchUserById(comment.UserID);
+                NavigationManager.NavigateFromClick(_mainWindow.topBar.ProfileComboBoxItem, user);
             }
         }
     }

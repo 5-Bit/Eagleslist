@@ -28,6 +28,10 @@
                 <StackPanel Grid.Column="0" Grid.Row="0">
                     <TextBlock x:Name="ListingTitleLabel" Padding="0" FontSize="21.333" Text="Post Title" TextTrimming="WordEllipsis" />
                     <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="by: "/>
+                        <Button Style="{StaticResource LinkButtonStyle}" x:Name="UserHandleButton" Click="ListingCreatorProfileClicked"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <Label Content="Condition: " Padding="0" VerticalAlignment="Center"/>
                         <Label x:Name="ListingConditionLabel" Content="condition text"/>
                     </StackPanel>
@@ -118,12 +122,14 @@
                                                Width="{Binding ElementName=CommentsSectionGrid, Path=ActualWidth}">
 
                                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
-                                            <Label Content="{Binding UserName}" HorizontalAlignment="Left" Padding="5 5 0 5"/>
+                                            <Button Style="{StaticResource LinkButtonStyle}" Content="{Binding UserName}"
+                                                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0 0 0" 
+                                                    Padding="5 5 0 5" Click="CommentCreatorButtonClicked"/>
 
                                             <Label Content=" commented " HorizontalAlignment="Left" Padding="0 5"/>
                                             
                                             <Label Content="{Binding CreateDate, Converter={StaticResource humanize}}" 
-                                               HorizontalAlignment="Left" Padding="0 5 5 5"/>
+                                                   HorizontalAlignment="Left" Padding="0 5 5 5"/>
                                         </StackPanel>
 
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right">
