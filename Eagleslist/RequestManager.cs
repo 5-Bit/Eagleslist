@@ -132,6 +132,29 @@ namespace Eagleslist
             }
         }
 
+        public static async Task<bool> DeleteListing(Listing listing)
+        {
+            using (var client = new HttpClient(DefaultRequestHandler()))
+            {
+                var session = CredentialManager.GetCurrentUser()?.SessionID;
+
+                if (session == null || listing == null)
+                {
+                    return false;
+                }
+
+                var url = $"{RootUrl}apidb/listings/{listing.ListingID}/delete";
+
+                var payload = new Dictionary<string, object>() {
+                    { "SessionID", session }
+                };
+
+                var response = await SendObjectAsJson<ErrorResponse>(payload, url, client.PutAsync);
+
+                return response != null && string.IsNullOrEmpty(response.Error);
+            }
+        }
+
         public static async Task<User> AttemptLogin(LoginRequest request)
         {
             using (var client = new HttpClient(DefaultRequestHandler()))
