@@ -111,15 +111,18 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.Column="0" 
-                                       Text="{Binding Title}" HorizontalAlignment="Left"/>
-                            
-                            <TextBlock Grid.Row="0" Grid.Column="1" 
-                                       Text="{Binding ISBN}" HorizontalAlignment="Right"/>
+                            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}"/>
+                                <TextBlock Text=" by "/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                           Text="{Binding Authors, Converter={StaticResource sentencizer}}"/>
+                            </StackPanel>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                       Text="{Binding Authors, Converter={StaticResource sentencizer}}" 
-                                       HorizontalAlignment="Left"/>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                                <TextBlock Text="ISBN: "/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ISBN}"/>
+                            </StackPanel>
+
                             
                             <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                                        Text="{Binding Subtitle}" HorizontalAlignment="Left" TextWrapping="Wrap"/>
