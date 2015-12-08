@@ -20,7 +20,7 @@
             </Grid.ColumnDefinitions>
 
             <Border Width="100" Height="100" Background="{StaticResource mediumGray}" ClipToBounds="True"
-                        Grid.Row="0" Grid.Column="0" Margin="20 20 10 20">
+                        Grid.Row="0" Grid.Column="0" Margin="20 20 10 20" VerticalAlignment="Top">
                 <Image x:Name="ProfileImage" Source="{Binding ElementName=ProfileImageURL, Path=Text}"/>
             </Border>
 
@@ -28,35 +28,37 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
-                    <TextBox DockPanel.Dock="Left" Text="Username" VerticalAlignment="Center" 
-                           x:Name="ProfileUsername" FontSize="21.333" FontWeight="Bold"
-                           HorizontalAlignment="Left"/>
-                    <TextBox Text="Image (URL)" VerticalAlignment="Stretch" x:Name="ProfileImageURL" 
-                              FontSize="18" Margin="10,0,0,0" HorizontalAlignment="Stretch"></TextBox>
-                </DockPanel>
+                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Username" VerticalAlignment="Center" 
+                           x:Name="ProfileUsername" FontSize="21.333" FontWeight="Bold" Margin="0 0 0 5"
+                           HorizontalAlignment="Stretch" Background="{StaticResource lightBackground}" BorderThickness="0" Focusable="False"/>
+                
+                <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Image (URL)" 
+                         VerticalAlignment="Stretch" x:Name="ProfileImageURL" Background="{StaticResource lightBackground}" BorderThickness="0" Focusable="False" Visibility="Collapsed"
+                         FontSize="18" Margin="0,0,0,5" HorizontalAlignment="Stretch"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="(n) listings" HorizontalAlignment="Right"
-                       VerticalAlignment="Center"/>
+                <TextBox Text="Bio" VerticalAlignment="Top" MaxLines="4" Grid.Row="2" 
+                         Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource lightBackground}" BorderThickness="0" Focusable="False"
+                         TextWrapping="Wrap" x:Name="ProfileBio"/>
+                
+                
+                <Button Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" MaxHeight="30" Margin="0 10 0 0"
+                        x:Name="EditButton" Width="100" Click="Edit_Click" Content="Edit" Visibility="Hidden"/>
 
-                <!--<DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="Green">-->
-
-
-                <!--<TextBlock Text=" - "/>-->
-
-                <!--<TextBlock Text="Email" VerticalAlignment="Center" x:Name="ProfileEmail"/>-->
-                <!--</DockPanel>-->
-
-                <TextBox Text="Bio" VerticalAlignment="Top" MinLines="4" Grid.Row="1" Grid.Column="0"
-                               TextWrapping="Wrap" x:Name="ProfileBio" />
-                <Button Grid.Row="1" Grid.Column="1" MaxHeight="30" x:Name="SaveButton" MaxWidth="100" Click="SaveProfile_Click" >Save</Button>
+                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" x:Name="EditingContainer" Visibility="Hidden">
+                    <Button HorizontalAlignment="Right" MaxHeight="30" Margin="0 10 5 0"
+                        x:Name="SaveButton" Width="100" Click="SaveEdit_Click" Content="Save"/>
+                    <Button HorizontalAlignment="Right" MaxHeight="30" Margin="5 10 0 0"
+                        x:Name="CancelButton" Width="100" Click="CancelEdit_Click" Content="Cancel"/>
+                </StackPanel>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource lightBackground}" Margin="20">

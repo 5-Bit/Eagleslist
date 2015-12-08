@@ -4,6 +4,7 @@ using Humanizer;
 using System.Windows;
 using System;
 using System.Windows.Threading;
+using System.Windows.Media;
 
 namespace Eagleslist.Controls
 {
@@ -39,6 +40,16 @@ namespace Eagleslist.Controls
                 ProfileImageURL.Text = value?.ImageURL;
 
                 GetListings();
+
+                var current = CredentialManager.GetCurrentUser();
+                if (value != null && current != null && value.Equals(current))
+                {
+                    EditButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    EditButton.Visibility = Visibility.Hidden;
+                }
             }
         }
 
@@ -77,10 +88,66 @@ namespace Eagleslist.Controls
             CurrentProfileUser = obj as User;
         }
 
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            EditButton.Visibility = Visibility.Hidden;
+            EditingContainer.Visibility = Visibility.Visible;
+            SetEditingUi();
+        }
+
+        private void CancelEdit_Click(object sender, RoutedEventArgs e)
+        {
+            EditButton.Visibility = Visibility.Visible;
+            EditingContainer.Visibility = Visibility.Hidden;
+            SetNotEditingUi();
+        }
+
+        private void SetEditingUi()
+        {
+            var focusable = true;
+            var background = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
+            var thickness = new Thickness(1);
+
+            ProfileUsername.Focusable = focusable;
+            ProfileUsername.Background = background;
+            ProfileUsername.BorderThickness = thickness;
+
+            ProfileImageURL.Focusable = focusable;
+            ProfileImageURL.Background = background;
+            ProfileImageURL.BorderThickness = thickness;
+            ProfileImageURL.Visibility = Visibility.Visible;
+
+            ProfileBio.Focusable = focusable;
+            ProfileBio.Background = background;
+            ProfileBio.BorderThickness = thickness;
+        }
+
+        private void SetNotEditingUi()
+        {
+            var focusable = false;
+            var background = new SolidColorBrush(Color.FromRgb(0xEC, 0xEE, 0xF3));
+            var thickness = new Thickness(0);
+
+            ProfileUsername.Focusable = focusable;
+            ProfileUsername.Background = background;
+            ProfileUsername.BorderThickness = thickness;
+
+            ProfileImageURL.Focusable = focusable;
+            ProfileImageURL.Background = background;
+            ProfileImageURL.BorderThickness = thickness;
+            ProfileImageURL.Visibility = Visibility.Collapsed;
+
+            ProfileBio.Focusable = focusable;
+            ProfileBio.Background = background;
+            ProfileBio.BorderThickness = thickness;
+        }
+
         DispatcherTimer tRestoreSaveToNormal = new DispatcherTimer(); 
         // Save the user's profile changes.
-        private async void SaveProfile_Click(object sender, RoutedEventArgs e)
+        private async void SaveEdit_Click(object sender, RoutedEventArgs e)
         {
+            CancelButton.IsEnabled = false;
             SaveButton.Content = "Saving...";
             if (await RequestManager.IsAuthenticated())
             {
@@ -93,9 +160,16 @@ namespace Eagleslist.Controls
                 {
                     MessageBox.Show("Unable to save the profile information, please try again.");
                 }
+
                 CredentialManager.SetCurrentUser(user, CredentialManager.IsPersisting);
                 SaveButton.Content = "Saved!";
                 _mainWindow.topBar.UpdateProfileUi();
+
+                EditButton.Visibility = Visibility.Visible;
+                EditingContainer.Visibility = Visibility.Hidden;
+
+                CancelButton.IsEnabled = true;
+                SetNotEditingUi();
                 tRestoreSaveToNormal.Start();
             }
             else
