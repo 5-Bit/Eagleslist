@@ -246,7 +246,14 @@ namespace Eagleslist.Controls
                 _imageUrl = book.volumeInfo.imageLinks.smallThumbnail ?? "";
             };
 
-            bool? success = prompt.ShowDialog();
+            try
+            {
+                bool? success = prompt.ShowDialog();
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine("Attempted presenting window in invalid context: " + e.Message);
+            }
         }
     }
 }
