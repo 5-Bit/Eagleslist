@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Eagleslist.App" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.ArrayToSentenceStringConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ArrayToSentenceStringConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.AuthResponse" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAgIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AuthResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.AutoFillPrompt" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQACAAAAEABACAQAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>AutoFillPrompt.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Book" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAgAEAABAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Books\Book.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.BookConditionMethods" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAEEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Books\BookCondition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.BookCreationResponse" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Books\BookCreationResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.Comment" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAgABAAAAAAAggAAAAAAAAAQABAAAAAAA=</HashCode>
+      <FileName>Comment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.CommentRequest" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommentRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.CommentRequestResponse" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>CommentRequestResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.Course" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAoACgAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Course.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.CourseCreationResponse" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>CourseCreationResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.CredentialManager" Collapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAEAAAAAAAAACAAAAMAAMIAAABAAgACAAAAAAACAAA=</HashCode>
+      <FileName>CredentialManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.ErrorResponse" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ErrorResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.Flag" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAIEAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Flags\Flag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.FlagHandlerRequest" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAIAAAAIAAAAAA=</HashCode>
+      <FileName>Flags\FlagHandlerRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.FlagRaisedResponse" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Flags\FlagRaisedResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.GoogleBook" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAEAAQCAAAAAAAAhAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>GoogleBook.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.GoogleBookResponse" Collapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAgABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GoogleBookResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.HumanizeConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HumanizeConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.ListingCreation" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQAAAAAIAwCAAEAQCAAABCAAEAAAAQAAAAIAAAACAAA=</HashCode>
+      <FileName>Listing Creation\ListingCreation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.Listing" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAyCABEAADAAAAAgAAAAAAAIAAAABAAAAAAA=</HashCode>
+      <FileName>Listing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.LoginPrompt" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAACAAAAAAAAAAAEAAAAAAAAAgA=</HashCode>
+      <FileName>LoginPrompt.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.LoginRequest" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>LoginRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAQAABAAAAAAgAAAAAAAAAEEAAAEABAAAAAE=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.NavigationContext" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAgAQAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>NavigationContext.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.NavigationManager" Collapsed="true">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAEAIAAAEIIAAAABBCAAAAAAAECMAAAAAAADAAA=</HashCode>
+      <FileName>NavigationManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.NewListingResponse" Collapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NewListingResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.OwnerIdToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>OwnerIdToVisibilityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.RegistrationSubmission" Collapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>RegistrationSubmission.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.RequestManager" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IBBAADAAABAgQAICAgkCAAIgAAAhwAAEAEAAQQAAAgA=</HashCode>
+      <FileName>RequestManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.SearchButton" Collapsed="true">
+    <Position X="7.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SearchButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.SignUpPrompt" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAECAAAAAAAEACAAAAAAAABAAAAAAAABCAAA=</HashCode>
+      <FileName>SignUpPrompt.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.User" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAgAAEjAAAIEEKAABAAAIAAAAAgAAAAAA=</HashCode>
+      <FileName>User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.ValidatedListing" Collapsed="true">
+    <Position X="7.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ValidatedListing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.Controls.CoursesBrowserControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Controls\CoursesBrowserControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Controls.CreditBarControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controls\CreditBarControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Controls.ListingBrowserControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAACAKAAAAAAAAAQAAAAAAIAAIAAAA=</HashCode>
+      <FileName>Controls\ListingBrowserControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Controls.ListingControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAIABAAEAAAEAAACACAAAACACAAACAAAAgAAAgAQAA=</HashCode>
+      <FileName>Controls\ListingControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Controls.ListingCreationControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAAgAAACAACQIEAkAEAECAAAAgAAIoAQAAAAA=</HashCode>
+      <FileName>Controls\ListingCreationControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Controls.MessagesViewerControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAA=</HashCode>
+      <FileName>Controls\MessagesViewerControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Controls.ProfileViewerControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFAEAIAABAAAAEAAACFAAAQAAAAAAAAAAAIBAYIAAA=</HashCode>
+      <FileName>Controls\ProfileViewerControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Controls.SearchControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAACAAAAAAAAQAAAAIAAAAQAA=</HashCode>
+      <FileName>Controls\SearchControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Controls.SideBarControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAgAAIAAIAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Controls\SideBarControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Controls.TopBarControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIQAAAAEABAAAIEAAAAIAAAAQoAAMAAAQgACgA=</HashCode>
+      <FileName>Controls\TopBarControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Eagleslist.Properties.Resources" Collapsed="true">
+    <Position X="5.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eagleslist.Properties.Settings" Collapsed="true">
+    <Position X="11" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Eagleslist.Navigatable" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Navigatable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Eagleslist.BookCondition" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAACAAgAAAAAAAAAIAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Books\BookCondition.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Eagleslist.FlagResolution" Collapsed="true">
+    <Position X="2.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Flags\FlagResolution.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Eagleslist.FlagType" Collapsed="true">
+    <Position X="4" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Flags\FlagType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
