@@ -26,7 +26,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Grid.Row="0">
-                    <Label x:Name="ListingTitleLabel" Padding="0" FontSize="21.333" Content="Post Title"/>
+                    <TextBlock x:Name="ListingTitleLabel" Padding="0" FontSize="21.333" Text="Post Title" TextTrimming="WordEllipsis" />
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Condition: " Padding="0" VerticalAlignment="Center"/>
                         <Label x:Name="ListingConditionLabel" Content="condition text"/>
@@ -47,7 +47,7 @@
                                Stretch="UniformToFill" HorizontalAlignment="Center"/>
                 </Border>
 
-                <TextBlock x:Name="ListingContentTextBlock" Text="Body text for post." Margin="0" Padding="0" 
+                <TextBlock x:Name="ListingContentTextBlock" Text="Body text for post." Margin="0 20 0 0" Padding="0" 
                                IsEnabled="False" TextWrapping="WrapWithOverflow"
                                TextTrimming="WordEllipsis" LineStackingStrategy="BlockLineHeight"
                                Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
