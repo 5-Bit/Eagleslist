@@ -111,6 +111,21 @@ namespace Eagleslist
             }
         }
 
+        public static async Task<User> FetchUserById(int userId)
+        {
+            var currentUser = CredentialManager.GetCurrentUser();
+            if (currentUser == null)
+            {
+                return null;
+            }
+
+            using (var client = new HttpClient(DefaultRequestHandler()))
+            {
+                var auth = new AuthResponse(null, currentUser.SessionID, userId);
+                return await FetchUserById(auth, client);
+            }
+        }
+
         private static async Task<User> FetchUserById(AuthResponse auth, HttpClient client)
         {
             var url = $"{RootUrl}apidb/users/id/{auth.UserID}";
