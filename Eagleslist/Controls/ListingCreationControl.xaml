@@ -10,15 +10,105 @@
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                   Background="{StaticResource lightBackground}">
+
         <Grid x:Name="ComposeGrid" HorizontalAlignment="Stretch" Width="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Margin="20, 10, 20, 10" Content="New Listing" FontSize="18" Padding="0"
+                   Grid.Row="0" VerticalAlignment="Center"/>
+
+            <Label x:Name="DraftSavedLabel" Content="no draft saved" Padding="0"
+                   Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"
+                   HorizontalAlignment="Right" VerticalAlignment="Center"
+                   FontSize="10" Foreground="Gray" Margin="20, 10, 20, 10"/>
+
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Margin="20, 0, 10, 0" HorizontalAlignment="Stretch" 
+                                Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+                    <Label x:Name="InvalidTitleLabel" Content="title must have content" Foreground="Gray" Padding="0 5" Visibility="Visible"/>
+                    <Label Content="Post Title" Padding="0 5"/>
+                    <TextBox FontSize="13.333" x:Name="NewListingTitleBox" 
+                             TextChanged="NewListingTitleChanged" MinWidth="250"/>
+                </StackPanel>
+
+                <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
+                                Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+                    <Label x:Name="InvalidPriceLabel" Content="invalid price" Foreground="Gray" Padding="0 5" Visibility="Visible"/>
+                    <Label Content="Price ($)" Padding="0 5"/>
+                    <TextBox FontSize="13.333" x:Name="NewListingPriceBox" TextChanged="NewListingPriceChanged" Width="80"/>
+                </StackPanel>
+
+                <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
+                                Grid.Column="2" Grid.Row="1" VerticalAlignment="Center">
+                    <Label Content="select a condition" Foreground="Gray" Padding="0 5" Visibility="Hidden"/>
+                    <Label Content="Condition" Padding="0 5"/>
+                    <ComboBox x:Name="NewListingConditionComboBox" SelectionChanged="NewListingConditionChanged"/>
+
+                </StackPanel>
+
+                <StackPanel Margin="10, 0, 20, 0" HorizontalAlignment="Stretch" 
+                        Grid.Column="3" Grid.Row="1" VerticalAlignment="Center">
+                    <Label x:Name="InvalidISBNLabel" Content="invalid ISBN" Foreground="Gray" Padding="0 5" Visibility="Hidden"/>
+                    <Label Content="ISBN (optional)" Padding="0 5"/>
+                    <TextBox FontSize="13.333" x:Name="NewListingIsbnBox" TextChanged="NewListingIsbnChanged" Width="100"/>
+                </StackPanel>
+            </Grid>
+            
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 20 20 0">
+                <Label x:Name="InvalidContentLabel" Content="body must have content" Foreground="Gray" Padding="0 5" Visibility="Visible"/>
+
+                <DockPanel Margin="0" VerticalAlignment="Stretch">
+                    <Label Content="Body" HorizontalAlignment="Left" Padding="0 5"/>
+                    <Label Content="Please do not post personal contact information" Padding="0 5" HorizontalAlignment="Right"/>
+                </DockPanel>
+
+                <TextBox Background="White" 
+                     VerticalAlignment="Stretch" Margin="0"
+                     MinHeight="150" TextWrapping="Wrap" x:Name="NewListingContentBox"
+                     TextChanged="NewListingContentChanged" AcceptsReturn="True" AcceptsTab="True"/>
+            </StackPanel>
+
+            <DockPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="20, 20, 20, 20">
+                <Button Grid.Row="0" Grid.Column="1" Content="Lookup Book Info" 
+                        Click="AttemptAutofillButtonClicked" DockPanel.Dock="Left" Width="100"/>
+
+                <Button Content="Post Listing" HorizontalAlignment="Right" Width="100"
+                        x:Name="PostNewListingButton" IsEnabled="False"
+                        Click="CreateListingButtonClicked"/>
+            </DockPanel>
+
+        </Grid>
+        
+        <!--<Grid x:Name="ComposeGrid" HorizontalAlignment="Stretch" Width="Auto">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="62" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -28,60 +118,8 @@
                 <ColumnDefinition Width="24*" />
             </Grid.ColumnDefinitions>
 
-            <Label Margin="20, 10, 20, 10" Content="New Listing" FontSize="18"
-                   Grid.Row="0" VerticalAlignment="Center"/>
             
-            <Label x:Name="DraftSavedLabel" Content="no draft saved" 
-                   Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"
-                   HorizontalAlignment="Right" VerticalAlignment="Center"
-                   FontSize="10" Foreground="Gray" Margin="20, 10, 20, 10"/>
-            
-            <StackPanel Margin="20, 0, 10, 0" HorizontalAlignment="Stretch" 
-                                Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
-                <Label Content="Post Title"/>
-                <TextBox FontSize="13.333" x:Name="NewListingTitleBox" TextChanged="NewListingTitleChanged"/>
-            </StackPanel>
 
-            <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
-                                Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
-                <Label Content="Price ($)"/>
-                <TextBox FontSize="13.333" x:Name="NewListingPriceBox" TextChanged="NewListingPriceChanged"/>
-            </StackPanel>
-
-            <StackPanel Margin="10, 0, 10, 0" HorizontalAlignment="Stretch"
-                                Grid.Column="2" Grid.Row="1" VerticalAlignment="Center">
-                <Label Content="Condition"/>
-                <ComboBox x:Name="NewListingConditionComboBox" SelectionChanged="NewListingConditionChanged"/>
-
-            </StackPanel>
-
-            <StackPanel Margin="10, 0, 20, 0" HorizontalAlignment="Stretch" 
-                        Grid.Column="3" Grid.Row="1" VerticalAlignment="Center">
-                
-                <Label Content="ISBN (optional)"/>
-                
-                <TextBox FontSize="13.333" x:Name="NewListingIsbnBox" TextChanged="NewListingIsbnChanged"/>
-                
-            </StackPanel>
-
-            <DockPanel Margin="20, 20, 20, 0" Grid.ColumnSpan="4" Grid.Row="2" VerticalAlignment="Stretch">
-                <Label Content="Body" HorizontalAlignment="Left"/>
-                <Label Content="Please do not post personal contact information" HorizontalAlignment="Right"/>
-            </DockPanel>
-
-            <TextBox Background="White" Grid.ColumnSpan="4" Grid.Row="3" 
-                     VerticalAlignment="Stretch" Margin="20, 0, 20, 20"
-                     MinHeight="150" TextWrapping="Wrap" x:Name="NewListingContentBox"
-                     TextChanged="NewListingContentChanged" AcceptsReturn="True" AcceptsTab="True"/>
-
-            <DockPanel Grid.ColumnSpan="4" Grid.Row="5" VerticalAlignment="Center" Margin="20, 20, 20, 20">
-                <Button Grid.Row="0" Grid.Column="1" Content="Lookup Book Info" 
-                        Click="AttemptAutofillButtonClicked" DockPanel.Dock="Left" Width="100"/>
-
-                <Button Content="Post Listing" HorizontalAlignment="Right" Width="100"
-                        x:Name="PostNewListingButton" IsEnabled="False"
-                        Click="CreateListingButtonClicked"/>
-            </DockPanel>
-        </Grid>
+        </Grid>-->
     </ScrollViewer>
 </UserControl>

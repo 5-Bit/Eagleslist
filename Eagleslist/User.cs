@@ -5,7 +5,7 @@ using System.Xml.Schema;
 
 namespace Eagleslist
 {
-    public class User: IXmlSerializable
+    public class User: IXmlSerializable, IEquatable<User>
     {
         public int ID { get; set; }
         public string SessionID { get; private set; }
@@ -21,6 +21,11 @@ namespace Eagleslist
         public User()
         {
 
+        }
+
+        public bool Equals(User other)
+        {
+            return ID.Equals(other.ID);
         }
 
         public User(int id, string sessionID, string imageURL, string handle, string email, string bio, bool isMod, bool isFaculty, string AuthError)
