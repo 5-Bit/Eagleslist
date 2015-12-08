@@ -80,7 +80,7 @@
 
                     <ListView.Template>
                         <ControlTemplate>
-                            <ItemsPresenter />
+                            <ItemsPresenter/>
                         </ControlTemplate>
                     </ListView.Template>
 
