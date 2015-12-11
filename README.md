@@ -11,3 +11,13 @@ Our progress building Eagleslist is being tracked at [5-bit.github.io](https://5
 3. Verify that Humanizer and Newtonsoft.Json have been installed via Nuget.
 4. Build and configure [eagleslist-server](https://github.com/5-Bit/eagleslist-server)
 5. Build and run Eagleslist in Visual Studio.
+
+### Screenshots
+
+#####
+
+![Search Listings](Screenshots/search.png)
+![New Listing](Screenshots/new.png)
+![Autofill Book Info](Screenshots/create.png)
+![Profile Page](Screenshots/profile.png)
+![Browse Listings](Screenshots/browse.png)
