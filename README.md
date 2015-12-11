@@ -12,12 +12,26 @@ Our progress building Eagleslist is being tracked at [5-bit.github.io](https://5
 4. Build and configure [eagleslist-server](https://github.com/5-Bit/eagleslist-server)
 5. Build and run Eagleslist in Visual Studio.
 
+--------------------------------------------------
+
 ### Screenshots
 
-#####
+##### Search Listings
 
 ![Search Listings](Screenshots/search.png)
+
+##### New Listing
+
 ![New Listing](Screenshots/new.png)
+
+##### Autofill Book Info
+
 ![Autofill Book Info](Screenshots/create.png)
+
+##### Profile Page
+
 ![Profile Page](Screenshots/profile.png)
+
+##### Browse Listings
+
 ![Browse Listings](Screenshots/browse.png)
